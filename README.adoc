@@ -1,0 +1,8 @@
+= daggerok-context (java 1.5)
+
+//tag::content[]
+Simples dependency injection library ever.
+Supported minimal java version: 1.5
+
+TODO: use cases, tests, documentation, usage samples, contribute, jitpack build, etc...
+//end::content[]
