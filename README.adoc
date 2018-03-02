@@ -1,4 +1,4 @@
-= daggerok-context (java 1.5)
+= daggerok-context (java 1.5) image:https://travis-ci.org/daggerok/daggerok-context.svg?branch=master["Build Status", link="https://travis-ci.org/daggerok/daggerok-context"]
 
 //tag::content[]
 Simples dependency injection library ever.
