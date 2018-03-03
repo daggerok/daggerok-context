@@ -1,11 +1,11 @@
-= jitpack 1.5 daggerok-context sample
+= jitpack master-SNAPSHOT daggerok-context sample
 
 //tag::content[]
 .build, run and test
 [source,groovy]
 ----
 bash ./gradlew
-bash ./build/install/jitpack15/bin/jitpack15
+bash ./build/install/jitpackmaster/bin/jitpackmaster
 ----
 
 .force jitpack rebuild

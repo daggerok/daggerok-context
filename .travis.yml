@@ -10,9 +10,16 @@ script:
 - bash mvnw
 - bash gradlew
 - export root=$(pwd)
+# master-SNAPSHOT
+- export sample=jitpackmaster
+- cd $root/samples/$sample
+- bash gradlew --refresh-dependencies
+- bash build/install/$sample/bin/$sample
+- bash ./build/install/$sample/bin/$sample trololo
 # 1.5
-- cd $root/samples/jitpack15
+- export sample=jitpack15
+- cd $root/samples/$sample
 #- bash gradlew --refresh-dependencies
 - bash gradlew
-- bash build/install/jitpack15/bin/jitpack15
-- bash ./build/install/jitpack15/bin/jitpack15 trololo
+- bash build/install/$sample/bin/$sample
+- bash ./build/install/$sample/bin/$sample trololo
