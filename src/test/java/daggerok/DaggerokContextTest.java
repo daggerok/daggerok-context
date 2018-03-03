@@ -12,7 +12,7 @@ public class DaggerokContextTest {
 
   @Test
   public void testContext() {
-    final DaggerokContext applicationContext = DaggerokContext.create();
+    final DaggerokContext applicationContext = DaggerokContext.create(getClass().getPackage());
     /*
     // DaggerokContext.create() should do next automatically (inject no-args Singletons):
     applicationContext.register(MyRepository.class, new MyRepository());
