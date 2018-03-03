@@ -49,15 +49,22 @@ dependencies {
   </dependencies>
 ----
 
-.4. force rebuild jitpack (using gradle):
+.4.1. force rebuild jitpack - update using gradle:
 [source,groovy]
 ----
 // use latests syntax for version (for examples latest 1.5....):
 buildscript {
   ext {
-    daggerokContextVersion = "1.5+"
+    // replace branchName with something like master or other branch you have...
+    daggerokContextVersion = "${branchName}-SNAPSHOT"
   }
 }
+----
+
+.4.2. force rebuild jitpack - run build with refresh dependencies flag
+[source,bash]
+----
+./gradlew --refresh-dependencies
 ----
 
 links:

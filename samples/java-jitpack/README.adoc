@@ -1,6 +1,12 @@
 = java-jitpack daggerok-context sample
 
 //tag::content[]
+.gradle force new JitPack version rebuild
+[source,groovy]
+----
+./gradlew --refresh-dependencies
+----
+
 .gradle build.gradle
 [source,groovy]
 ----
