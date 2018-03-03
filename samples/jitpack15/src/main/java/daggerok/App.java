@@ -18,6 +18,8 @@ public class App {
                       .injectBeans();
 
     final Main main = applicationContext.getBean(Main.class);
-    main.sayHello("maksimko!");
+
+    final String name = args.length > 0 ? args[0] : "maksimko!";
+    main.sayHello(name);
   }
 }

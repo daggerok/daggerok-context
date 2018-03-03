@@ -10,5 +10,9 @@ script:
 - bash mvnw
 - bash gradlew
 - export root=$(pwd)
-- cd $root/samples/java-jitpack
-- bash gradlew --refresh-dependencies
+# 1.5
+- cd $root/samples/jitpack15
+#- bash gradlew --refresh-dependencies
+- bash gradlew
+- bash build/install/jitpack15/bin/jitpack15
+- bash ./build/install/jitpack15/bin/jitpack15 trololo
