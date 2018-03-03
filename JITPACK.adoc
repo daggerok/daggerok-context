@@ -1,5 +1,65 @@
 = jitpack
 
+1. create github release
+
+.2. resolving dependencies with gradle (build.gradle):
+[source,groovy]
+----
+buildscript {
+  ext {
+    daggerokContextVersion = "master-SNAPSHOT"
+  }
+}
+
+// JitPack 1:
+allprojects {
+  repositories {
+    maven { url "https://jitpack.io" }
+  }
+}
+
+dependencies {
+  // JitPack 2:
+  compile "com.github.daggerok:daggerok-context:$daggerokContextVersion"
+}
+----
+
+.3. resolving dependencies with maven (pom.xml):
+[source,xml]
+----
+  <properties>
+    <daggerok-context.version>master-SNAPSHOT</daggerok-context.version>
+  </properties>
+
+  <!-- JitPack 1: -->
+  <repositories>
+    <repository>
+      <id>jitpack.io</id>
+      <url>https://jitpack.io</url>
+    </repository>
+  </repositories>
+
+  <dependencies>
+    <!-- JitPack 2: -->
+    <dependency>
+      <groupId>com.github.daggerok</groupId>
+      <artifactId>daggerok-context</artifactId>
+      <version>${daggerok-context.version}</version>
+    </dependency>
+  </dependencies>
+----
+
+.4. force rebuild jitpack (using gradle):
+[source,groovy]
+----
+// use latests syntax for version (for examples latest 1.5....):
+buildscript {
+  ext {
+    daggerokContextVersion = "1.5+"
+  }
+}
+----
+
 links:
 
 . link:https://jitpack.io/#daggerok/daggerok-context
