@@ -18,7 +18,7 @@ public class CapitalizeService {
     final String trimmed = inputMapper.trimmed(input);
     if (null == trimmed) return null;
 
-    final String head = trimmed.substring(0, 1);
+    final String head = trimmed.substring(0, 1).toUpperCase();
     final String tail = trimmed.length() > 1 ? trimmed.substring(1, trimmed.length()) : "";
     return head + tail;
   }

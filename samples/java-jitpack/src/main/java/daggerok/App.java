@@ -11,11 +11,10 @@ import lombok.extern.slf4j.Slf4j;
 public class App {
   public static void main(String[] args) {
 
-    final DaggerokContext applicationContext = DaggerokContext.create();
+    final DaggerokContext applicationContext = DaggerokContext.create(App.class.getPackage());
 
     applicationContext.register(InputMapper.class, new InputMapper(applicationContext.getBean(InputValidator.class)))
                       .register(CapitalizeService.class, new CapitalizeService(applicationContext.getBean(InputMapper.class)))
-                      .setBasePackageClasses(App.class)
                       .injectBeans();
 
     final Main main = applicationContext.getBean(Main.class);

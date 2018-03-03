@@ -27,6 +27,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * {@link DaggerokContext#register(Class, Object)}
  * <p>
  * {@link DaggerokContext#setInjectAnnotation(Class)}
+ * {@link DaggerokContext#setFailOnInjectNullRef(boolean)}
  * <p>
  * {@link DaggerokContext#injectBeans()}
  * <p>
@@ -40,6 +41,7 @@ public class DaggerokContext {
   private Class<? extends Annotation> injectAnnotation = Inject.class;
   private Class<? extends Annotation> componentAnnotation = Singleton.class;
   private ConcurrentHashMap<String, Object> beans = new ConcurrentHashMap<String, Object>();
+  private boolean failOnInjectNullRef = false;
 
   /* private construct */
 
@@ -321,7 +323,7 @@ public class DaggerokContext {
   }
 
   /**
-   * Step 3: Optionally optional configuration to set @{@link Inject} replacement.
+   * Step 3: Optionally set @{@link Inject} replacement.
    * Must be executed after DaggerokContext.create() was created but before DaggerokContext.injectBeans()
    *
    * @param injectAnnotation replacements for {@link Inject} annotation sor injections scan.
@@ -333,6 +335,18 @@ public class DaggerokContext {
     requireNonNull(injectAnnotation, "inject constructor annotation may not be null.");
 
     this.injectAnnotation = injectAnnotation;
+    return this;
+  }
+
+  /**
+   * Step 3: Optionally set if application context bootstrap must fail on any null injection.
+   * Must be executed before DaggerokContext.injectBeans()
+   *
+   * @param failOnInjectNullRef if set to true, application will fail on any null @{@link Inject}s. Default: false.
+   * @return context configuration.
+   */
+  public DaggerokContext setFailOnInjectNullRef(final boolean failOnInjectNullRef) {
+    this.failOnInjectNullRef = failOnInjectNullRef;
     return this;
   }
 
@@ -360,8 +374,13 @@ public class DaggerokContext {
 
       final Object[] parameters = result.toArray();
       final Object instance = newInstance(constructor, parameters);
+      final Object bean = type.cast(instance);
 
-      register(type.getName(), type.cast(instance));
+      if (null == bean) {
+        log.warn("Bean {} and was resulted in {}", type.getName(), bean);
+      }
+
+      register(type.getName(), bean);
     }
 
     return this;
