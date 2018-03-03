@@ -25,7 +25,7 @@ version = "0.0.1"
 defaultTasks "clean", "build", "install", "publishToMavenLocal", "publish"
 
 jar {
-  classifier = "1.6"
+  classifier = "$javaVersion"
 }
 
 sourceCompatibility = targetCompatibility = "$javaVersion"
