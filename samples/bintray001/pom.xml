@@ -6,7 +6,7 @@
 
   <groupId>daggerok</groupId>
   <version>0.0.1</version>
-  <artifactId>jitpackmaster</artifactId>
+  <artifactId>bintray001</artifactId>
   <packaging>jar</packaging>
 
   <properties>
@@ -16,14 +16,14 @@
     <lombok.version>1.16.18</lombok.version>
     <slf4j.version>1.7.25</slf4j.version>
     <vavr.version>0.9.2</vavr.version>
-    <daggerok-context.version>-SNAPSHOT</daggerok-context.version>
+    <daggerok-context.version>0.0.1</daggerok-context.version>
   </properties>
 
-  <!-- JitPack 1: -->
+  <!-- bintray 1: -->
   <repositories>
     <repository>
-      <id>jitpack.io</id>
-      <url>https://jitpack.io</url>
+      <id>bintray-daggerok-daggerok</id>
+      <url>https://dl.bintray.com/daggerok/daggerok</url>
     </repository>
   </repositories>
 

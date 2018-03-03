@@ -28,7 +28,7 @@
           <snapshots>
             <enabled>false</enabled>
           </snapshots>
-          <id>bintray-daggerok</id>
+          <id>bintray-daggerok-daggerok</id>
           <name>bintray</name>
           <url>https://dl.bintray.com/daggerok/daggerok</url>
         </repository>
@@ -38,7 +38,7 @@
           <snapshots>
             <enabled>false</enabled>
           </snapshots>
-          <id>bintray-daggerok</id>
+          <id>bintray-daggerok-daggerok</id>
           <name>bintray-plugins</name>
           <url>https://dl.bintray.com/daggerok/daggerok</url>
         </pluginRepository>

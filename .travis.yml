@@ -9,17 +9,26 @@ install: true
 script:
 - bash mvnw
 - bash gradlew
+
 - export root=$(pwd)
+
 # master-SNAPSHOT
 - export sample=jitpackmaster
 - cd $root/samples/$sample
 - bash gradlew --refresh-dependencies
 - bash build/install/$sample/bin/$sample
 - bash ./build/install/$sample/bin/$sample trololo
-# 1.5
-- export sample=jitpack15
-- cd $root/samples/$sample
-#- bash gradlew --refresh-dependencies
-- bash gradlew
-- bash build/install/$sample/bin/$sample
-- bash ./build/install/$sample/bin/$sample trololo
+
+# bintray 0.0.1; JitPack 1.5
+- >
+  for sample in \
+    bintray001 \
+    jitpack15 \
+  ; do
+    export sample=bintray001
+    cd $root/samples/$sample
+    bash gradlew
+    bash build/install/$sample/bin/$sample
+    bash ./build/install/$sample/bin/$sample trololo
+    bash ./build/install/$sample/bin/$sample $sample
+  done
