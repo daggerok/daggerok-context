@@ -19,3 +19,5 @@ bintrayApiKey=<change me: your bintray api key>
 links:
 
 . link:https://github.com/bintray/gradle-bintray-plugin
+. link:https://bintray.com/docs/usermanual/formats/formats_mavenrepositories.html#_working_with_gradle
+. link:https://bintray.com/docs/usermanual/formats/formats_mavenrepositories.html#_working_with_maven

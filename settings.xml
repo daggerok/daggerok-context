@@ -14,9 +14,9 @@
   <!--
   <distributionManagement>
     <repository>
-      <id>bintray-daggerok-daggerok</id>
+      <id>bintray-daggerok</id>
       <name>daggerok-daggerok</name>
-      <url>https://api.bintray.com/maven/daggerok/daggerok/[PACKAGE_NAME]/;publish=1</url>
+      <url>https://api.bintray.com/maven/daggerok/daggerok/daggerok-context/;publish=1</url>
     </repository>
   </distributionManagement>
   -->
@@ -28,7 +28,7 @@
           <snapshots>
             <enabled>false</enabled>
           </snapshots>
-          <id>bintray-daggerok-daggerok</id>
+          <id>bintray-daggerok</id>
           <name>bintray</name>
           <url>https://dl.bintray.com/daggerok/daggerok</url>
         </repository>
@@ -38,7 +38,7 @@
           <snapshots>
             <enabled>false</enabled>
           </snapshots>
-          <id>bintray-daggerok-daggerok</id>
+          <id>bintray-daggerok</id>
           <name>bintray-plugins</name>
           <url>https://dl.bintray.com/daggerok/daggerok</url>
         </pluginRepository>
