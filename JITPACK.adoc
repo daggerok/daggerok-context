@@ -1,5 +1,6 @@
 = jitpack
 
+//tag::content[]
 1. create github release
 
 .2. resolving dependencies with gradle (build.gradle):
@@ -70,3 +71,4 @@ buildscript {
 links:
 
 . link:https://jitpack.io/#daggerok/daggerok-context
+//end::content[]

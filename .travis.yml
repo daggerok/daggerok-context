@@ -15,7 +15,7 @@ script:
 # master-SNAPSHOT
 - export sample=jitpackmaster
 - cd $root/samples/$sample
-- bash gradlew --refresh-dependencies
+- bash gradlew #--refresh-dependencies
 - bash build/install/$sample/bin/$sample
 - bash ./build/install/$sample/bin/$sample trololo
 
@@ -23,12 +23,35 @@ script:
 - >
   for sample in \
     bintray001 \
-    jitpack15 \
   ; do
     export sample=bintray001
     cd $root/samples/$sample
-    bash gradlew
+    bash gradlew #--refresh-dependencies
     bash build/install/$sample/bin/$sample
     bash ./build/install/$sample/bin/$sample trololo
     bash ./build/install/$sample/bin/$sample $sample
   done
+cache:
+  directories:
+  - $HOME/.m2/wrapper
+  - $HOME/.m2/repository/ch
+  - $HOME/.m2/repository/javax
+  - $HOME/.m2/repository/junit
+  - $HOME/.m2/repository/org
+  - $HOME/.m2/repository/codehaus
+  - $HOME/.m2/repository/apache
+  - $HOME/.m2/repository/jdom
+  - $HOME/.m2/repository/ow2
+  - $HOME/.m2/repository/plugins
+  - $HOME/.m2/repository/vavr
+  - $HOME/.gradle/wrapper
+  - $HOME/.gradle/**/ch/junit
+  - $HOME/.gradle/**/javax/junit
+  - $HOME/.gradle/**/junit/junit
+  - $HOME/.gradle/**/org/**
+  - $HOME/.gradle/**/codehaus/**
+  - $HOME/.gradle/**/apache/**
+  - $HOME/.gradle/**/jdom/**
+  - $HOME/.gradle/**/ow2/**
+  - $HOME/.gradle/**/plugins/**
+  - $HOME/.gradle/**/vavr/**

@@ -13,7 +13,6 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>${maven.compiler.target}</maven.compiler.source>
     <maven.compiler.target>1.5</maven.compiler.target>
-    <lombok.version>1.16.20</lombok.version>
     <slf4j.version>1.7.25</slf4j.version>
     <inject.version>1</inject.version>
     <junit.version>4.12</junit.version>
@@ -35,14 +34,6 @@
       <groupId>org.reflections</groupId>
       <artifactId>reflections</artifactId>
       <version>${reflections.version}</version>
-    </dependency>
-
-    <!-- In java we trust -->
-    <dependency>
-      <groupId>org.projectlombok</groupId>
-      <artifactId>lombok</artifactId>
-      <version>${lombok.version}</version>
-      <optional>true</optional>
     </dependency>
 
     <!-- logging -->

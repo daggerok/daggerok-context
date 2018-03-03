@@ -2,7 +2,7 @@
 
 //tag::content[]
 
-Simples dependency injection library ever.
+Simplest lightly dependency injection library for java ever!
 Supported minimal java version: 1.5
 
 TODO: use cases, tests, documentation, usage samples, contribute, jitpack build, etc...

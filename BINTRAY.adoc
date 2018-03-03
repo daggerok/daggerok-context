@@ -1,5 +1,6 @@
 = bintray
 
+//tag::content[]
 1. register on bintray.com
 
 .2. update gradle.properties
@@ -21,3 +22,4 @@ links:
 . link:https://github.com/bintray/gradle-bintray-plugin
 . link:https://bintray.com/docs/usermanual/formats/formats_mavenrepositories.html#_working_with_gradle
 . link:https://bintray.com/docs/usermanual/formats/formats_mavenrepositories.html#_working_with_maven
+//end::content[]
