@@ -1,0 +1,21 @@
+= bintray
+
+1. register on bintray.com
+
+.2. update gradle.properties
+----
+cp -Rf gradle.properties-default gradle.properties
+vi gradle.properties
+# ...
+bintrayUser=<change me: your bintray user>
+bintrayApiKey=<change me: your bintray api key>
+----
+
+.3. publish to bintray
+----
+./gradlew -iS clean bintrayUpload
+----
+
+links:
+
+. link:https://github.com/bintray/gradle-bintray-plugin

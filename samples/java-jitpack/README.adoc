@@ -1,0 +1,50 @@
+= java-jitpack daggerok-context sample
+
+//tag::content[]
+.gradle build.gradle
+[source,groovy]
+----
+buildscript {
+  ext {
+    daggerokContextVersion = "1.5-SNAPSHOT"
+  }
+}
+
+// JitPack 1:
+allprojects {
+  repositories {
+    maven { url "https://jitpack.io" }
+  }
+}
+
+dependencies {
+  // JitPack 2:
+  compile "com.github.daggerok:daggerok-context:$daggerokContextVersion"
+}
+----
+
+.maven pom.xml
+[source,xml]
+----
+  <properties>
+    <daggerok-context.version>1.5-SNAPSHOT</daggerok-context.version>
+  </properties>
+
+  <!-- JitPack 1: -->
+  <repositories>
+    <repository>
+      <id>jitpack.io</id>
+      <url>https://jitpack.io</url>
+    </repository>
+  </repositories>
+
+  <dependencies>
+    <!-- JitPack 2: -->
+    <dependency>
+      <groupId>com.github.daggerok</groupId>
+      <artifactId>daggerok-context</artifactId>
+      <version>${daggerok-context.version}</version>
+    </dependency>
+  </dependencies>
+----
+//end::content[]

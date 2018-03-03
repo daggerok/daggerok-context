@@ -10,4 +10,3 @@ target
 *.log
 .DS_Store
 *.log
-gradle.properties

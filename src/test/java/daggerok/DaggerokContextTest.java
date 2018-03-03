@@ -17,7 +17,6 @@ public class DaggerokContextTest {
     // DaggerokContext.create() should do next automatically (inject no-args Singletons):
     applicationContext.register(MyRepository.class, new MyRepository());
     */
-    applicationContext.setBasePackages();
 
     final MyRepository myRepository = applicationContext.getBean(MyRepository.class);
     applicationContext.register(MyOtherService.class, new MyOtherService(myRepository));

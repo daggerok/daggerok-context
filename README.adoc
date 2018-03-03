@@ -1,4 +1,4 @@
-= daggerok-context (java 1.5) image:https://travis-ci.org/daggerok/daggerok-context.svg?branch=master["Build Status", link="https://travis-ci.org/daggerok/daggerok-context"] image:https://jitpack.io/v/daggerok/daggerok-context.svg["JitPack", link="https://jitpack.io/#daggerok/daggerok-context"]
+= daggerok-context (java 1.5) image:https://travis-ci.org/daggerok/daggerok-context.svg?branch=master["Build Status", link="https://travis-ci.org/daggerok/daggerok-context"] image:https://jitpack.io/v/daggerok/daggerok-context.svg["JitPack", link="https://jitpack.io/#daggerok/daggerok-context"] image:https://api.bintray.com/packages/daggerok/daggerok/daggerok-context/images/download.svg[link="https://bintray.com/daggerok/daggerok/daggerok-context/_latestVersion"]
 
 //tag::content[]
 Simples dependency injection library ever.

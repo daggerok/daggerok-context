@@ -8,6 +8,9 @@ buildscript {
     slf4jVersion = "1.7.25"
     junitVersion = "4.12"
     injectVersion = "1"
+
+    // publication
+    vcsUrl = "https://github.com/daggerok/daggerok-context.git"
   }
 }
 
@@ -16,23 +19,23 @@ plugins {
   id "java"
   id "maven"
   id "eclipse"
+  id "com.jfrog.bintray" version "1.8.0"
 }
 
+description = "Daggerok Context - Java dependency injection library."
 group = "com.github.daggerok"
 //group = "daggerok"
 version = "0.0.1"
 
 defaultTasks "clean", "build", "install", "publishToMavenLocal", "publish"
 
-jar {
-  classifier = "$javaVersion"
-}
-
 sourceCompatibility = targetCompatibility = "$javaVersion"
 
-repositories {
-  mavenLocal()
-  mavenCentral()
+allprojects {
+  repositories {
+    mavenLocal()
+    mavenCentral()
+  }
 }
 
 dependencies {
@@ -60,23 +63,51 @@ dependencies {
 
 apply plugin: "maven-publish"
 
-task sourceJarClassifier(type: Jar) {
-  from sourceSets.main.allJava
-  classifier = "1.5"
+task classifierJar(type: Jar) {
+  from sourceSets.main.output
 }
 
 task sourceJar(type: Jar) {
   from sourceSets.main.allJava
-  dependsOn sourceJarClassifier
+}
+
+task classifierSourceJar(type: Jar) {
+  from sourceSets.main.allJava
+}
+
+def pomConfig = {
+  scm {
+    url "$project.vcsUrl"
+  }
+  developers {
+    developer {
+      id "daggerok"
+      name "Maksim Kostromin"
+      email "daggerok@gmail.com"
+    }
+  }
+  licenses {
+    license {
+      name "MIT License"
+      url "https://raw.githubusercontent.com/daggerok/daggerok-context/master/LICENSE"
+      distribution "repo"
+    }
+  }
 }
 
 publishing {
   publications {
-    mavenJava(MavenPublication) {
+    publication(MavenPublication) {
       from components.java
-
-      artifact sourceJar {
-        classifier "sources"
+      artifact classifierJar { classifier = "1.5" }
+      artifact sourceJar { classifier = "sources" }
+      artifact classifierSourceJar { classifier = "1.5-sources" }
+      pom.withXml {
+        def root = asNode()
+        root.appendNode("description", project.description)
+        root.appendNode("name", project.name)
+        root.appendNode("url", project.vcsUrl)
+        root.children().last() + pomConfig
       }
     }
   }
@@ -87,7 +118,41 @@ publishing {
   }
 }
 
+bintray {
+  user = project.hasProperty('bintrayUser') ? project.property('bintrayUser') : System.getenv('BINTRAY_USER')
+  key = project.hasProperty('bintrayApiKey') ? project.property('bintrayApiKey') : System.getenv('BINTRAY_API_KEY')
+  publications = ["publication"]
+  pkg {
+    userOrg = user
+    repo = "daggerok"
+    name = "$project.name"
+    licenses = ["MIT"]
+    vcsUrl = project.vcsUrl
+    labels = [
+        "Dependency Injection",
+        "Inversion of Control",
+        "Context Dependency Injection",
+        "dependency-injection",
+        "inversion-of-control",
+        "context-dependency-injection",
+        "daggerok-context",
+        "context",
+        "CDI",
+        "cdi",
+        "IoC",
+        "ioc",
+    ]
+    publicDownloadNumbers = true
+  }
+}
+
 task wrapper(type: Wrapper) {
   gradleVersion = "4.6"
   distributionType = "ALL"
+}
+
+clean.doFirst {
+  ["out"].each {
+    delete "$projectDir/$it"
+  }
 }

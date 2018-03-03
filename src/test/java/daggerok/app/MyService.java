@@ -10,7 +10,7 @@ public class MyService {
   private final MyOtherService myOtherService;
 
   @Inject
-  public MyService(final MyRepository myRepository, MyOtherService myOtherService) {
+  public MyService(final MyRepository myRepository, final MyOtherService myOtherService) {
     this.myRepository = myRepository;
     this.myOtherService = myOtherService;
   }
