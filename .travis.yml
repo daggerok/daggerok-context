@@ -19,10 +19,11 @@ script:
 - bash build/install/$sample/bin/$sample
 - bash ./build/install/$sample/bin/$sample trololo
 
-# bintray 0.0.1; JitPack 1.5
+# bintray 0.0.1; JitPack 0.0.1
 - >
   for sample in \
     bintray001 \
+    jitpack001 \
   ; do
     export sample=bintray001
     cd $root/samples/$sample
