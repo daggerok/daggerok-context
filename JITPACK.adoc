@@ -1,17 +1,11 @@
 = jitpack
 
 //tag::content[]
-1. create github release
+=== create github release
 
-.2. resolving dependencies with gradle (build.gradle):
+.resolving dependencies with gradle (build.gradle):
 [source,groovy]
 ----
-buildscript {
-  ext {
-    daggerokContextVersion = "1.0.0"
-  }
-}
-
 // JitPack 1:
 allprojects {
   repositories {
@@ -21,48 +15,47 @@ allprojects {
 
 dependencies {
   // JitPack 2:
-  compile "com.github.daggerok:daggerok-context:$daggerokContextVersion"
+  compile "com.github.daggerok:daggerok-context:1.0.0"
 }
 ----
 
-.3. resolving dependencies with maven (pom.xml):
+.resolving dependencies with maven (pom.xml):
 [source,xml]
 ----
-  <properties>
-    <daggerok-context.version>1.0.0</daggerok-context.version>
-  </properties>
+<!-- JitPack 1: -->
+<repositories>
+  <repository>
+    <id>jitpack.io</id>
+    <url>https://jitpack.io</url>
+  </repository>
+</repositories>
 
-  <!-- JitPack 1: -->
-  <repositories>
-    <repository>
-      <id>jitpack.io</id>
-      <url>https://jitpack.io</url>
-    </repository>
-  </repositories>
-
-  <dependencies>
-    <!-- JitPack 2: -->
-    <dependency>
-      <groupId>com.github.daggerok</groupId>
-      <artifactId>daggerok-context</artifactId>
-      <version>${daggerok-context.version}</version>
-    </dependency>
-  </dependencies>
+<dependencies>
+  <!-- JitPack 2: -->
+  <dependency>
+    <groupId>com.github.daggerok</groupId>
+    <artifactId>daggerok-context</artifactId>
+    <version>1.0.0</version>
+  </dependency>
+</dependencies>
 ----
 
-.4.1. force rebuild jitpack - update using gradle:
+=== force rebuild jitpack
+
+* update using gradle:
 [source,groovy]
 ----
-// use latests syntax for version (for examples latest 1.5....):
-buildscript {
-  ext {
-    // replace branchName with something like master or other branch you have...
-    daggerokContextVersion = "${branchName}-SNAPSHOT"
-  }
-}
+// build ${branchName} version:
+compile "com.github.daggerok:daggerok-context:${branchName}-SNAPSHOT"
+
+// build master version:
+compile "com.github.daggerok:daggerok-context:master-SNAPSHOT"
+
+// build latest version:
+compile "com.github.daggerok:daggerok-context:-SNAPSHOT"
 ----
 
-.4.2. force rebuild jitpack - run build with refresh dependencies flag
+* run build with refresh dependencies flag
 [source,bash]
 ----
 ./gradlew --refresh-dependencies
@@ -70,5 +63,5 @@ buildscript {
 
 links:
 
-. link:https://jitpack.io/#daggerok/daggerok-context
+* link:https://jitpack.io/#daggerok/daggerok-context
 //end::content[]

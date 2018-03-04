@@ -2,8 +2,8 @@
 
 //tag::content[]
 image:https://travis-ci.org/daggerok/daggerok-context.svg?branch=master["Build Status", link="https://travis-ci.org/daggerok/daggerok-context"]
+image:https://api.bintray.com/packages/daggerok/daggerok/daggerok-context/images/download.svg[link="https://bintray.com/bintray/jcenter?filterByPkgName=daggerok-context"]
 image:https://jitpack.io/v/daggerok/daggerok-context.svg["JitPack", link="https://jitpack.io/#daggerok/daggerok-context"]
-image:https://api.bintray.com/packages/daggerok/daggerok/daggerok-context/images/download.svg[link="https://bintray.com/daggerok/daggerok/daggerok-context/_latestVersion"]
 
 == description
 Simplest lightly dependency injection library for java ever!
@@ -49,67 +49,81 @@ dependencies {
 ----
 @Singleton
 public class MyRepository {
-  public void repositoryMethod() { }
-}
-----
 
-.MyService.java - we also have service with MyRepository component injector. Annotation @Inject is required. Class can have only one constructor with all injectors
-[source,java]
-----
-public class MyService {
-
-  private final MyRepository myRepository;
-
-  @Inject
-  public MyService(final MyRepository myRepository) {
-    this.myRepository = myRepository;
-  }
-
-  public void serviceMethod() {
-    myRepository.repositoryMethod();
+  public String repositoryMethod() {
+    return "MyRepository.repositoryMethod";
   }
 }
 ----
 
-.MyClient.java - lastly we are using client with MyService injectior
+.MyClient.java - we also have another component with auto injectior, i.e: creates new empty HashMap automatically if it's not exists using default constructor
 [source,java]
 ----
 public class MyClient {
 
-  private final MyService myService;
+  private final HashMap<String, Object> config;
 
   @Inject
-  public MyClient(final MyService myService) {
-    this.myService = myService;
+  public MyClient(HashMap<String, Object> config) {
+    this.config = config;
   }
 
-  public void clientMethod() {
-    myService.serviceMethod()
+  public String clientMethod() {
+    return "MyClient.clientMethod" + config.size();
   }
 }
 ----
 
-.MyApp.class - and finally application
+.MyService.java - lastly, we have service with two injectors MyRepository / MyClient Annotation @Inject is required. Class can have only one constructor with all injectors configuration
 [source,java]
 ----
-public class MyApp {
+public class MyService {
 
-  public static void main(String[] args) {
+  private final MyClient myClient;
+  private final MyRepository myRepository;
 
-    final DaggerokContext applicationContext = DaggerokContext.create(MyApp.class)
-                                                              .initialize();
+  @Inject
+  public MyService(MyClient myClient, MyRepository myRepository) {
+    this.myClient = myClient;
+    this.myRepository = myRepository;
+  }
+
+  public String serviceMethod() {
+    return myClient.clientMethod() + myRepository.repositoryMethod();
+  }
+}
+----
+
+.MyAppTest.class - and finally test application
+[source,java]
+----
+public class MyAppTest {
+
+  @Test
+  public void my_app_test() {
+
+    DaggerokContext applicationContext = DaggerokContext.create(MyAppTest.class)
+                                                        .initialize();
     /*
       initialize() method will do:
 
-      1. scan everithyng in base package of MyApp
-      1. create MyRepository instance in applicationContext
-      2. inject MyRepository and create MyService instance in applicationContext
-      3. inject MyService and create MyClient instance in applicationContext
+      1. scan everithyng in base package of MyAppTest
+      2. create MyRepository instance in applicationContext
+      3. using default constructor create HashMap instance in applicationContext
+      4. inject HashMap and create MyClient instance in applicationContext
+      5. inject MyRepository and MyClient and create MyService instance in applicationContext
     */
 
-    final MyClient myClient = applicationContext.getBean(MyClient.class);
+    MyService myService = applicationContext.getBean(MyService.class);
+    String actual = myService.serviceMethod();
 
-    myClient.clientMethod();
+    assertTrue(actual.contains("MyClient.clinetMethod"));
+    assertTrue(actual.contains("MyRepository.repositoryMethod"));
+    assertTrue(actual.contains("0"));
+
+    HashMap config = applicationContext.getBean(HashMap.class);
+    config.put("message", "hello");
+    assertTrue(myService.serviceMethod().contains("1"));
   }
 }
 ----
@@ -149,36 +163,31 @@ DaggerokContext.create(Package.getPackages());
 .set custom component annotation
 [source,java]
 ----
-DaggerokContext.create(MyApp.class)
-               .withComponents(Singleton.class);
+applicationContext.withComponents(Singleton.class);
 ----
 
 .set custom injector annotation
 [source,java]
 ----
-DaggerokContext.create(MyApp.class)
-               .withInjectors(Inject.class);
+applicationContext.withInjectors(Inject.class);
 ----
 
 .fail on inject null bean
 [source,java]
 ----
-DaggerokContext.create(MyApp.class)
-               .failOnInjectNullRef(false);
+applicationContext.failOnInjectNullRef(false);
 ----
 
 .fail on bean creation error Class.newInstance()
 [source,java]
 ----
-DaggerokContext.create(MyApp.class)
-               .failOnBeanCreationError(false);
+applicationContext.failOnBeanCreationError(false);
 ----
 
 .fail on unknown Reflections library errors
 [source,java]
 ----
-DaggerokContext.create(MyApp.class)
-               .failOnUnknownReflectionsErrors(false);
+applicationContext.failOnUnknownReflectionsErrors(false);
 ----
 
 === Manual beans registration:
@@ -201,49 +210,65 @@ applicationContext.register("my.app.MyBean", new MyBean("custom bean initializat
 === Search, create and inject everything we can:
 . `DaggerokContext#initialize()`
 
-.build application context
+.minimal required configuration
 [source,java]
 ----
-DaggerokContext.create(...)
+DaggerokContext.create("")
                .initialize();
+----
+
+.other possible configuration
+[source,java]
+----
+DaggerokContext applicationContext = DaggerokContext.create(String.class)
+                                                    .failOnInjectNullRef(true)
+                                                    .register(String.class, "Hello, World!")
+                                                    .initialize();
+
+System.out.println(applicationContext.getBean(String.class));
 ----
 
 === Get bean from context - could be used before initialize() if bean was previously manually added:
 . `DaggerokContext#getBean(Class)`
+. `DaggerokContext#getBean(String, Class)`
 . `DaggerokContext#getBean(String)`
 
 .build application context
 [source,java]
 ----
 // get bean by class
-final MyRepository myRepository = applicationContext.getBean(MyRepository.class);
-final Map<String, String> map = applicationContext.getBean(Map.class);
-final String string = applicationContext.getBean(String.class);
+MyRepository myRepository = applicationContext.getBean(MyRepository.class);
+Map<String, String> map = applicationContext.getBean(Map.class);
+String string = applicationContext.getBean(String.class);
 
 // get named beans
-final Map<String, String> map = applicationContext.getBean("java.util.Map");
-final HashMap<String, String> myOtherap = applicationContext.getBean("myOtherap");
-final String string = applicationContext.getBean("java.lan.String");
-final String oneMoreString = applicationContext.getBean("oneMoreString");
+Map<String, String> map = applicationContext.getBean("java.util.Map", Map.class);
+HashMap<String, String> myOtherMap = applicationContext.getBean("myOtherMap", HashMap.class);
+
+// get named beans (unchecked)
+Map<String, String> map = applicationContext.getBean("java.util.Map");
+HashMap<String, String> myOtherMap = applicationContext.getBean("myOtherMap");
+String string = applicationContext.getBean("java.lan.String");
+String oneMoreString = applicationContext.getBean("oneMoreString");
 ----
 
 == why?
 
-. no more magic!
-. no more xml!
-. no more weight dependencies!
-. no more evil field injections!
-. no more abstract modules!
-. no more plugins configurations!
-. no more annotation processing configurations!
-. no more custom annotations clones! use standards, use JSR-330!
-. no more specific build configurations! single dependency only!
+* no more magic!
+* no more xml!
+* no more weight dependencies!
+* no more evil field injections!
+* no more abstract modules!
+* no more plugins configurations!
+* no more annotation processing configurations!
+* no more custom annotations clones! use standards, use JSR-330!
+* no more specific build configurations! single dependency only!
 
 === it's really simple
 
-. JSR-330: supports only @Inject
-. all class-based registration creates singletons
-. supports custom named beans registration
+* JSR-330: supports only @Inject
+* all class-based registration creates singletons
+* supports custom named beans registration
 
 It's simple. Simple means fast, less bugs, more fun. It's doing one thing and doing it well
 link:https://github.com/daggerok/daggerok-context/issues[...unless you found a bug :)]
@@ -313,10 +338,10 @@ dependencies {
 ----
 
 == TODO
-. short public API description with examples or documentation
-. publish to
-  .. jcenter (requested)
-  .. mavenCentral (TODO)
+* short public API description with examples or documentation
+* publish to
+** jcenter (requested)
+** mavenCentral (TODO)
 
 == contribution
 Feel free extend and contribute to add more functionality like Named Qualifier.
@@ -324,8 +349,7 @@ Personally I'd like to keep it simple as possible.
 On really big projects therese days you probably would like to use something like
 Guice, Dagger, CDI from JavaEE or Spring from spring-boot, or maybe even PicoContainer, who knows :))
 
-. link:./BINTRAY.adoc[read about bintray]
-. link:./JITPACK.adoc[read about JitPack]
-. link:./VERSIONS.adoc[versions]
-. link:./MIGRATION.adoc[java versions features]
+* link:./VERSIONS.adoc[versions]
+* link:./BINTRAY.adoc[bintray]
+* link:./JITPACK.adoc[JitPack]
 //end::content[]

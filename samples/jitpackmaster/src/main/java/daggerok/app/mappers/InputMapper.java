@@ -1,6 +1,6 @@
-package daggerok.app.mappers;
+package daggerok.apps.app.mappers;
 
-import daggerok.app.validators.InputValidator;
+import daggerok.apps.app.validators.InputValidator;
 
 import javax.inject.Inject;
 

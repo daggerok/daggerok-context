@@ -3,13 +3,46 @@ package daggerok;
 import daggerok.context.DaggerokContext;
 import org.junit.Test;
 
-import java.util.HashMap;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import static java.util.Collections.singletonMap;
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 public class DaggerokContextTest {
+
+  @Test
+  public void get_named_bean_safe_test() {
+
+
+    final DaggerokContext applicationContext = DaggerokContext.create(Set.class)
+                                                              .failOnInjectNullRef(true)
+                                                              .register(Set.class,
+                                                                        new HashSet<Integer>(Arrays.asList(2, 3, 4)))
+                                                              .initialize();
+
+    final Set hashSet = applicationContext.getBean("java.util.Set", Set.class);
+
+    assertEquals(3, hashSet.size());
+    assertFalse(hashSet.contains(0));
+    assertFalse(hashSet.contains(1));
+    assertTrue(hashSet.contains(2));
+    assertTrue(hashSet.contains(3));
+  }
+
+  @Test
+  public void hello_world_test() {
+
+
+    final DaggerokContext applicationContext = DaggerokContext.create("java.lang")
+                                                              .failOnInjectNullRef(true)
+                                                              .register(String.class, "Hello, World!")
+                                                              .initialize();
+
+    assertEquals("Hello, World!", applicationContext.getBean(String.class));
+  }
 
   @Test
   public void manual_and_custom_bean_registration_test() {

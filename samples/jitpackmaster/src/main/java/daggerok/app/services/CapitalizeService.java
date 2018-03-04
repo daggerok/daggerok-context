@@ -1,6 +1,6 @@
-package daggerok.app.services;
+package daggerok.apps.app.services;
 
-import daggerok.app.mappers.InputMapper;
+import daggerok.apps.app.mappers.InputMapper;
 
 import javax.inject.Inject;
 

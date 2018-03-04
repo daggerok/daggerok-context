@@ -1,4 +1,4 @@
-package daggerok.app.validators;
+package daggerok.apps.app.validators;
 
 import javax.inject.Singleton;
 

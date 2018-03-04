@@ -1,6 +1,6 @@
-package daggerok.app;
+package daggerok.apps.app;
 
-import daggerok.app.services.HelloService;
+import daggerok.apps.app.services.HelloService;
 
 import javax.inject.Inject;
 

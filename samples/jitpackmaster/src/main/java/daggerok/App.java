@@ -1,6 +1,6 @@
 package daggerok;
 
-import daggerok.app.Main;
+import daggerok.apps.app.Main;
 import daggerok.context.DaggerokContext;
 
 public class App {

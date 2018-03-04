@@ -1,4 +1,4 @@
-package daggerok.app.services;
+package daggerok.apps.app.services;
 
 import javax.inject.Inject;
 

@@ -12,7 +12,7 @@ repositories {
 }
 
 dependencies {
-  compile "com.github.daggerok:daggerok-context:0.0.1"
+  compile "com.github.daggerok:daggerok-context:1.0.0"
 }
 ----
 
@@ -31,7 +31,7 @@ dependencies {
   <dependency>
     <groupId>com.github.daggerok</groupId>
     <artifactId>daggerok-context</artifactId>
-    <version>0.0.1</version>
+    <version>1.0.0</version>
   </dependency>
 </dependencies>
 ----
@@ -45,7 +45,7 @@ repositories {
 }
 
 dependencies {
-  compile "com.github.daggerok:daggerok-context:0.0.1"
+  compile "com.github.daggerok:daggerok-context:1.0.0"
 }
 ----
 
@@ -64,7 +64,7 @@ dependencies {
   <dependency>
     <groupId>com.github.daggerok</groupId>
     <artifactId>daggerok-context</artifactId>
-    <version>0.0.1</version>
+    <version>1.0.0</version>
   </dependency>
 </dependencies>
 ----
@@ -114,9 +114,8 @@ dependencies {
 ----
 
 == publish (upload) to bintray
-1. register on bintray.com
-
-2. update gradle.properties
+* register on bintray.com
+* update gradle.properties
 ----
 cp -Rf gradle.properties-default gradle.properties
 vi gradle.properties
@@ -124,15 +123,14 @@ vi gradle.properties
 bintrayUser=<change me: your bintray user>
 bintrayApiKey=<change me: your bintray api key>
 ----
-
-3. publish to bintray
+* publish to bintray
 ----
 ./gradlew -iS clean bintrayUpload
 ----
 
 links:
 
-. link:https://github.com/bintray/gradle-bintray-plugin
-. link:https://bintray.com/docs/usermanual/formats/formats_mavenrepositories.html#_working_with_gradle
-. link:https://bintray.com/docs/usermanual/formats/formats_mavenrepositories.html#_working_with_maven
+* link:https://github.com/bintray/gradle-bintray-plugin
+* link:https://bintray.com/docs/usermanual/formats/formats_mavenrepositories.html#_working_with_gradle
+* link:https://bintray.com/docs/usermanual/formats/formats_mavenrepositories.html#_working_with_maven
 //end::content[]

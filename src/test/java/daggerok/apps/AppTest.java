@@ -1,6 +1,6 @@
-package daggerok;
+package daggerok.apps;
 
-import daggerok.app.MyService;
+import daggerok.apps.app.MyService;
 import daggerok.context.DaggerokContext;
 import org.junit.Test;
 

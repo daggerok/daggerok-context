@@ -1,4 +1,4 @@
-package daggerok.app.bad;
+package daggerok.apps.app.bad;
 
 import javax.inject.Inject;
 import java.util.Arrays;

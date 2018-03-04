@@ -1,7 +1,6 @@
 buildscript {
   ext {
     javaVersion = "1.5"
-    vavrVersion = "0.9.2"
     reflectionsVersion = "0.9.11"
     logbackVersion = "1.2.3"
     slf4jVersion = "1.7.25"
@@ -24,7 +23,7 @@ plugins {
 description = "Daggerok Context - Java dependency injection library."
 group = "com.github.daggerok"
 //group = "daggerok"
-version = "1.0.0"
+version = "1.0.1"
 
 defaultTasks "clean", "build", "install", "publishToMavenLocal", "publish"
 

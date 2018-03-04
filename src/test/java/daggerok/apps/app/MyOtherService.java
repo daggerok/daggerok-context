@@ -1,6 +1,6 @@
-package daggerok.app;
+package daggerok.apps.app;
 
-import daggerok.app.data.MyRepository;
+import daggerok.apps.app.data.MyRepository;
 
 import javax.inject.Inject;
 

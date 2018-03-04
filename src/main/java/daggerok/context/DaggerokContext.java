@@ -48,6 +48,7 @@ import static java.lang.String.format;
  *
  * Get bean from context - could be used before initialize() if bean was previously manually added:
  * {@link DaggerokContext#getBean(Class)}
+ * {@link DaggerokContext#getBean(String, Class)}
  * {@link DaggerokContext#getBean(String)}
  */
 public class DaggerokContext extends TreeMap<Integer, HashSet<Constructor>> {
@@ -146,7 +147,7 @@ public class DaggerokContext extends TreeMap<Integer, HashSet<Constructor>> {
   }
 
   /**
-   * Step 3: Optionally configure injector annotation. Default: {@link Inject}
+   * Step 2: Optionally configure injector annotation. Default: {@link Inject}
    * <p>
    * Must be performed before applicationContext.initialize()
    *
@@ -169,7 +170,7 @@ public class DaggerokContext extends TreeMap<Integer, HashSet<Constructor>> {
   }
 
   /**
-   * Step 3: Optionally configure if application context bootstrap must fail on any null injection.
+   * Step 2: Optionally configure if application context bootstrap must fail on any null injection.
    * <p>
    * Must be performed before applicationContext.initialize(),
    * Can be useful for debug.
@@ -183,7 +184,7 @@ public class DaggerokContext extends TreeMap<Integer, HashSet<Constructor>> {
   }
 
   /**
-   * Step 3: Optionally configure if application context bootstrap must fail on bean creation new instance errors.
+   * Step 2: Optionally configure if application context bootstrap must fail on bean creation new instance errors.
    * Default: false.
    * <p>
    * Must be performed before applicationContext.initialize(),
@@ -199,7 +200,7 @@ public class DaggerokContext extends TreeMap<Integer, HashSet<Constructor>> {
   }
 
   /**
-   * Step 3: Optionally configure if application context bootstrap must fail on unknown possible exceptions catches.
+   * Step 2: Optionally configure if application context bootstrap must fail on unknown possible exceptions catches.
    * Default: false.
    * <p>
    * Must be performed before applicationContext.initialize(),
@@ -216,7 +217,7 @@ public class DaggerokContext extends TreeMap<Integer, HashSet<Constructor>> {
   /* manual context registration */
 
   /**
-   * Step 4: Optionally in addition manually register bean by it's class.
+   * Step 3: Optionally in addition manually register bean by it's class.
    * <p>
    *
    * <pre><code>
@@ -242,7 +243,7 @@ public class DaggerokContext extends TreeMap<Integer, HashSet<Constructor>> {
   }
 
   /**
-   * Step 4: Optionally in addition manually register bean by it's full (FQDN) class name.
+   * Step 3: Optionally in addition manually register bean by it's full (FQDN) class name.
    * <p>
    *
    * <pre><code>
@@ -276,7 +277,7 @@ public class DaggerokContext extends TreeMap<Integer, HashSet<Constructor>> {
   /* context initialization */
 
   /**
-   * Step 5: Context initialization.
+   * Step 4: Context initialization.
    * <p>
    * Scanning for components and registering beans for application context will be returned.
    *
@@ -289,7 +290,7 @@ public class DaggerokContext extends TreeMap<Integer, HashSet<Constructor>> {
   /* context usage */
 
   /**
-   * Step 6: Gets bean instance by it's class type.
+   * Step 5: Gets bean instance by it's class type.
    * <p>
    * Can be used before applicationContext.initialize() only if bean you are looking for previously was manually added.
    *
@@ -312,7 +313,29 @@ public class DaggerokContext extends TreeMap<Integer, HashSet<Constructor>> {
   }
 
   /**
-   * Step 6: Gets bean instance by it's class type.
+   * Step 5: Gets named bean instance by it's type.
+   * <p>
+   * Can be used before applicationContext.initialize() only if bean you are looking for previously was manually added.
+   *
+   * <pre><code>
+   *
+   *   final MyBean myBean = applicationContext.getBean(MyBean.class);
+   *
+   * </code></pre>
+   *
+   * @param name full (FQDN) class name. Can be any registered bean:
+   *             - manually (explicitly);
+   *             - automatically (implicitly) by scanning @{@link Singleton}s with default
+   *             or public no-arg constructor in basePackages;
+   * @return bean from context if registered otherwise null.
+   */
+  public <T> T getBean(final String name, final Class<T> type) {
+    requireNonNull(name, "bean name");
+    return type.cast(beans.get(name));
+  }
+
+  /**
+   * Step 5: Gets named bean instance (unsafe ).
    * <p>
    * Can be used before applicationContext.initialize() only if bean you are looking for previously was manually added.
    *
