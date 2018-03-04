@@ -8,7 +8,7 @@
 ----
 buildscript {
   ext {
-    daggerokContextVersion = "master-SNAPSHOT"
+    daggerokContextVersion = "1.0.0"
   }
 }
 
@@ -29,7 +29,7 @@ dependencies {
 [source,xml]
 ----
   <properties>
-    <daggerok-context.version>master-SNAPSHOT</daggerok-context.version>
+    <daggerok-context.version>1.0.0</daggerok-context.version>
   </properties>
 
   <!-- JitPack 1: -->

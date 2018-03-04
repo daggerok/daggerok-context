@@ -1,13 +1,6 @@
-= migration
+= migration java
 
 //tag::content[]
-JDK 1.4 features
-
-. assert operator `java -ea AssertPractice`
-. regular expressions `Pattern.compile(matchObj).matcher(origObj).group()/start()/end()`
-. splitting `"a String".split(" ");`
-. exception chaining / wrapping
-
 JDK 1.5 features
 
 . autoboxing / autounboxing
@@ -21,6 +14,13 @@ JDK 1.5 features
 . Scanner `new Scanner("10 5 3 1") .nextInt()/.hasNextInt()`
 . collections (generics) `new ArrayList<Integer>(); new PriorityQueue<Double>()`
 . high-performance immutable StringBuilder (replacement of mutable StringBuffer)
+
+JDK 1.4 features
+
+. assert operator `java -ea AssertPractice`
+. regular expressions `Pattern.compile(matchObj).matcher(origObj).group()/start()/end()`
+. splitting `"a String".split(" ");`
+. exception chaining / wrapping
 
 links:
 

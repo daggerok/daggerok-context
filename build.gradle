@@ -24,7 +24,7 @@ plugins {
 description = "Daggerok Context - Java dependency injection library."
 group = "com.github.daggerok"
 //group = "daggerok"
-version = "0.0.1"
+version = "1.0.0"
 
 defaultTasks "clean", "build", "install", "publishToMavenLocal", "publish"
 
