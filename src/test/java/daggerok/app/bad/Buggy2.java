@@ -7,5 +7,5 @@ import javax.inject.Singleton;
 public class Buggy2 {
 
   @Inject
-  public Buggy2(final String ololo) {}
+  public Buggy2(final String ololo) { }
 }

@@ -20,7 +20,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import static java.lang.String.format;
 
 /**
- * Hight overview of DaggerokContext public API:
+ * High overview of DaggerokContext public API:
  * <p>
  *
  * Entry point: create uninitialized context using:
@@ -237,9 +237,7 @@ public class DaggerokContext extends TreeMap<Integer, HashSet<Constructor>> {
 
     requireNonNull(beanType, "bean type");
 
-    final String typeName = beanType.getName();
-
-    register(typeName, instance);
+    register(beanType.getName(), instance);
     return this;
   }
 
@@ -630,7 +628,6 @@ public class DaggerokContext extends TreeMap<Integer, HashSet<Constructor>> {
                                 final AtomicInteger counter) {
 
     final HashSet<Constructor> updated = new HashSet<Constructor>(constructors);
-
     updated.remove(constructor);
     entry.setValue(updated);
     counter.decrementAndGet();
@@ -717,7 +714,6 @@ public class DaggerokContext extends TreeMap<Integer, HashSet<Constructor>> {
       if (!failOnBeanCreationError) return null;
 
       final CreateNewInstanceException error = new CreateNewInstanceException(type, e.getLocalizedMessage());
-
       log.error("Bean instance '{}' creation with parameters '{}' failed.", type.getName(), parameters, error);
       throw error;
     }
@@ -810,7 +806,6 @@ public class DaggerokContext extends TreeMap<Integer, HashSet<Constructor>> {
     if (null != o) return;
 
     final NullPointerException exception = new NullPointerException(format("%s may not be null.", variableName));
-
     log.error(exception.getLocalizedMessage(), exception);
     throw exception;
   }
@@ -830,6 +825,7 @@ public class DaggerokContext extends TreeMap<Integer, HashSet<Constructor>> {
 
     for (final String packageName : basePackages) {
       if (null == packageName) continue;
+      //// allow empty package
       //if ("".equals(packageName.trim())) continue;
       result.add(packageName);
     }
@@ -837,7 +833,6 @@ public class DaggerokContext extends TreeMap<Integer, HashSet<Constructor>> {
     if (result.size() > 0) return;
 
     final IllegalStateException exception = new IllegalStateException(messages);
-
     log.error(exception.getLocalizedMessage(), exception);
     throw exception;
   }

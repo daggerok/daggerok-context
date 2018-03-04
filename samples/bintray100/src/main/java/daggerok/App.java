@@ -1,0 +1,17 @@
+package daggerok;
+
+import daggerok.app.Main;
+import daggerok.context.DaggerokContext;
+
+public class App {
+  public static void main(String[] args) {
+
+    final String name = args.length > 0 ? args[0] : "maksimko!";
+
+    final DaggerokContext applicationContext = DaggerokContext.create(App.class.getPackage())
+                                                              .initialize();
+    final Main main = applicationContext.getBean(Main.class);
+
+    main.sayHello(name);
+  }
+}

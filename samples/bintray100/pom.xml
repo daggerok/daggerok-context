@@ -16,14 +16,22 @@
     <daggerok-context.version>0.0.1</daggerok-context.version>
   </properties>
 
+  <!-- bintray 1: -->
   <repositories>
+    <!--
     <repository>
-      <id>bintray-daggerok-daggerok</id>
+      <id>daggerok</id>
       <url>https://dl.bintray.com/daggerok/daggerok</url>
+    </repository>
+    -->
+    <repository>
+      <id>jcenter</id>
+      <url>https://jcenter.bintray.com</url>
     </repository>
   </repositories>
 
   <dependencies>
+    <!-- bintray 2: -->
     <dependency>
       <groupId>com.github.daggerok</groupId>
       <artifactId>daggerok-context</artifactId>

@@ -1,14 +1,331 @@
-= daggerok-context (java 1.5) image:https://travis-ci.org/daggerok/daggerok-context.svg?branch=master["Build Status", link="https://travis-ci.org/daggerok/daggerok-context"] image:https://jitpack.io/v/daggerok/daggerok-context.svg["JitPack", link="https://jitpack.io/#daggerok/daggerok-context"] image:https://api.bintray.com/packages/daggerok/daggerok/daggerok-context/images/download.svg[link="https://bintray.com/daggerok/daggerok/daggerok-context/_latestVersion"]
+= daggerok-context java 1.5+
 
 //tag::content[]
+image:https://travis-ci.org/daggerok/daggerok-context.svg?branch=master["Build Status", link="https://travis-ci.org/daggerok/daggerok-context"]
+image:https://jitpack.io/v/daggerok/daggerok-context.svg["JitPack", link="https://jitpack.io/#daggerok/daggerok-context"]
+image:https://api.bintray.com/packages/daggerok/daggerok/daggerok-context/images/download.svg[link="https://bintray.com/daggerok/daggerok/daggerok-context/_latestVersion"]
 
+== description
 Simplest lightly dependency injection library for java ever!
-Supported minimal java version: 1.5
+Processing @Inject and optionally @Singleton annotations from JSR-330
+Minimal supported java version: 1.5
 
-TODO: use cases, tests, documentation, usage samples, contribute, jitpack build, etc...
+image:https://www.bintray.com/docs/images/bintray_badge_color.png["daggerok-context", link="https://bintray.com/daggerok/daggerok/daggerok-context?source=watch"]
 
-link:
+.build.gradle
+[source,gradle]
+----
+repositories {
+  jcenter()
+}
+
+dependencies {
+  compile "com.github.daggerok:daggerok-context:1.0.0"
+}
+----
+
+.pom.xml
+[source,xml]
+----
+<repositories>
+  <repository>
+    <id>jcentral</id>
+    <url>https://jcenter.bintray.com</url>
+  </repository>
+</repositories>
+
+<dependencies>
+  <dependency>
+    <groupId>com.github.daggerok</groupId>
+    <artifactId>daggerok-context</artifactId>
+    <version>1.0.0</version>
+  </dependency>
+</dependencies>
+----
+
+== usage
+.MyRepostory.java - let's say we have repository component (annotation @Singleton is optional)
+[source,java]
+----
+@Singleton
+public class MyRepository {
+  public void repositoryMethod() { }
+}
+----
+
+.MyService.java - we also have service with MyRepository component injector. Annotation @Inject is required. Class can have only one constructor with all injectors
+[source,java]
+----
+public class MyService {
+
+  private final MyRepository myRepository;
+
+  @Inject
+  public MyService(final MyRepository myRepository) {
+    this.myRepository = myRepository;
+  }
+
+  public void serviceMethod() {
+    myRepository.repositoryMethod();
+  }
+}
+----
+
+.MyClient.java - lastly we are using client with MyService injectior
+[source,java]
+----
+public class MyClient {
+
+  private final MyService myService;
+
+  @Inject
+  public MyClient(final MyService myService) {
+    this.myService = myService;
+  }
+
+  public void clientMethod() {
+    myService.serviceMethod()
+  }
+}
+----
+
+.MyApp.class - and finally application
+[source,java]
+----
+public class MyApp {
+
+  public static void main(String[] args) {
+
+    final DaggerokContext applicationContext = DaggerokContext.create(MyApp.class)
+                                                              .initialize();
+    /*
+      initialize() method will do:
+
+      1. scan everithyng in base package of MyApp
+      1. create MyRepository instance in applicationContext
+      2. inject MyRepository and create MyService instance in applicationContext
+      3. inject MyService and create MyClient instance in applicationContext
+    */
+
+    final MyClient myClient = applicationContext.getBean(MyClient.class);
+
+    myClient.clientMethod();
+  }
+}
+----
+
+== public API overview
+=== Entry point: create uninitialized context using:
+. `DaggerokContext#create(Class...)`
+. `DaggerokContext#create(Package...)`
+. `DaggerokContext#create(String...)`
+
+.many ways create context
+[source,java]
+----
+// by base class:
+DaggerokContext.create(MyApp.class);
+
+// by base packages:
+DaggerokContext.create(MyApp.class.getPackage(), Package.getPackages());
+
+// create context by packages:
+DaggerokContext.create("my.app", "my.other.app");
+
+// we are not recommend create context from empty package, but it's possible :)
+DaggerokContext.create("");
+
+// we also do not recommend create context for all packages in classpath, and yes, it's possible too :)
+DaggerokContext.create(Package.getPackages());
+----
+
+=== User configurations:
+. `DaggerokContext#withComponents(Annotation)`
+. `DaggerokContext#withInjectors(Annotation)`
+. `DaggerokContext#failOnInjectNullRef(boolean)`
+. `DaggerokContext#failOnBeanCreationError(boolean)`
+. `DaggerokContext#failOnUnknownReflectionsErrors(boolean)`
+
+.set custom component annotation
+[source,java]
+----
+DaggerokContext.create(MyApp.class)
+               .withComponents(Singleton.class);
+----
+
+.set custom injector annotation
+[source,java]
+----
+DaggerokContext.create(MyApp.class)
+               .withInjectors(Inject.class);
+----
+
+.fail on inject null bean
+[source,java]
+----
+DaggerokContext.create(MyApp.class)
+               .failOnInjectNullRef(false);
+----
+
+.fail on bean creation error Class.newInstance()
+[source,java]
+----
+DaggerokContext.create(MyApp.class)
+               .failOnBeanCreationError(false);
+----
+
+.fail on unknown Reflections library errors
+[source,java]
+----
+DaggerokContext.create(MyApp.class)
+               .failOnUnknownReflectionsErrors(false);
+----
+
+=== Manual beans registration:
+. `DaggerokContext#register(String, Object)`
+. `DaggerokContext#register(Class, Object)`
+
+.manually bean register
+[source,java]
+----
+// by class:
+applicationContext.register(MyRepostory.class, new MyRepository())
+                  .register("java.util.Map", singletonMap("hello", "world"))
+                  .register(String.class, "Hello, World!");
+
+// by name:
+applicationContext.register("my.app.MyBean", new MyBean("custom bean initialization..."))
+                  .register("java.lang.String", "Hey, y0!");
+----
+
+=== Search, create and inject everything we can:
+. `DaggerokContext#initialize()`
+
+.build application context
+[source,java]
+----
+DaggerokContext.create(...)
+               .initialize();
+----
+
+=== Get bean from context - could be used before initialize() if bean was previously manually added:
+. `DaggerokContext#getBean(Class)`
+. `DaggerokContext#getBean(String)`
+
+.build application context
+[source,java]
+----
+// get bean by class
+final MyRepository myRepository = applicationContext.getBean(MyRepository.class);
+final Map<String, String> map = applicationContext.getBean(Map.class);
+final String string = applicationContext.getBean(String.class);
+
+// get named beans
+final Map<String, String> map = applicationContext.getBean("java.util.Map");
+final HashMap<String, String> myOtherap = applicationContext.getBean("myOtherap");
+final String string = applicationContext.getBean("java.lan.String");
+final String oneMoreString = applicationContext.getBean("oneMoreString");
+----
+
+== why?
+
+. no more magic!
+. no more xml!
+. no more weight dependencies!
+. no more evil field injections!
+. no more abstract modules!
+. no more plugins configurations!
+. no more annotation processing configurations!
+. no more custom annotations clones! use standards, use JSR-330!
+. no more specific build configurations! single dependency only!
+
+=== it's really simple
+
+. JSR-330: supports only @Inject
+. all class-based registration creates singletons
+. supports custom named beans registration
+
+It's simple. Simple means fast, less bugs, more fun. It's doing one thing and doing it well
+link:https://github.com/daggerok/daggerok-context/issues[...unless you found a bug :)]
+
+== other installation variants
+=== gradle bintray.daggerok
+.gradle setup (build.gradle)
+[source,gradle]
+----
+repositories {
+  maven { url "https://dl.bintray.com/daggerok/daggerok" }
+}
+
+dependencies {
+  compile "com.github.daggerok:daggerok-context:0.0.1"
+}
+----
+=== gradle jitpack
+.gradle setup (build.gradle)
+[source,gradle]
+----
+repositories {
+  maven { url "https://jitpack.io" }
+}
+
+dependencies {
+  compile "com.github.daggerok:daggerok-context:0.0.1"
+}
+----
+=== maven bintray/daggerok
+.maven setup (pom.xml)
+[source,xml]
+----
+<repositories>
+  <repository>
+    <id>bintray-daggerok-daggerok</id>
+    <url>https://dl.bintray.com/daggerok/daggerok</url>
+  </repository>
+</repositories>
+
+<dependencies>
+  <dependency>
+    <groupId>com.github.daggerok</groupId>
+    <artifactId>daggerok-context</artifactId>
+    <version>0.0.1</version>
+  </dependency>
+</dependencies>
+----
+=== maven jitpack
+.maven setup (pom.xml)
+[source,xml]
+----
+<repositories>
+  <repository>
+    <id>jitpack.io</id>
+    <url>https://jitpack.io</url>
+  </repository>
+</repositories>
+
+<dependencies>
+  <dependency>
+    <groupId>com.github.daggerok</groupId>
+    <artifactId>daggerok-context</artifactId>
+    <version>0.0.1</version>
+  </dependency>
+</dependencies>
+----
+
+== TODO
+. short public API description with examples or documentation
+. publish to
+  .. jcenter (requested)
+  .. mavenCentral (TODO)
+
+== contribution
+Feel free extend and contribute to add more functionality like Named Qualifier.
+Personally I'd like to keep it simple as possible.
+On really big projects therese days you probably would like to use something like
+Guice, Dagger, CDI from JavaEE or Spring from spring-boot, or maybe even PicoContainer, who knows :))
 
 . link:./BINTRAY.adoc[read about bintray]
 . link:./JITPACK.adoc[read about JitPack]
+. link:./VERSIONS.adoc[versions]
+. link:./MIGRATION.adoc[java versions features]
 //end::content[]

@@ -1,9 +1,122 @@
 = bintray
 
 //tag::content[]
+== resolve dependencies
+
+=== gradle bintray/jcenter installation
+.gradle setup (build.gradle)
+[source,gradle]
+----
+repositories {
+  jcenter() // maven { url "https://jcenter.bintray.com" }
+}
+
+dependencies {
+  compile "com.github.daggerok:daggerok-context:0.0.1"
+}
+----
+
+=== maven bintray/jcenter installation
+.or shorter, just pom.xml
+[source,xml]
+----
+<repositories>
+  <repository>
+    <id>bintray-central</id>
+    <url>https://jcenter.bintray.com</url>
+  </repository>
+</repositories>
+
+<dependencies>
+  <dependency>
+    <groupId>com.github.daggerok</groupId>
+    <artifactId>daggerok-context</artifactId>
+    <version>0.0.1</version>
+  </dependency>
+</dependencies>
+----
+
+=== gradle bintray/daggerok installation
+.gradle setup (build.gradle)
+[source,gradle]
+----
+repositories {
+  maven { url "https://dl.bintray.com/daggerok/daggerok" }
+}
+
+dependencies {
+  compile "com.github.daggerok:daggerok-context:0.0.1"
+}
+----
+
+=== maven bintray/daggerok installation
+.or shorter, just pom.xml
+[source,xml]
+----
+<repositories>
+  <repository>
+    <id>bintray-daggerok</id>
+    <url>https://dl.bintray.com/daggerok/daggerok</url>
+  </repository>
+</repositories>
+
+<dependencies>
+  <dependency>
+    <groupId>com.github.daggerok</groupId>
+    <artifactId>daggerok-context</artifactId>
+    <version>0.0.1</version>
+  </dependency>
+</dependencies>
+----
+
+=== or longer...
+.maven setup (settings.xml)
+[source,xml]
+----
+<profiles>
+  <profile>
+    <repositories>
+      <repository>
+        <snapshots>
+          <enabled>false</enabled>
+        </snapshots>
+        <id>bintray-daggerok-daggerok</id>
+        <name>bintray</name>
+        <url>https://dl.bintray.com/daggerok/daggerok</url>
+      </repository>
+    </repositories>
+    <pluginRepositories>
+      <pluginRepository>
+        <snapshots>
+          <enabled>false</enabled>
+        </snapshots>
+        <id>bintray-daggerok-daggerok</id>
+        <name>bintray-plugins</name>
+        <url>https://dl.bintray.com/daggerok/daggerok</url>
+      </pluginRepository>
+    </pluginRepositories>
+    <id>bintray</id>
+  </profile>
+</profiles>
+<activeProfiles>
+  <activeProfile>bintray</activeProfile>
+</activeProfiles>
+----
+
+.maven setup (pom.xml)
+[source,xml]
+----
+<dependency>
+  <groupId>com.github.daggerok</groupId>
+  <artifactId>daggerok-context</artifactId>
+  <version>1.0.0</version>
+</dependency>
+----
+
+== publish (upload) to bintray
 1. register on bintray.com
 
-.2. update gradle.properties
+2. update gradle.properties
 ----
 cp -Rf gradle.properties-default gradle.properties
 vi gradle.properties
@@ -12,7 +125,7 @@ bintrayUser=<change me: your bintray user>
 bintrayApiKey=<change me: your bintray api key>
 ----
 
-.3. publish to bintray
+3. publish to bintray
 ----
 ./gradlew -iS clean bintrayUpload
 ----

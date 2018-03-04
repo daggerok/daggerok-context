@@ -2,37 +2,37 @@ env:
   global:
   - TERM=dumb
 language: java
-jdk:
-- oraclejdk8
-- openjdk8
 install: true
 script:
 - bash mvnw
 - bash gradlew
-
 - export root=$(pwd)
-
 # master-SNAPSHOT
 - export sample=jitpackmaster
 - cd $root/samples/$sample
-- bash gradlew #--refresh-dependencies
+- bash mvnw -U
+- java -jar ./target/*-all.jar
+- java -jar ./target/*-all.jar trololo
+- java -jar ./target/*-all.jar $sample
+- bash gradlew --refresh-dependencies
 - bash build/install/$sample/bin/$sample
 - bash ./build/install/$sample/bin/$sample trololo
-
-# bintray 0.0.1; JitPack 0.0.1
+# bintray 0.0.1, JitPack 0.0.1, bintray 1.0.0
 - >
   for sample in \
-    bintray001 \
+    bintray100 \
     jitpack001 \
+    bintray001 \
   ; do
-    export sample=bintray001
     cd $root/samples/$sample
-    bash gradlew #--refresh-dependencies
-    bash build/install/$sample/bin/$sample
+
+    bash mvnw -U
+    java -jar ./target/*-all.jar
+    java -jar ./target/*-all.jar trololo
+    java -jar ./target/*-all.jar $sample
+
+    bash gradlew --refresh-dependencies
+    bash ./build/install/$sample/bin/$sample
     bash ./build/install/$sample/bin/$sample trololo
     bash ./build/install/$sample/bin/$sample $sample
   done
-cache:
-  directories:
-  - $HOME/.m2
-  - $HOME/.gradle

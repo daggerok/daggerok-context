@@ -1,7 +1,6 @@
 buildscript {
   ext {
     javaVersion = "1.8"
-    daggerokContextVersion = "1.0.0"
   }
 }
 
@@ -39,14 +38,13 @@ defaultTasks "clean", "build", "installDist", "distZip", "publish"
 repositories {
   mavenLocal()
   mavenCentral()
-
   // bintray 1:
-  maven { url "https://dl.bintray.com/daggerok/daggerok" }
+  jcenter()
 }
 
 dependencies {
   // bintray 2:
-  compile "com.github.daggerok:daggerok-context:$daggerokContextVersion"
+  compile "com.github.daggerok:daggerok-context:0.0.1"
 }
 
 task wrapper(type: Wrapper) {

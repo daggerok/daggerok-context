@@ -6,5 +6,5 @@ import java.util.Arrays;
 public class Buggy5 {
 
   @Inject
-  public Buggy5(final Arrays ololo) {}
+  public Buggy5(final Arrays ololo) { }
 }
