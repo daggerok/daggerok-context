@@ -20,7 +20,7 @@ repositories {
 }
 
 dependencies {
-  compile "com.github.daggerok:daggerok-context:1.0.0"
+  compile "com.github.daggerok:daggerok-context:1.0.1"
 }
 ----
 
@@ -38,7 +38,7 @@ dependencies {
   <dependency>
     <groupId>com.github.daggerok</groupId>
     <artifactId>daggerok-context</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
   </dependency>
 </dependencies>
 ----
@@ -283,7 +283,7 @@ repositories {
 }
 
 dependencies {
-  compile "com.github.daggerok:daggerok-context:0.0.1"
+  compile "com.github.daggerok:daggerok-context:1.0.1"
 }
 ----
 === gradle jitpack
@@ -295,7 +295,7 @@ repositories {
 }
 
 dependencies {
-  compile "com.github.daggerok:daggerok-context:0.0.1"
+  compile "com.github.daggerok:daggerok-context:1.0.1"
 }
 ----
 === maven bintray/daggerok
@@ -313,7 +313,7 @@ dependencies {
   <dependency>
     <groupId>com.github.daggerok</groupId>
     <artifactId>daggerok-context</artifactId>
-    <version>0.0.1</version>
+    <version>1.0.1</version>
   </dependency>
 </dependencies>
 ----
@@ -332,7 +332,7 @@ dependencies {
   <dependency>
     <groupId>com.github.daggerok</groupId>
     <artifactId>daggerok-context</artifactId>
-    <version>0.0.1</version>
+    <version>1.0.1</version>
   </dependency>
 </dependencies>
 ----
