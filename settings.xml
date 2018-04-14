@@ -5,6 +5,13 @@
   <!-- NOTE: use gradle to publish daggerok-context -->
 
   <servers>
+    <!-- maven central -->
+    <server>
+      <id>ossrh</id>
+      <username>daggerok</username>
+      <password>**********</password>
+    </server>
+    <!-- bintray -->
     <server>
       <id>bintray-daggerok-daggerok</id>
       <username>daggerok</username>
@@ -24,6 +31,18 @@
   -->
 
   <profiles>
+    <!-- maven central -->
+    <profile>
+      <id>ossrh</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+      <properties>
+        <gpg.executable>gpg</gpg.executable>
+        <gpg.passphrase>**********</gpg.passphrase>
+      </properties>
+    </profile>
+    <!-- bintray -->
     <profile>
       <repositories>
         <repository>
@@ -51,4 +70,5 @@
   <activeProfiles>
     <activeProfile>bintray</activeProfile>
   </activeProfiles>
+
 </settings>

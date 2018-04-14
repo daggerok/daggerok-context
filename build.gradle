@@ -16,13 +16,14 @@ plugins {
   id "idea"
   id "java"
   id "maven"
+  id "signing"
   id "eclipse"
   id "com.jfrog.bintray" version "1.8.0"
 }
 
 description = "Daggerok Context - Java dependency injection library."
+archivesBaseName = "daggerok-context"
 group = "com.github.daggerok"
-//group = "daggerok"
 version = "1.0.1"
 
 defaultTasks "clean", "build", "install", "publishToMavenLocal", "publish"
@@ -61,6 +62,13 @@ dependencies {
 
 apply plugin: "maven-publish"
 
+task javadocJar(type: Jar) {
+  classifier = "javadoc"
+  from javadoc
+}
+
+javadoc.failOnError = false
+
 task classifierJar(type: Jar) {
   from sourceSets.main.output
 }
@@ -87,7 +95,7 @@ def pomConfig = {
   licenses {
     license {
       name "MIT License"
-      url "https://raw.githubusercontent.com/daggerok/daggerok-context/master/LICENSE"
+      url "http://www.opensource.org/licenses/mit-license.php"
       distribution "repo"
     }
   }
@@ -97,6 +105,7 @@ publishing {
   publications {
     publication(MavenPublication) {
       from components.java
+      artifact javadocJar { classifier = "javadoc" }
       artifact classifierJar { classifier = "1.5" }
       artifact sourceJar { classifier = "sources" }
       artifact classifierSourceJar { classifier = "1.5-sources" }
@@ -117,8 +126,8 @@ publishing {
 }
 
 bintray {
-  user = project.hasProperty('bintrayUser') ? project.property('bintrayUser') : System.getenv('BINTRAY_USER')
-  key = project.hasProperty('bintrayApiKey') ? project.property('bintrayApiKey') : System.getenv('BINTRAY_API_KEY')
+  user = project.hasProperty("bintrayUser") ? project.property("bintrayUser") : System.getenv("BINTRAY_USER")
+  key = project.hasProperty("bintrayApiKey") ? project.property("bintrayApiKey") : System.getenv("BINTRAY_API_KEY")
   publications = ["publication"]
   pkg {
     userOrg = user
@@ -154,3 +163,53 @@ clean.doFirst {
     delete "$projectDir/$it"
   }
 }
+
+/* maven central */
+/* // for some reasons pgp stuff are not working... try with maven
+artifacts {
+  archives javadocJar, classifierJar, sourceJar, classifierSourceJar
+}
+
+signing {
+  sign configurations.archives
+}
+
+uploadArchives {
+  repositories {
+    mavenDeployer {
+      beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+      repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
+        authentication(userName: ossrhUsername, password: ossrhPassword)
+      }
+      snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
+        authentication(userName: ossrhUsername, password: ossrhPassword)
+      }
+      pom.project {
+        name "$project.name"
+        packaging "jar"
+        // optionally artifactId can be defined here
+        description "$project.description"
+        url "https://github.com/daggerok/daggerok-context"
+        scm {
+          connection "scm:git:git://github.com/daggerok/daggerok-context.git"
+          developerConnection "scm:git:ssh://github.com:daggerok/daggerok-context.git"
+          url "https://github.com/daggerok/daggerok-context/tree/master"
+        }
+        licenses {
+          license {
+            name "MIT License"
+            url "http://www.opensource.org/licenses/mit-license.php"
+          }
+        }
+        developers {
+          developer {
+            id "daggerok"
+            name "Maksim Kostromin"
+            email "daggerok@gmail.com"
+          }
+        }
+      }
+    }
+  }
+}
+*/

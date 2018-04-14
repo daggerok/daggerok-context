@@ -1,3 +1,5 @@
 # https://bintray.com/profile/edit
 bintrayUser=<change me: your bintray user>
 bintrayApiKey=<change me: your bintray api key>
+ossrhUsername=<change me: your jira id>
+ossrhPassword=<change me: your jira password>
