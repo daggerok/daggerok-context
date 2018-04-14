@@ -339,9 +339,7 @@ dependencies {
 
 == TODO
 * short public API description with examples or documentation
-* publish to
-** jcenter (requested)
-** mavenCentral (TODO)
+* publish to mavenCentral
 
 == contribution
 Feel free extend and contribute to add more functionality like Named Qualifier.
