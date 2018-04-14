@@ -1,0 +1,10 @@
+= maven central
+
+TODO:
+
+export GPG_TTY=$(tty)
+bash ./mvnw clean deploy -Psonatype
+
+currently failing:
+gradle gpg
+maven-central javadoc

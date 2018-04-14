@@ -152,6 +152,7 @@
         <version>2.9.1</version>
         <configuration>
           <failOnError>false</failOnError>
+          <applyJavadocSecurityFix>true</applyJavadocSecurityFix>
         </configuration>
         <executions>
           <execution>
@@ -222,7 +223,7 @@
         </executions>
       </plugin>
 
-      <!-- fat jar -->
+      <!-- fat jar
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-assembly-plugin</artifactId>
@@ -254,6 +255,7 @@
           </execution>
         </executions>
       </plugin>
+      -->
     </plugins>
   </build>
 

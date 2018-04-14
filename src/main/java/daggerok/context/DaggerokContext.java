@@ -70,12 +70,8 @@ public class DaggerokContext extends TreeMap<Integer, HashSet<Constructor>> {
 
   /**
    * Step 1: Initialize application context by application classes.
-   * <p>
-   * <pre><code>
    *
    * final DaggerokContext applicationContext = DaggerokContext.create(App.class);
-   *
-   * </pre></code>
    *
    * @param baseClasses optional additional sources.
    * @return context initialization.
@@ -86,14 +82,10 @@ public class DaggerokContext extends TreeMap<Integer, HashSet<Constructor>> {
 
   /**
    * Step 1: Initialize application context by packages.
-   * <p>
-   * <pre><code>
    *
    * final DaggerokContext applicationContext = DaggerokContext.create(
    *   App1.class.getPackage(), App2.class.getPackage()
    * );
-   *
-   * </pre></code>
    *
    * @param basePackages base packages for annotation / beans scan. see Class.getPackage(),
    *                     usually it's package of application class with main method.
@@ -105,14 +97,10 @@ public class DaggerokContext extends TreeMap<Integer, HashSet<Constructor>> {
 
   /**
    * Step 1: Initialize application context by package names.
-   * <p>
-   * <pre><code>
    *
    * final DaggerokContext applicationContext = DaggerokContext.create(
    *   "my.app.package1", "my.app.package2", "my.app.package3"
    * );
-   *
-   * </pre></code>
    *
    * @param basePackages base packages for annotation / beans scan.
    * @return context initialization.
@@ -125,14 +113,10 @@ public class DaggerokContext extends TreeMap<Integer, HashSet<Constructor>> {
 
   /**
    * Step 2: Optionally configure component annotation. Default: {@link Singleton}
-   * <p>
+   *
    * Must be performed before applicationContext.initialize()
    *
-   * <pre><code>
-   *
    * applicationContext.withComponents(Singleton.class);
-   *
-   * </pre></code>
    *
    * @param componentAnnotation user specific components annotation.
    * @param <A> could be any annotation.
@@ -148,14 +132,10 @@ public class DaggerokContext extends TreeMap<Integer, HashSet<Constructor>> {
 
   /**
    * Step 2: Optionally configure injector annotation. Default: {@link Inject}
-   * <p>
+   *
    * Must be performed before applicationContext.initialize()
    *
-   * <pre><code>
-   *
    * applicationContext.withInjectors(Inject.class);
-   *
-   * </pre></code>
    *
    * @param injectAnnotation replacements for {@link Inject} annotation sor injections scan.
    * @param <A> could be any annotation.
@@ -171,7 +151,7 @@ public class DaggerokContext extends TreeMap<Integer, HashSet<Constructor>> {
 
   /**
    * Step 2: Optionally configure if application context bootstrap must fail on any null injection.
-   * <p>
+   *
    * Must be performed before applicationContext.initialize(),
    * Can be useful for debug.
    *
@@ -186,7 +166,7 @@ public class DaggerokContext extends TreeMap<Integer, HashSet<Constructor>> {
   /**
    * Step 2: Optionally configure if application context bootstrap must fail on bean creation new instance errors.
    * Default: false.
-   * <p>
+   *
    * Must be performed before applicationContext.initialize(),
    * We believe you don't need enable it, unless debug purposes.
    *
@@ -202,7 +182,7 @@ public class DaggerokContext extends TreeMap<Integer, HashSet<Constructor>> {
   /**
    * Step 2: Optionally configure if application context bootstrap must fail on unknown possible exceptions catches.
    * Default: false.
-   * <p>
+   *
    * Must be performed before applicationContext.initialize(),
    * Use it only if you know what you are doing and you believe you configured out everything.
    *
@@ -218,16 +198,11 @@ public class DaggerokContext extends TreeMap<Integer, HashSet<Constructor>> {
 
   /**
    * Step 3: Optionally in addition manually register bean by it's class.
-   * <p>
-   *
-   * <pre><code>
    *
    * final MyBean myBean = new Bean("bean initialization...");
    *
    * applicationContext.register(MyBean.class, myBean);
    * applicationContext.register(MyService.class, new MyService(myBean));
-   *
-   * </pre></code>
    *
    * @param beanType bean class.
    * @param instance bean instance.
@@ -244,9 +219,6 @@ public class DaggerokContext extends TreeMap<Integer, HashSet<Constructor>> {
 
   /**
    * Step 3: Optionally in addition manually register bean by it's full (FQDN) class name.
-   * <p>
-   *
-   * <pre><code>
    *
    * package my.app;
    * // ....
@@ -257,8 +229,6 @@ public class DaggerokContext extends TreeMap<Integer, HashSet<Constructor>> {
    * applicationContext.register("my.app.MyBean", myBean);
    * applicationContext.register(myOtherBean.getClass().getName(), myOtherBean);
    * applicationContext.register(MyService.class.getClass().getName(), new MyService(myOtherBean));
-   *
-   * </pre></code>
    *
    * @param beanName FQDN class name.
    * @param instance bean instance.
@@ -278,7 +248,7 @@ public class DaggerokContext extends TreeMap<Integer, HashSet<Constructor>> {
 
   /**
    * Step 4: Context initialization.
-   * <p>
+   *
    * Scanning for components and registering beans for application context will be returned.
    *
    * @return context configuration.
@@ -291,14 +261,10 @@ public class DaggerokContext extends TreeMap<Integer, HashSet<Constructor>> {
 
   /**
    * Step 5: Gets bean instance by it's class type.
-   * <p>
+   *
    * Can be used before applicationContext.initialize() only if bean you are looking for previously was manually added.
    *
-   * <pre><code>
-   *
    *   final MyBean myBean = applicationContext.getBean(MyBean.class);
-   *
-   * </code></pre>
    *
    * @param type bean class type.
    * @param <T>  can be any registered bean:
@@ -314,14 +280,10 @@ public class DaggerokContext extends TreeMap<Integer, HashSet<Constructor>> {
 
   /**
    * Step 5: Gets named bean instance by it's type.
-   * <p>
+   *
    * Can be used before applicationContext.initialize() only if bean you are looking for previously was manually added.
    *
-   * <pre><code>
-   *
    *   final MyBean myBean = applicationContext.getBean(MyBean.class);
-   *
-   * </code></pre>
    *
    * @param name full (FQDN) class name. Can be any registered bean:
    *             - manually (explicitly);
@@ -336,14 +298,10 @@ public class DaggerokContext extends TreeMap<Integer, HashSet<Constructor>> {
 
   /**
    * Step 5: Gets named bean instance (unsafe ).
-   * <p>
+   *
    * Can be used before applicationContext.initialize() only if bean you are looking for previously was manually added.
    *
-   * <pre><code>
-   *
    *   final MyBean myBean = applicationContext.getBean(MyBean.class);
-   *
-   * </code></pre>
    *
    * @param typeName full (FQDN) class name. Can be any registered bean:
    *                 - manually (explicitly);
@@ -467,8 +425,6 @@ public class DaggerokContext extends TreeMap<Integer, HashSet<Constructor>> {
 
   /**
    * Try to find and initialize all no-arg components and injector parameters into context.
-   * <p>
-   * <pre><code>
    *
    * flow:
    *
@@ -477,9 +433,7 @@ public class DaggerokContext extends TreeMap<Integer, HashSet<Constructor>> {
    *   as well as all no-arg parameters of constructor annotated with @{@link Inject}
    * - create new instance and put it into context
    *
-   * </code></pre>
-   *
-   * @return
+   * @return DaggerokContext
    */
   private DaggerokContext createNoArgComponents() {
 
@@ -527,8 +481,6 @@ public class DaggerokContext extends TreeMap<Integer, HashSet<Constructor>> {
 
   /**
    * Try to find and initialize all beans and injectors with retry = O(n^2).
-   * <p>
-   * <pre><code>
    *
    * flow:
    *
@@ -551,8 +503,6 @@ public class DaggerokContext extends TreeMap<Integer, HashSet<Constructor>> {
    *    - else if injectorsLeft == loopedCounter:
    *      - throw error and stop context bootstrap
    *      - or skip to next entry depends on fail-on condition configurations
-   *
-   * </code></pre>
    *
    * @return context initialization.
    */
