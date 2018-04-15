@@ -152,7 +152,6 @@
         <version>2.9.1</version>
         <configuration>
           <failOnError>false</failOnError>
-          <applyJavadocSecurityFix>true</applyJavadocSecurityFix>
         </configuration>
         <executions>
           <execution>
@@ -177,6 +176,13 @@
             </goals>
           </execution>
         </executions>
+      </plugin>
+
+      <!-- https://www.versioneye.com -->
+      <plugin>
+        <groupId>com.versioneye</groupId>
+        <artifactId>versioneye-maven-plugin</artifactId>
+        <version>3.11.4</version>
       </plugin>
 
       <plugin>

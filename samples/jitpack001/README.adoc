@@ -1,4 +1,4 @@
-= jitpack master-SNAPSHOT daggerok-context sample
+= jitpack 0.0.1 daggerok-context sample
 
 //tag::content[]
 .build, run and test

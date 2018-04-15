@@ -44,7 +44,7 @@ repositories {
 
 dependencies {
   // bintray 2:
-  compile "com.github.daggerok:daggerok-context:0.0.1"
+  compile "com.github.daggerok:daggerok-context:1.0.0"
 }
 
 task wrapper(type: Wrapper) {

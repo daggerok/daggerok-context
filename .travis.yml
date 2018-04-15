@@ -17,12 +17,15 @@ script:
 - bash gradlew --refresh-dependencies
 - bash build/install/$sample/bin/$sample
 - bash ./build/install/$sample/bin/$sample trololo
-# bintray 0.0.1, JitPack 0.0.1, bintray 1.0.0
+# bintray JitPack central
 - >
   for sample in \
-    bintray100 \
-    jitpack001 \
     bintray001 \
+    bintray100 \
+    bintray101 \
+    jitpack001 \
+    jitpack100 \
+    jitpack101 \
   ; do
     cd $root/samples/$sample
 

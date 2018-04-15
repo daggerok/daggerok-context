@@ -1,4 +1,4 @@
-= bintray 0.0.1 daggerok-context sample
+= bintray 1.0.0 daggerok-context sample
 
 //tag::content[]
 .build, run and test

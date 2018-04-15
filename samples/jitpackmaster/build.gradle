@@ -1,7 +1,6 @@
 buildscript {
   ext {
     javaVersion = "1.8"
-    daggerokContextVersion = "master-SNAPSHOT"
   }
 }
 
@@ -45,7 +44,7 @@ repositories {
 
 dependencies {
   // JitPack 2:
-  compile "com.github.daggerok:daggerok-context:$daggerokContextVersion"
+  compile "com.github.daggerok:daggerok-context:master-SNAPSHOT"
 }
 
 task wrapper(type: Wrapper) {
