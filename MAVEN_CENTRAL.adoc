@@ -1,5 +1,8 @@
 = maven central
 
+NOTE: JitPack build is failing because of gpg signing configuration.
+So we are commented out maven-central build config part in build.gradle
+
 == prepare
 
 [sources,bash]
