@@ -17,7 +17,9 @@ image:https://www.bintray.com/docs/images/bintray_badge_color.png["daggerok-cont
 [source,gradle]
 ----
 repositories {
-  jcenter()
+  jcenter()      // available in bintray
+  // or
+  mavenCentral() // also available in maven central
 }
 
 dependencies {
@@ -28,13 +30,6 @@ dependencies {
 .pom.xml
 [source,xml]
 ----
-<repositories>
-  <repository>
-    <id>jcentral</id>
-    <url>https://jcenter.bintray.com</url>
-  </repository>
-</repositories>
-
 <dependencies>
   <dependency>
     <groupId>com.github.daggerok</groupId>
@@ -42,6 +37,14 @@ dependencies {
     <version>1.0.1</version>
   </dependency>
 </dependencies>
+
+<!-- only for bintray use case: -->
+<repositories>
+  <repository>
+    <id>jcentral</id>
+    <url>https://jcenter.bintray.com</url>
+  </repository>
+</repositories>
 ----
 
 == usage
