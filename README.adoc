@@ -15,8 +15,9 @@ Simplest lightly dependency injection library for java ever!
 Processing @Inject and optionally @Singleton annotations from JSR-330
 Minimal supported java version: 1.5
 
+== installation
+
 image:https://www.bintray.com/docs/images/bintray_badge_color.png["daggerok-context", link="https://bintray.com/daggerok/daggerok/daggerok-context?source=watch"]
-image:http://maven.apache.org/images/maven-logo-black-on-white.png["daggerok-context", link="https://maven-badges.herokuapp.com/maven-central/com.github.daggerok/daggerok-context"]
 
 .build.gradle
 [source,gradle]
@@ -31,6 +32,8 @@ dependencies {
   compile "com.github.daggerok:daggerok-context:1.0.1"
 }
 ----
+
+image:http://maven.apache.org/images/maven-logo-black-on-white.png["daggerok-context", link="https://maven-badges.herokuapp.com/maven-central/com.github.daggerok/daggerok-context"]
 
 .pom.xml
 [source,xml]
