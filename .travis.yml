@@ -31,16 +31,27 @@ script:
 - ./mvnw
 - ./gradlew
 
-# master-SNAPSHOT
-- export sample=jitpackmaster
-- cd $root/samples/$sample
-- bash mvnw -U
-- java -jar ./target/*-all.jar
-- java -jar ./target/*-all.jar trololo
-- java -jar ./target/*-all.jar $sample
-- bash gradlew --refresh-dependencies
-- bash build/install/$sample/bin/$sample
-- bash ./build/install/$sample/bin/$sample trololo
+## master-SNAPSHOT
+#- export sample=jitpackmaster
+#- cd $root/samples/$sample
+#- ./mvnw -U
+#- java -jar ./target/*-all.jar
+#- java -jar ./target/*-all.jar trololo
+#- java -jar ./target/*-all.jar $sample
+#- bash gradlew --refresh-dependencies
+#- bash build/install/$sample/bin/$sample
+#- bash ./build/install/$sample/bin/$sample trololo
+#
+## bintray JitPack central
+#- >
+#  for sample in \
+#    bintray001 \
+#    bintray100 \
+#    bintray101 \
+#    jitpack001 \
+#    jitpack100 \
+#    jitpack101 \
+#  ; do
 
 # bintray JitPack central
 - >
@@ -48,9 +59,6 @@ script:
     bintray001 \
     bintray100 \
     bintray101 \
-    jitpack001 \
-    jitpack100 \
-    jitpack101 \
   ; do
     cd $root/samples/$sample
 
@@ -68,18 +76,18 @@ script:
 after_script:
 - cd ${root}/
 #
-- test ".${TRAVIS_BRANCH}" = ".release" && mkdir -p ~/.gradle
-- test ".${TRAVIS_BRANCH}" = ".release" && echo 'bintrayUser=daggerok'           >> ~/.gradle/gradle.properties
-- test ".${TRAVIS_BRANCH}" = ".release" && echo "bintrayApiKey=$BINTRAY_API_KEY" >> ~/.gradle/gradle.properties
-- test ".${TRAVIS_BRANCH}" != ".release" && echo './gradlew -S clean bintrayUpload'
-- test ".${TRAVIS_BRANCH}" = ".release" && echo "yes!"
-- test ".${TRAVIS_BRANCH}" = ".release" || echo "no!"
+- test ".${TRAVIS_BRANCH}" = ".master" && mkdir -p ~/.gradle
+- test ".${TRAVIS_BRANCH}" = ".master" && echo 'bintrayUser=daggerok'           >> ~/.gradle/gradle.properties
+- test ".${TRAVIS_BRANCH}" = ".master" && echo "bintrayApiKey=$BINTRAY_API_KEY" >> ~/.gradle/gradle.properties
+- test ".${TRAVIS_BRANCH}" = ".master" && echo './gradlew -S clean bintrayUpload'
+- test ".${TRAVIS_BRANCH}" = ".master" && echo "yes!"
+- test ".${TRAVIS_BRANCH}" = ".master" || echo "no!"
 #
-- test ".${TRAVIS_BRANCH}" = ".release" && echo 'ossrhUsername=daggerok'                              >> ~/.gradle/gradle.properties
-- test ".${TRAVIS_BRANCH}" = ".release" && echo "signing.keyId=$SIGNING_KEY_ID"                       >> ~/.gradle/gradle.properties
-- test ".${TRAVIS_BRANCH}" = ".release" && echo "signing.password=$SIGNING_PASSWORD"                  >> ~/.gradle/gradle.properties
-- test ".${TRAVIS_BRANCH}" = ".release" && echo "signing.secretKeyRingFile=$(pwd)/.gnupg/secring.gpg" >> ~/.gradle/gradle.properties
-- test ".${TRAVIS_BRANCH}" != ".release" && echo './gradlew -S uploadArchives'
+- test ".${TRAVIS_BRANCH}" = ".master" && echo 'ossrhUsername=daggerok'                              >> ~/.gradle/gradle.properties
+- test ".${TRAVIS_BRANCH}" = ".master" && echo "signing.keyId=$SIGNING_KEY_ID"                       >> ~/.gradle/gradle.properties
+- test ".${TRAVIS_BRANCH}" = ".master" && echo "signing.password=$SIGNING_PASSWORD"                  >> ~/.gradle/gradle.properties
+- test ".${TRAVIS_BRANCH}" = ".master" && echo "signing.secretKeyRingFile=$(pwd)/.gnupg/secring.gpg" >> ~/.gradle/gradle.properties
+- test ".${TRAVIS_BRANCH}" = ".master" && echo './gradlew -S uploadArchives'
 
 before_cache:
 - for item in $(find ~/.gradle -name "*.lock");
