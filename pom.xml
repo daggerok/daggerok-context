@@ -2,11 +2,12 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>com.github.daggerok</groupId>
   <artifactId>daggerok-context</artifactId>
-  <version>1.0.2</version>
+  <version>1.0.3</version>
   <packaging>jar</packaging>
 
   <name>${project.groupId}:${project.artifactId}</name>
@@ -48,7 +49,7 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <maven.compiler.source>1.5</maven.compiler.source>
+    <maven.compiler.source>${maven.compiler.target}</maven.compiler.source>
     <maven.compiler.target>1.5</maven.compiler.target>
     <slf4j.version>1.7.25</slf4j.version>
     <inject.version>1</inject.version>
@@ -58,23 +59,19 @@
   </properties>
 
   <dependencies>
-
-    <!-- JSR-330 -->
-    <dependency>
+    <dependency><!-- JSR-330 -->
       <groupId>javax.inject</groupId>
       <artifactId>javax.inject</artifactId>
       <version>${inject.version}</version>
     </dependency>
 
-    <!-- Reflections -->
-    <dependency>
+    <dependency><!-- Reflections -->
       <groupId>org.reflections</groupId>
       <artifactId>reflections</artifactId>
       <version>${reflections.version}</version>
     </dependency>
 
-    <!-- logging -->
-    <dependency>
+    <dependency><!-- logging -->
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-api</artifactId>
       <version>${slf4j.version}</version>
@@ -98,8 +95,7 @@
     <defaultGoal>clean package</defaultGoal>
 
     <plugins>
-      <!-- maven central deployment -->
-      <plugin>
+      <plugin><!-- maven central deployment -->
         <groupId>org.sonatype.plugins</groupId>
         <artifactId>nexus-staging-maven-plugin</artifactId>
         <version>1.6.7</version>
@@ -110,8 +106,8 @@
           <autoReleaseAfterClose>true</autoReleaseAfterClose>
         </configuration>
       </plugin>
-      <!-- sources -->
-      <plugin>
+
+      <plugin><!-- sources -->
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-source-plugin</artifactId>
         <version>2.2.1</version>
@@ -124,8 +120,8 @@
           </execution>
         </executions>
       </plugin>
-      <!-- javadoc -->
-      <plugin>
+
+      <plugin><!-- javadoc -->
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-javadoc-plugin</artifactId>
         <version>2.9.1</version>
@@ -141,8 +137,8 @@
           </execution>
         </executions>
       </plugin>
-      <!-- GPG -->
-      <plugin>
+
+      <plugin><!-- GPG -->
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-gpg-plugin</artifactId>
         <version>1.5</version>
@@ -157,8 +153,7 @@
         </executions>
       </plugin>
 
-      <!-- https://www.versioneye.com -->
-      <plugin>
+      <plugin><!-- https://www.versioneye.com -->
         <groupId>com.versioneye</groupId>
         <artifactId>versioneye-maven-plugin</artifactId>
         <version>3.11.4</version>

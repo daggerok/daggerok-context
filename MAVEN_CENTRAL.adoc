@@ -120,4 +120,10 @@ uploadArchives {
 gradle uploadArchives
 ----
 
+go to https://oss.sonatype.org/#stagingRepositories
+
+login and publish deployed version
+
+link:https://www.youtube.com/watch?v=b5D2EBjLp40&feature=youtu.be[see for details YouTube: 04 - Accessing OSS-RH - Easy Publishing to Central Repository]
+
 == maven (TODO: failed on gpg...)

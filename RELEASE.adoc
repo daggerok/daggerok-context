@@ -28,6 +28,10 @@ echo 'bintrayApiKey=Bintray.api.key...' >> ~/.gradle/gradle.properties
 # Uploaded to 'https://api.bintray.com/content/daggerok/daggerok/daggerok-context/1.0.2/com/github/daggerok/daggerok-context/1.0.2/daggerok-context-1.0.2.pom'.
 ----
 
+go to https://bintray.com/daggerok/daggerok/daggerok-context/
+
+login and publish deployed version to jcenter repository
+
 == gradle (maven central)
 
 .prepare `gradle.properties` file
@@ -50,8 +54,56 @@ echo 'apply from: "$project.projectDir/gradle/maven-central.gradle"' >> build.gr
 
 .publish artifact to bintray jcenter
 ----
-./gradlew -S uploadArchives
+./gradlew clean assemble
+./gradlew -Si uploadArchives
 
 ## output:
+# Deploying to https://oss.sonatype.org/service/local/staging/deploy/maven2/
+# Uploading: com/github/daggerok/daggerok-context/1.0.2/daggerok-context-1.0.2.jar to repository remote at https://oss.sonatype.org/service/local/staging/deploy/maven2/
+# Transferring 10K from remote
+# Uploaded 10K
+# Uploading: com/github/daggerok/daggerok-context/1.0.2/daggerok-context-1.0.2.pom to repository remote at https://oss.sonatype.org/service/local/staging/deploy/maven2/
+# Transferring 2K from remote
+# Uploaded 2K
+# Uploading: com/github/daggerok/daggerok-context/1.0.2/daggerok-context-1.0.2-sources.jar to repository remote at https://oss.sonatype.org/service/local/staging/deploy/maven2/
+# Transferring 7K from remote
+# Uploaded 7K
+# Uploading: com/github/daggerok/daggerok-context/1.0.2/daggerok-context-1.0.2-1.5.jar to repository remote at https://oss.sonatype.org/service/local/staging/deploy/maven2/
+# Transferring 10K from remote
+# Uploaded 10K
+# Uploading: com/github/daggerok/daggerok-context/1.0.2/daggerok-context-1.0.2-1.5.jar.asc to repository remote at https://oss.sonatype.org/service/local/staging/deploy/maven2/
+# Transferring 0K from remote
+# Uploaded 0K
+# Uploading: com/github/daggerok/daggerok-context/1.0.2/daggerok-context-1.0.2.jar.asc to repository remote at https://oss.sonatype.org/service/local/staging/deploy/maven2/
+# Transferring 0K from remote
+# Uploaded 0K
+# Uploading: com/github/daggerok/daggerok-context/1.0.2/daggerok-context-1.0.2-javadoc.jar to repository remote at https://oss.sonatype.org/service/local/staging/deploy/maven2/
+# Transferring 32K from remote
+# Uploaded 32K
+# Uploading: com/github/daggerok/daggerok-context/1.0.2/daggerok-context-1.0.2-1.5-sources.jar to repository remote at https://oss.sonatype.org/service/local/staging/deploy/maven2/
+# Transferring 7K from remote
+# Uploaded 7K
+# Uploading: com/github/daggerok/daggerok-context/1.0.2/daggerok-context-1.0.2-javadoc.jar.asc to repository remote at https://oss.sonatype.org/service/local/staging/deploy/maven2/
+# Transferring 0K from remote
+# Uploaded 0K
+# Uploading: com/github/daggerok/daggerok-context/1.0.2/daggerok-context-1.0.2-1.5-sources.jar.asc to repository remote at https://oss.sonatype.org/service/local/staging/deploy/maven2/
+# Transferring 0K from remote
+# Uploaded 0K
+# Uploading: com/github/daggerok/daggerok-context/1.0.2/daggerok-context-1.0.2-sources.jar.asc to repository remote at https://oss.sonatype.org/service/local/staging/deploy/maven2/
+# Transferring 0K from remote
+# Uploaded 0K
+# Uploading: com/github/daggerok/daggerok-context/1.0.2/daggerok-context-1.0.2.pom.asc to repository remote at https://oss.sonatype.org/service/local/staging/deploy/maven2/
+# Transferring 0K from remote
+# Uploaded 0K
+# Downloading: com/github/daggerok/daggerok-context/maven-metadata.xml from repository remote at https://oss.sonatype.org/service/local/staging/deploy/maven2/
+# Transferring 0K from remote
+# Uploading: com/github/daggerok/daggerok-context/maven-metadata.xml to repository remote at https://oss.sonatype.org/service/local/staging/deploy/maven2/
+# Transferring 0K from remote
+# Uploaded 0K
 ----
 
+go to https://oss.sonatype.org/#stagingRepositories
+
+login and publish deployed version and link:https://central.sonatype.org/pages/releasing-the-deployment.html[follow instructions]
+
+link:https://www.youtube.com/watch?v=b5D2EBjLp40&feature=youtu.be[see for details YouTube: 04 - Accessing OSS-RH - Easy Publishing to Central Repository]

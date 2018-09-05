@@ -110,7 +110,8 @@ after_script:
 - test ".${TRAVIS_BRANCH}" = ".release" && mkdir -p ~/.gradle
 - test ".${TRAVIS_BRANCH}" = ".release" && echo 'bintrayUser=daggerok'           >> ~/.gradle/gradle.properties
 - test ".${TRAVIS_BRANCH}" = ".release" && echo "bintrayApiKey=$BINTRAY_API_KEY" >> ~/.gradle/gradle.properties
-- test ".${TRAVIS_BRANCH}" = ".release" && ./gradlew -S clean bintrayUpload
+- test ".${TRAVIS_BRANCH}" = ".release" && ./gradlew clean assemble
+- test ".${TRAVIS_BRANCH}" = ".release" && ./gradlew -S bintrayUpload
 #
 - test ".${TRAVIS_BRANCH}" = ".master" && echo "deploy release to maven central"
 #
@@ -121,7 +122,8 @@ after_script:
 - test ".${TRAVIS_BRANCH}" = ".master" && echo "signing.secretKeyRingFile=$(pwd)/.gnupg/secring.gpg"            >> ~/.gradle/gradle.properties
 - test ".${TRAVIS_BRANCH}" = ".master" && echo 'apply from:\ "$project.projectDir/gradle/maven-central.gradle"' >> ~/.gradle/gradle.properties
 - test ".${TRAVIS_BRANCH}" = ".master" && cat build.gradle
-- test ".${TRAVIS_BRANCH}" = ".master" && echo './gradlew -Si uploadArchives'
+- test ".${TRAVIS_BRANCH}" = ".master" && ./gradlew clean assemble
+- test ".${TRAVIS_BRANCH}" = ".master" && ./gradlew -Si uploadArchives
 
 before_cache:
 - for item in $(find ~/.gradle -name "*.lock");
