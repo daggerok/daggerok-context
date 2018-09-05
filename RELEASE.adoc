@@ -5,14 +5,14 @@
 .prepare `gradle.properties` file
 [source,bash]
 ----
-mkdir ~/.gradle
-echo 'bintrayUser=daggerok' >> ~/.gradle/gradle.properties
-echo 'bintrayApiKey=qwe...' >> ~/.gradle/gradle.properties
+mkdir -p ~/.gradle
+echo 'bintrayUser=daggerok'             >> ~/.gradle/gradle.properties
+echo 'bintrayApiKey=Bintray.api.key...' >> ~/.gradle/gradle.properties
 ----
 
 .publish artifact to bintray jcenter
 ----
-./gradlew -i clean bintrayUpload
+./gradlew -S clean bintrayUpload
 
 ## output:
 # Uploading to https://api.bintray.com/content/daggerok/daggerok/daggerok-context/1.0.2/com/github/daggerok/daggerok-context/1.0.2/daggerok-context-1.0.2-javadoc.jar...
@@ -28,19 +28,30 @@ echo 'bintrayApiKey=qwe...' >> ~/.gradle/gradle.properties
 # Uploaded to 'https://api.bintray.com/content/daggerok/daggerok/daggerok-context/1.0.2/com/github/daggerok/daggerok-context/1.0.2/daggerok-context-1.0.2.pom'.
 ----
 
-////
-== maven central
+== gradle (maven central)
 
-.prepare `settings.xml` file
-[source,xml]
+.prepare `gradle.properties` file
+[source,bash]
 ----
-mkdir ~/.gradle
-echo 'bintrayUser=daggerok' >> ~/.gradle/gradle.properties
-echo 'bintrayApiKey=qwe...' >> ~/.gradle/gradle.properties
+mkdir -p ~/.gradle
+echo 'ossrhUsername=daggerok'             >> ~/.gradle/gradle.properties
+echo 'ossrhPassword=Sonatype.password...' >> ~/.gradle/gradle.properties
+echo 'signing.keyId=A5252B5B'             >> ~/.gradle/gradle.properties
+echo 'signing.password=Pgp2.password...'  >> ~/.gradle/gradle.properties
+echo 'signing.secretKeyRingFile=/Users/mak/.gnupg/secring.gpg' >> ~/.gradle/gradle.properties
+----
+
+.prepare `build.gradle` file
+[source,bash]
+----
+# uncomment maven-central.gradle file usage in build.gradle:
+echo 'apply from: "$project.projectDir/gradle/maven-central.gradle"' >> build.gradle
 ----
 
 .publish artifact to bintray jcenter
 ----
-./gradlew -iS clean bintrayUpload
+./gradlew -S uploadArchives
+
+## output:
 ----
-////
+

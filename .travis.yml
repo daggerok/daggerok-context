@@ -1,12 +1,36 @@
 env:
   global:
   - TERM=dumb
+  - secure: Ga/qypDnCt7cbY+fe13PN8IJBZ5aPajVygNbDvT3pm/aKsJfEpP+tHXa4N/TsMr5RYXMgOBOiXGeP5VnALHTmRHvrEsj7RWA1UDCh5sGKMeNIKWuUSE+CV7obYI7cazVHZ+k+tnBEUWIrn+3Tzp810mYG8Kbz1VvNpEVyRrX9EpWJwGJO9n4LlbSaA8Y9hZqrJlIxCsc11LPnmadtpBb2Cvur1qDEFsGj8/9fByzIpWfV+iHtEJlmnIKooRbcF1WW1XuSwpmEU2azxWOZVF/pVkwCVFtohzRXBZd9avAVunUZAN2xvVvYc7TXNvdrkh91/18pCraKZCfP9GhlnVl4FxaRP0LN9kF2NAdJut2jvnLkrfL69R1W+2AzeGCR6+1EWi+xdLxd5T1Zmj5oIdZ74Dioph7BJVT5dtdC7UN5AktUonAiqBdUMpCEZ+vgYS3/A+Qsl8HVRMpKpvhqFlxXVbNERiDUYKxc/Fn2NotyYzgaXmwOr2NQn6/pJmLu7khX+U0US1ExVWkv6tir4mmSzphIG00Ud7h3oML3FRrLxA4cdNk2YOwsFrmDiGZezTsVddFCI4qSwbPFZJ//tiO9xzf2jpmLv+p1aCDhNL1K1i11+s5iFAg+8mhlLiP3bsU8rkJkcgsBdeVKt1zHfWiM2uzPYkvj8AooS5oKFDIyeY=
+  - secure: Q90l1v+EuwOiRKtZQnLajNhZ5117fDebanf6TQY28SZabaU4xYzYq5y8zWuPNlWxkgoGZlzStBMC2ROQjoqZohZFnf7keFQw4MY7Xp5xU2d96beObXPBmnVd7qfkaYxSF5Ub/d4nAEnmXW+bze18VnONKrL7uvORQpRIB8Teiv3LrMt69voCg/HW8nrUvoHHurwtzzKXlvP25J/BRe5GsDXjLyfpM6pCJH9XARYk68Q9x8SIQO42cJfbSHVwWmKiUMVXZlrizjzFeZQlIDUgoMa+CNJOmeEVp8aZSy23auJpMbA4rpBL5WX47adEcyMnrZPMRo81wJV+yFyzm8Qvzz892f2JOcdg4YqZZi2rRCivETUeVUtzN62uofGMRicFdN90Vat1ZwIgC21mvVIzDxvlf4kf2V8oWjBcgBrOOyIs17P0zHWoY296A9/NJ/MlctxPRrEYtNSZqtHbIuypbwQVcdhZTA3qfB1nO0kQski3HAbm9zD/Y7Tlvo4E7FX4oSewmPEtnqHkOWfPJdan3dYU4/3DSPS6A4+O6J5Ua9RSINDzugx7YkAERv1y0P+H2WTRXmU+v/A217vmImpzVpAWpfMz2tMOB3kGZXc0BZrvqx1HqUyhfiBJcycIp45kkVFqjYDojkMG6LBHPNTQe3m3oPfpg/9MzSYQWQZfQaA=
+  - secure: qj65FD8KC2ocGymbF0YrjGa0X+4/xlx8RqZeT3wPJGZnv8Y9z0DVOTXbUVw9BDFhEoffIkLM4d/6HsW9FQSMXcUDWVhZpjkqVsLXahR/VdBQTvdxClzExjEcDuYnLh6/Joq13/1dLljSeAoC55898hDIKgSfUtGOiiax9kjFZ0OJduRZtqiauYrchE9E7rSyPtiQ0hBW8RVjpjSO48KBUW4ysZ1J96xG/ZYhOl1VBgrmxsdwFsnwQAQ+9c8f8mMGJzGvsrxXK4DZcH0txfqwAYyVDkvF0mFoCeOoFwsaPyHOdm5/z6PAEgOEu3tT/KfIhsjlc9/16uxZ/BfVF0wPE2/0pm94mB3OZEE1jaQgQ/5LlM03I6+qDMHRBlUhuZkOhlPIf3l1dw6nCtRohFmRI3eox9nVlwLw2ukNGQZ0hqdgcj/eTH2EbBCohqKCgd+Jb/4C6+KB4cBbQy+2QUSRCORsVjBs1Mc1dnKgFxf9JHunGoqKJrppTmveq4RQG6eiTNx7fOPK0yh2XxRhdWkCJ9E8ykDvc3mfW2v0avQCLKCfkMjuAKu019v+lGfyHUtrDMw8kdhwMFPkUn3pANCwAGhoUyD9OUUuIGVSuARBBCuGZbsdJuc4LQBrNwoxvlTzgDEiTQPGBwe15VXwpyHRrigk2AdlMQzTkgRCZzENcms=
+
 language: java
+jdk: oraclejdk8
+
+addons:
+  apt:
+    packages:
+    - bash
+    - curl
+
 install: true
+before_install:
+- sudo add-apt-repository universe -y >/dev/null
+- echo "deb http://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list >/dev/null
+- sudo apt-get update -yqq >/dev/null
+- sudo apt-get install -yqq --no-install-suggests --no-install-recommends
+  tree curl bash sudo >/dev/null
+#
+- source <(curl -s https://raw.githubusercontent.com/daggerok/bash-functions/master/main.bash)
+- stop_any 8080 3000 80 >/dev/null
+
 script:
-- bash mvnw
-- bash gradlew
 - export root=$(pwd)
+#
+- ./mvnw
+- ./gradlew
+
 # master-SNAPSHOT
 - export sample=jitpackmaster
 - cd $root/samples/$sample
@@ -17,6 +41,7 @@ script:
 - bash gradlew --refresh-dependencies
 - bash build/install/$sample/bin/$sample
 - bash ./build/install/$sample/bin/$sample trololo
+
 # bintray JitPack central
 - >
   for sample in \
@@ -39,3 +64,29 @@ script:
     bash ./build/install/$sample/bin/$sample trololo
     bash ./build/install/$sample/bin/$sample $sample
   done
+
+after_script:
+- cd ${root}/
+#
+- test ".${TRAVIS_BRANCH}" = ".release" && mkdir -p ~/.gradle
+- test ".${TRAVIS_BRANCH}" = ".release" && echo 'bintrayUser=daggerok'           >> ~/.gradle/gradle.properties
+- test ".${TRAVIS_BRANCH}" = ".release" && echo "bintrayApiKey=$BINTRAY_API_KEY" >> ~/.gradle/gradle.properties
+- test ".${TRAVIS_BRANCH}" != ".release" && echo './gradlew -S clean bintrayUpload'
+- test ".${TRAVIS_BRANCH}" = ".release" && echo "yes!"
+- test ".${TRAVIS_BRANCH}" = ".release" || echo "no!"
+#
+- test ".${TRAVIS_BRANCH}" = ".release" && echo 'ossrhUsername=daggerok'                              >> ~/.gradle/gradle.properties
+- test ".${TRAVIS_BRANCH}" = ".release" && echo "signing.keyId=$SIGNING_KEY_ID"                       >> ~/.gradle/gradle.properties
+- test ".${TRAVIS_BRANCH}" = ".release" && echo "signing.password=$SIGNING_PASSWORD"                  >> ~/.gradle/gradle.properties
+- test ".${TRAVIS_BRANCH}" = ".release" && echo "signing.secretKeyRingFile=$(pwd)/.gnupg/secring.gpg" >> ~/.gradle/gradle.properties
+- test ".${TRAVIS_BRANCH}" != ".release" && echo './gradlew -S uploadArchives'
+
+before_cache:
+- for item in $(find ~/.gradle -name "*.lock");
+    do sudo rm -rf $item ;
+  done
+
+cache:
+  directories:
+  - "$HOME/.m2"
+  - "$HOME/.gradle"

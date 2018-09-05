@@ -51,11 +51,12 @@ dependencies {
 
   // Logging
   compile("org.slf4j:slf4j-api:$slf4jVersion")
+
   runtime("ch.qos.logback:logback-classic:$logbackVersion")
   compileOnly("ch.qos.logback:logback-classic:$logbackVersion")
-  testCompileOnly("ch.qos.logback:logback-classic:$logbackVersion")
 
   // Testing
+  testCompileOnly("ch.qos.logback:logback-classic:$logbackVersion")
   testCompile("junit:junit:$junitVersion")
 }
 
@@ -77,4 +78,4 @@ def getPropOrSystemOrDefault(def propertyName, def systemPropertyName) {
 
 apply from: "$project.projectDir/gradle/maven-publish.gradle"
 apply from: "$project.projectDir/gradle/bintray.gradle"
-//apply from: "$project.projectDir/gradle/maven-central.gradle"
+apply from: "$project.projectDir/gradle/maven-central.gradle"
