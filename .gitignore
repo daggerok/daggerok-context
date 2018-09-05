@@ -7,7 +7,6 @@ target
 *.iml
 *.ipr
 *.iws
-*.log
+*.log*
 .DS_Store
-*.log
 gradle.properties

@@ -29,13 +29,13 @@ repositories {
 }
 
 dependencies {
-  compile "com.github.daggerok:daggerok-context:1.0.1"
+  compile "com.github.daggerok:daggerok-context:1.0.2"
 }
 ----
 
 //image:http://maven.apache.org/images/maven-logo-black-on-white.png["daggerok-context", link="https://maven-badges.herokuapp.com/maven-central/com.github.daggerok/daggerok-context"]
 
-image:http://maven.apache.org/images/maven-logo-black-on-white.png["daggerok-context", link="https://search.maven.org/beta/artifact/com.github.daggerok/daggerok-context/1.0.1/jar"]
+image:http://maven.apache.org/images/maven-logo-black-on-white.png["daggerok-context", link="https://search.maven.org/beta/artifact/com.github.daggerok/daggerok-context/1.0.2/jar"]
 
 .pom.xml
 [source,xml]
@@ -44,7 +44,7 @@ image:http://maven.apache.org/images/maven-logo-black-on-white.png["daggerok-con
   <dependency>
     <groupId>com.github.daggerok</groupId>
     <artifactId>daggerok-context</artifactId>
-    <version>1.0.1</version>
+    <version>1.0.2</version>
   </dependency>
 </dependencies>
 
@@ -114,7 +114,7 @@ public class MyService {
 public class MyAppTest {
 
   @Test
-  public void my_app_test() {
+  public void test() {
 
     DaggerokContext applicationContext = DaggerokContext.create(MyAppTest.class)
                                                         .initialize();
@@ -297,7 +297,7 @@ repositories {
 }
 
 dependencies {
-  compile "com.github.daggerok:daggerok-context:1.0.1"
+  compile "com.github.daggerok:daggerok-context:1.0.2"
 }
 ----
 === gradle jitpack
@@ -309,7 +309,7 @@ repositories {
 }
 
 dependencies {
-  compile "com.github.daggerok:daggerok-context:1.0.1"
+  compile "com.github.daggerok:daggerok-context:1.0.2"
 }
 ----
 === maven bintray/daggerok
@@ -327,7 +327,7 @@ dependencies {
   <dependency>
     <groupId>com.github.daggerok</groupId>
     <artifactId>daggerok-context</artifactId>
-    <version>1.0.1</version>
+    <version>1.0.2</version>
   </dependency>
 </dependencies>
 ----
@@ -346,7 +346,7 @@ dependencies {
   <dependency>
     <groupId>com.github.daggerok</groupId>
     <artifactId>daggerok-context</artifactId>
-    <version>1.0.1</version>
+    <version>1.0.2</version>
   </dependency>
 </dependencies>
 ----

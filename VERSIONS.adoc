@@ -12,4 +12,12 @@ see link:./BINTRAY.adoc[bintray] and link:./JITPACK.adoc[jitpack] READMEs to pic
 |1.0.0
 |1.0.0
 |1.5+
+
+|1.0.1
+|1.0.1
+|1.5+
+
+|1.0.2
+|1.0.2
+|1.5+
 |===
