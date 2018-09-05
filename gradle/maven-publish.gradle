@@ -1,0 +1,76 @@
+apply plugin: 'maven-publish'
+
+javadoc.failOnError = false
+
+task javadocJar(type: Jar) {
+  classifier = 'javadoc'
+  from javadoc
+}
+
+task classifierJar(type: Jar) {
+  from sourceSets.main.output
+}
+
+task sourceJar(type: Jar) {
+  from sourceSets.main.allJava
+}
+
+task classifierSourceJar(type: Jar) {
+  from sourceSets.main.allJava
+}
+
+def pomConfig = {
+  scm {
+    url project.vcsUrl
+  }
+  developers {
+    developer {
+      id 'daggerok'
+      name 'Maksim Kostromin'
+      email 'daggerok@gmail.com'
+    }
+  }
+  licenses {
+    license {
+      name 'MIT License'
+      url 'http://www.opensource.org/licenses/mit-license.php'
+      distribution 'repo'
+    }
+  }
+}
+
+publishing {
+  publications {
+    publication(MavenPublication) {
+      from components.java
+      artifact javadocJar {
+        classifier = 'javadoc'
+      }
+      artifact classifierJar {
+        classifier = '1.5'
+      }
+      artifact sourceJar {
+        classifier = 'sources'
+      }
+      artifact classifierSourceJar {
+        classifier = '1.5-sources'
+      }
+      pom.withXml {
+        def root = asNode()
+        root.appendNode('description', project.description)
+        root.appendNode('name', project.name)
+        root.appendNode('url', project.vcsUrl)
+        root.children().last() + pomConfig
+      }
+    }
+  }
+  repositories {
+    maven {
+      url "$buildDir/maven-publish"
+    }
+  }
+}
+
+artifacts {
+  archives javadocJar, classifierJar, sourceJar, classifierSourceJar
+}

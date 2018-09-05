@@ -1,1 +1,2 @@
 rootProject.name = 'daggerok-context'
+enableFeaturePreview('STABLE_PUBLISHING')

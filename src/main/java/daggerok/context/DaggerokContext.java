@@ -285,6 +285,8 @@ public class DaggerokContext extends TreeMap<Integer, HashSet<Constructor>> {
    *
    *   final MyBean myBean = applicationContext.getBean(MyBean.class);
    *
+   * @param <T>  bean type
+   * @param type bean class
    * @param name full (FQDN) class name. Can be any registered bean:
    *             - manually (explicitly);
    *             - automatically (implicitly) by scanning @{@link Singleton}s with default
@@ -303,6 +305,7 @@ public class DaggerokContext extends TreeMap<Integer, HashSet<Constructor>> {
    *
    *   final MyBean myBean = applicationContext.getBean(MyBean.class);
    *
+   * @param <T>      bean type
    * @param typeName full (FQDN) class name. Can be any registered bean:
    *                 - manually (explicitly);
    *                 - automatically (implicitly) by scanning @{@link Singleton}s with default

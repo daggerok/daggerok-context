@@ -18,13 +18,13 @@ plugins {
   id 'maven'
   id 'signing'
   id 'eclipse'
-  id 'com.jfrog.bintray' version '1.8.0'
+  id 'com.jfrog.bintray' version '1.8.4' apply false
 }
 
-description = 'Daggerok Context - Java dependency injection library.'
-archivesBaseName = 'daggerok-context'
-group = 'com.github.daggerok'
 version = '1.0.2'
+group = 'com.github.daggerok'
+archivesBaseName = 'daggerok-context'
+description = 'Daggerok Context - Java dependency injection library.'
 
 defaultTasks 'clean', 'build', 'install', 'publishToMavenLocal', 'publish'
 
@@ -52,110 +52,14 @@ dependencies {
   // Logging
   compile("org.slf4j:slf4j-api:$slf4jVersion")
   runtime("ch.qos.logback:logback-classic:$logbackVersion")
+  compileOnly("ch.qos.logback:logback-classic:$logbackVersion")
+  testCompileOnly("ch.qos.logback:logback-classic:$logbackVersion")
 
   // Testing
   testCompile("junit:junit:$junitVersion")
 }
 
-apply plugin: 'maven-publish'
-
-task javadocJar(type: Jar) {
-  classifier = 'javadoc'
-  from javadoc
-}
-
-javadoc.failOnError = false
-
-task classifierJar(type: Jar) {
-  from sourceSets.main.output
-}
-
-task sourceJar(type: Jar) {
-  from sourceSets.main.allJava
-}
-
-task classifierSourceJar(type: Jar) {
-  from sourceSets.main.allJava
-}
-
-def pomConfig = {
-  scm {
-    url "$project.vcsUrl"
-  }
-  developers {
-    developer {
-      id 'daggerok'
-      name 'Maksim Kostromin'
-      email 'daggerok@gmail.com'
-    }
-  }
-  licenses {
-    license {
-      name 'MIT License'
-      url 'http://www.opensource.org/licenses/mit-license.php'
-      distribution 'repo'
-    }
-  }
-}
-
-publishing {
-  publications {
-    publication(MavenPublication) {
-      from components.java
-      artifact javadocJar { classifier = 'javadoc' }
-      artifact classifierJar { classifier = '1.5' }
-      artifact sourceJar { classifier = 'sources' }
-      artifact classifierSourceJar { classifier = '1.5-sources' }
-      pom.withXml {
-        def root = asNode()
-        root.appendNode('description', project.description)
-        root.appendNode('name', project.name)
-        root.appendNode('url', project.vcsUrl)
-        root.children().last() + pomConfig
-      }
-    }
-  }
-  repositories {
-    maven {
-      url "$buildDir/maven-publish"
-    }
-  }
-}
-
-def getPropOrSystemOrDefault(def propertyName, def systemPropertyName) {
-  def defaultValue = System.getenv("$systemPropertyName") ?: 'not-present'
-  return project.hasProperty("$propertyName") ? project.property("$propertyName") : defaultValue
-}
-
-bintray {
-  user = getPropOrSystemOrDefault('bintrayUser', 'BINTRAY_USER')
-  key = getPropOrSystemOrDefault('bintrayApiKey', 'BINTRAY_API_KEY')
-  publications = ['publication']
-  pkg {
-    userOrg = user
-    repo = 'daggerok'
-    name = "$project.name"
-    licenses = ['MIT']
-    vcsUrl = project.vcsUrl
-    labels = [
-        'Dependency Injection',
-        'Inversion of Control',
-        'Context Dependency Injection',
-        'dependency-injection',
-        'inversion-of-control',
-        'context-dependency-injection',
-        'daggerok-context',
-        'context',
-        'CDI',
-        'cdi',
-        'IoC',
-        'ioc',
-    ]
-    publicDownloadNumbers = true
-  }
-}
-
-task wrapper(type: Wrapper) {
+wrapper {
   gradleVersion = '4.10'
   distributionType = 'BIN'
 }
@@ -166,56 +70,11 @@ clean.doFirst {
   }
 }
 
-/* maven cen/tral */
-artifacts {
-  archives javadocJar, classifierJar, sourceJar, classifierSourceJar
+def getPropOrSystemOrDefault(def propertyName, def systemPropertyName) {
+  def defaultValue = System.getenv("$systemPropertyName") ?: 'not-present'
+  return project.hasProperty("$propertyName") ? project.property("$propertyName") : defaultValue
 }
 
-// avoid jitpack build fail: uncomment to publish build to maven central
-/*
-signing {
-  sign configurations.archives
-}
-
-def ossrhUsername = getPropOrSystemOrDefault('ossrhUsername', 'ossrhUsername')
-def ossrhPassword = getPropOrSystemOrDefault('ossrhPassword', 'ossrhPassword')
-
-uploadArchives {
-  repositories {
-    mavenDeployer {
-      beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
-      repository(url: 'https://oss.sonatype.org/service/local/staging/deploy/maven2/') {
-        authentication(userName: ossrhUsername, password: ossrhPassword)
-      }
-      snapshotRepository(url: 'https://oss.sonatype.org/content/repositories/snapshots/') {
-        authentication(userName: ossrhUsername, password: ossrhPassword)
-      }
-      pom.project {
-        name "$project.name"
-        packaging 'jar'
-        // optionally artifactId can be defined here
-        description "$project.description"
-        url 'https://github.com/daggerok/daggerok-context'
-        scm {
-          connection 'scm:git:git://github.com/daggerok/daggerok-context.git'
-          developerConnection 'scm:git:ssh://github.com:daggerok/daggerok-context.git'
-          url 'https://github.com/daggerok/daggerok-context/tree/master'
-        }
-        licenses {
-          license {
-            name 'MIT License'
-            url 'http://www.opensource.org/licenses/mit-license.php'
-          }
-        }
-        developers {
-          developer {
-            id 'daggerok'
-            name 'Maksim Kostromin'
-            email 'daggerok@gmail.com'
-          }
-        }
-      }
-    }
-  }
-}
-*/
+apply from: "$project.projectDir/gradle/maven-publish.gradle"
+apply from: "$project.projectDir/gradle/bintray.gradle"
+//apply from: "$project.projectDir/gradle/maven-central.gradle"

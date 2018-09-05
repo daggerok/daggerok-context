@@ -1,0 +1,29 @@
+apply plugin: 'com.jfrog.bintray'
+
+bintray {
+  user = getPropOrSystemOrDefault('bintrayUser', 'BINTRAY_USER')
+  key = getPropOrSystemOrDefault('bintrayApiKey', 'BINTRAY_API_KEY')
+  publications = ['publication']
+  pkg {
+    userOrg = user
+    repo = 'daggerok'
+    name = project.name
+    licenses = ['MIT']
+    vcsUrl = project.vcsUrl
+    labels = [
+        'Dependency Injection',
+        'Inversion of Control',
+        'Context Dependency Injection',
+        'dependency-injection',
+        'inversion-of-control',
+        'context-dependency-injection',
+        'daggerok-context',
+        'context',
+        'CDI',
+        'cdi',
+        'IoC',
+        'ioc',
+    ]
+    publicDownloadNumbers = true
+  }
+}

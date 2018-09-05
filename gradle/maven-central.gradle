@@ -1,0 +1,47 @@
+// avoid jitpack build fail: uncomment to publish build to maven central
+
+signing {
+  sign configurations.archives
+}
+
+def ossrhUsername = getPropOrSystemOrDefault('ossrhUsername', 'ossrhUsername')
+def ossrhPassword = getPropOrSystemOrDefault('ossrhPassword', 'ossrhPassword')
+
+uploadArchives {
+  repositories {
+    mavenDeployer {
+      beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+      repository(url: 'https://oss.sonatype.org/service/local/staging/deploy/maven2/') {
+        authentication(userName: ossrhUsername, password: ossrhPassword)
+      }
+      snapshotRepository(url: 'https://oss.sonatype.org/content/repositories/snapshots/') {
+        authentication(userName: ossrhUsername, password: ossrhPassword)
+      }
+      pom.project {
+        name project.name
+        packaging 'jar'
+        // optionally artifactId can be defined here
+        description project.description
+        url 'https://github.com/daggerok/daggerok-context'
+        scm {
+          connection 'scm:git:git://github.com/daggerok/daggerok-context.git'
+          developerConnection 'scm:git:ssh://github.com:daggerok/daggerok-context.git'
+          url 'https://github.com/daggerok/daggerok-context/tree/master'
+        }
+        licenses {
+          license {
+            name 'MIT License'
+            url 'http://www.opensource.org/licenses/mit-license.php'
+          }
+        }
+        developers {
+          developer {
+            id 'daggerok'
+            name 'Maksim Kostromin'
+            email 'daggerok@gmail.com'
+          }
+        }
+      }
+    }
+  }
+}

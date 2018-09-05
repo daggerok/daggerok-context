@@ -1,0 +1,46 @@
+= performing release
+
+== gradle (bintray artifactory)
+
+.prepare `gradle.properties` file
+[source,bash]
+----
+mkdir ~/.gradle
+echo 'bintrayUser=daggerok' >> ~/.gradle/gradle.properties
+echo 'bintrayApiKey=qwe...' >> ~/.gradle/gradle.properties
+----
+
+.publish artifact to bintray jcenter
+----
+./gradlew -i clean bintrayUpload
+
+## output:
+# Uploading to https://api.bintray.com/content/daggerok/daggerok/daggerok-context/1.0.2/com/github/daggerok/daggerok-context/1.0.2/daggerok-context-1.0.2-javadoc.jar...
+# Uploaded to 'https://api.bintray.com/content/daggerok/daggerok/daggerok-context/1.0.2/com/github/daggerok/daggerok-context/1.0.2/daggerok-context-1.0.2-javadoc.jar'.
+# Uploading to https://api.bintray.com/content/daggerok/daggerok/daggerok-context/1.0.2/com/github/daggerok/daggerok-context/1.0.2/daggerok-context-1.0.2-1.5.jar...
+# Uploaded to 'https://api.bintray.com/content/daggerok/daggerok/daggerok-context/1.0.2/com/github/daggerok/daggerok-context/1.0.2/daggerok-context-1.0.2-1.5.jar'.
+# Uploading to https://api.bintray.com/content/daggerok/daggerok/daggerok-context/1.0.2/com/github/daggerok/daggerok-context/1.0.2/daggerok-context-1.0.2-sources.jar...
+# Uploaded to 'https://api.bintray.com/content/daggerok/daggerok/daggerok-context/1.0.2/com/github/daggerok/daggerok-context/1.0.2/daggerok-context-1.0.2-sources.jar'.
+# Uploading to https://api.bintray.com/content/daggerok/daggerok/daggerok-context/1.0.2/com/github/daggerok/daggerok-context/1.0.2/daggerok-context-1.0.2-1.5-sources.jar...
+# Uploaded to 'https://api.bintray.com/content/daggerok/daggerok/daggerok-context/1.0.2/com/github/daggerok/daggerok-context/1.0.2/daggerok-context-1.0.2-1.5-sources.jar'.
+# Uploading to https://api.bintray.com/content/daggerok/daggerok/daggerok-context/1.0.2/com/github/daggerok/daggerok-context/1.0.2/daggerok-context-1.0.2.jar...
+# Uploaded to 'https://api.bintray.com/content/daggerok/daggerok/daggerok-context/1.0.2/com/github/daggerok/daggerok-context/1.0.2/daggerok-context-1.0.2.jar'.
+# Uploaded to 'https://api.bintray.com/content/daggerok/daggerok/daggerok-context/1.0.2/com/github/daggerok/daggerok-context/1.0.2/daggerok-context-1.0.2.pom'.
+----
+
+////
+== maven central
+
+.prepare `settings.xml` file
+[source,xml]
+----
+mkdir ~/.gradle
+echo 'bintrayUser=daggerok' >> ~/.gradle/gradle.properties
+echo 'bintrayApiKey=qwe...' >> ~/.gradle/gradle.properties
+----
+
+.publish artifact to bintray jcenter
+----
+./gradlew -iS clean bintrayUpload
+----
+////
