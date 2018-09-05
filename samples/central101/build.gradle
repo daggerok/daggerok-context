@@ -1,23 +1,23 @@
 buildscript {
   ext {
-    javaVersion = "1.8"
+    javaVersion = '1.8'
   }
 }
 
 plugins {
-  id "idea"
-  id "java"
-  id "eclipse"
-  id "application"
-  id "maven-publish"
-  id "com.github.johnrengelman.shadow" version "2.0.4"
+  id 'idea'
+  id 'java'
+  id 'eclipse'
+  id 'application'
+  id 'maven-publish'
+  id 'com.github.johnrengelman.shadow' version '2.0.4'
 }
 
-group = "daggerok"
-version = "0.0.1"
+group = 'daggerok'
+version = '0.0.1'
 sourceCompatibility = targetCompatibility = "$javaVersion"
 
-mainClassName = "daggerok.App"
+mainClassName = 'daggerok.App'
 shadowJar.mustRunAfter jar
 
 publishing {
@@ -33,7 +33,7 @@ publishing {
   }
 }
 
-defaultTasks "clean", "build", "installDist", "distZip", "publish"
+defaultTasks 'clean', 'build', 'installDist', 'distZip', 'publish'
 
 repositories {
   mavenLocal()
@@ -41,10 +41,10 @@ repositories {
 }
 
 dependencies {
-  compile "com.github.daggerok:daggerok-context:1.0.1"
+  compile 'com.github.daggerok:daggerok-context:1.0.1'
 }
 
-task wrapper(type: Wrapper) {
-  gradleVersion = "4.6"
-  distributionType = "ALL"
+wrapper {
+  gradleVersion = '4.10'
+  distributionType = 'BIN'
 }
