@@ -52,36 +52,47 @@ script:
 #    jitpack100 \
 #    jitpack101 \
 #  ; do
+#    cd $root/samples/$sample
+#
+#    bash mvnw -U
+#    java -jar ./target/*-all.jar
+#    java -jar ./target/*-all.jar trololo
+#    java -jar ./target/*-all.jar $sample
+#
+#    bash gradlew --refresh-dependencies
+#    bash ./build/install/$sample/bin/$sample
+#    bash ./build/install/$sample/bin/$sample trololo
+#    bash ./build/install/$sample/bin/$sample $sample
+#  done
 
-# bintray JitPack central
+# acceptance tests
 - >
   for sample in \
+    central101 \
     bintray001 \
     bintray100 \
     bintray101 \
   ; do
     cd $root/samples/$sample
-
-    bash mvnw -U
+    ./mvnw -U
     java -jar ./target/*-all.jar
     java -jar ./target/*-all.jar trololo
     java -jar ./target/*-all.jar $sample
-
-    bash gradlew --refresh-dependencies
+    ./gradlew --refresh-dependencies
     bash ./build/install/$sample/bin/$sample
     bash ./build/install/$sample/bin/$sample trololo
     bash ./build/install/$sample/bin/$sample $sample
   done
 
 after_script:
+- test ".${TRAVIS_BRANCH}" = ".master" || echo "not master!"
 - cd ${root}/
 #
 - test ".${TRAVIS_BRANCH}" = ".master" && mkdir -p ~/.gradle
 - test ".${TRAVIS_BRANCH}" = ".master" && echo 'bintrayUser=daggerok'           >> ~/.gradle/gradle.properties
 - test ".${TRAVIS_BRANCH}" = ".master" && echo "bintrayApiKey=$BINTRAY_API_KEY" >> ~/.gradle/gradle.properties
 - test ".${TRAVIS_BRANCH}" = ".master" && echo './gradlew -S clean bintrayUpload'
-- test ".${TRAVIS_BRANCH}" = ".master" && echo "yes!"
-- test ".${TRAVIS_BRANCH}" = ".master" || echo "no!"
+- test ".${TRAVIS_BRANCH}" = ".master" && echo "yes! master!"
 #
 - test ".${TRAVIS_BRANCH}" = ".master" && echo 'ossrhUsername=daggerok'                              >> ~/.gradle/gradle.properties
 - test ".${TRAVIS_BRANCH}" = ".master" && echo "signing.keyId=$SIGNING_KEY_ID"                       >> ~/.gradle/gradle.properties
