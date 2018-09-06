@@ -144,6 +144,7 @@ public class MyAppTest {
 
 == public API overview
 === Entry point: create uninitialized context using:
+. `DaggerokContext#create()`
 . `DaggerokContext#create(Class...)`
 . `DaggerokContext#create(Package...)`
 . `DaggerokContext#create(String...)`
@@ -151,6 +152,9 @@ public class MyAppTest {
 .many ways create context
 [source,java]
 ----
+// empty context (with simgle bean registred: DaggerokContext):
+DaggerokContext.create(MyApp.class);
+
 // by base class:
 DaggerokContext.create(MyApp.class);
 

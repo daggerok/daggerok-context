@@ -105,15 +105,15 @@ after_script:
 - cd ${root}/
 - chmod 0600 .gnupg/gpg.conf
 #
-- test ".${TRAVIS_BRANCH}" = ".release" && echo "deploy release to bintray jcenter"
+- test ".${TRAVIS_BRANCH}" = ".master" && echo "deploy drafted release to bintray jcenter"
 #
-- test ".${TRAVIS_BRANCH}" = ".release" && mkdir -p ~/.gradle
-- test ".${TRAVIS_BRANCH}" = ".release" && echo 'bintrayUser=daggerok'           >> ~/.gradle/gradle.properties
-- test ".${TRAVIS_BRANCH}" = ".release" && echo "bintrayApiKey=$BINTRAY_API_KEY" >> ~/.gradle/gradle.properties
-- test ".${TRAVIS_BRANCH}" = ".release" && ./gradlew clean assemble
-- test ".${TRAVIS_BRANCH}" = ".release" && ./gradlew -S bintrayUpload
+- test ".${TRAVIS_BRANCH}" = ".master" && mkdir -p ~/.gradle
+- test ".${TRAVIS_BRANCH}" = ".master" && echo 'bintrayUser=daggerok'           >> ~/.gradle/gradle.properties
+- test ".${TRAVIS_BRANCH}" = ".master" && echo "bintrayApiKey=$BINTRAY_API_KEY" >> ~/.gradle/gradle.properties
+- test ".${TRAVIS_BRANCH}" = ".master" && ./gradlew clean assemble
+- test ".${TRAVIS_BRANCH}" = ".master" && ./gradlew -S bintrayUpload
 #
-- test ".${TRAVIS_BRANCH}" = ".master" && echo "deploy release to maven central"
+- test ".${TRAVIS_BRANCH}" = ".master" && echo "deploy drafted release to maven central"
 #
 - test ".${TRAVIS_BRANCH}" = ".master" && echo 'ossrhUsername=daggerok'                                         >> ~/.gradle/gradle.properties
 - test ".${TRAVIS_BRANCH}" = ".master" && echo "ossrhPassword=$OSSRH_PASSWORD"                                  >> ~/.gradle/gradle.properties

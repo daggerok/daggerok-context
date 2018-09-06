@@ -2,9 +2,7 @@ package daggerok.context;
 
 import daggerok.context.Exceptions.BeanNotFoundException;
 import daggerok.context.Exceptions.CreateNewInstanceException;
-import daggerok.context.Exceptions.WrappedReflectionsException;
-import org.reflections.Reflections;
-import org.reflections.scanners.MethodAnnotationsScanner;
+import daggerok.context.Finders.FinderBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -13,23 +11,26 @@ import javax.inject.Singleton;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Constructor;
 import java.util.*;
-import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import static java.lang.String.format;
+import static daggerok.context.Requires.requireNonNull;
 
 /**
  * High overview of DaggerokContext public API:
  * <p>
  *
  * Entry point: create uninitialized context using:
+ * {@link DaggerokContext#create()}
  * {@link DaggerokContext#create(Class...)}
  * {@link DaggerokContext#create(Package...)}
  * {@link DaggerokContext#create(String...)}
  * <p>
  *
  * User configurations:
+ * {@link DaggerokContext#withBasePackageClasses(Class...)}
+ * {@link DaggerokContext#withBasePackageNames(String...)}
+ * {@link DaggerokContext#withBasePackages(Package...)}
  * {@link DaggerokContext#withComponents(Class)}
  * {@link DaggerokContext#withInjectors(Class)}
  * {@link DaggerokContext#failOnInjectNullRef(boolean)}
@@ -51,7 +52,7 @@ import static java.lang.String.format;
  * {@link DaggerokContext#getBean(String, Class)}
  * {@link DaggerokContext#getBean(String)}
  */
-public class DaggerokContext extends TreeMap<Integer, HashSet<Constructor>> {
+public class DaggerokContext extends ConcurrentHashMap<Integer, HashSet<Constructor>> {
 
   private static final Logger log = LoggerFactory.getLogger(DaggerokContext.class);
 
@@ -67,6 +68,19 @@ public class DaggerokContext extends TreeMap<Integer, HashSet<Constructor>> {
   /* public API */
 
   /* context creation */
+
+  /**
+   * Step 1: Initialize default application context.
+   *
+   * final DaggerokContext applicationContext = DaggerokContext.create();
+   *
+   * This will create empty application context with only 1 Bean: itself registered DaggerokContext
+   *
+   * @return context initialization.
+   */
+  public static DaggerokContext create() {
+    return new DaggerokContext("");
+  }
 
   /**
    * Step 1: Initialize application context by application classes.
@@ -112,6 +126,67 @@ public class DaggerokContext extends TreeMap<Integer, HashSet<Constructor>> {
   /* context configuration */
 
   /**
+   * Step 2: (Optional / if created default context) Add base ckasses to get packages for injections scan.
+   *
+   * @param baseClasses base classes to get it's packages to components and injections scan.
+   * @return context initialization.
+   */
+  public DaggerokContext withBasePackageClasses(final Class... baseClasses) {
+    requireNonNull(baseClasses, "base package classes");
+    if (0 == baseClasses.length) return this;
+    final Package[] packages = new Package[baseClasses.length];
+    for (int i = 0; i < baseClasses.length; i++) {
+      final Class aClass = baseClasses[i];
+      requireNonNull(aClass, "a package class");
+      packages[i] = aClass.getPackage();
+    }
+    withBasePackages(packages);
+    return this;
+  }
+
+  /**
+   * Step 2: (Optional / if created default context) Add base package names for injections scan.
+   *
+   * @param basePackageNames base packages to components and injections scan.
+   * @return context initialization.
+   */
+  public DaggerokContext withBasePackageNames(final String... basePackageNames) {
+    requireNonNull(basePackageNames, "base package");
+    if (0 == basePackageNames.length) return this;
+    final ArrayList<String> packages = new ArrayList<String>();
+    for (final String basePackage : basePackageNames) {
+      if ("".equals(basePackage)) log.warn(
+          "Detected empty base package! We don't recommend use all included empty packages. It can decrease " +
+              "performance dramatically and cause some unknown errors depends on 3rd party libraries your are " +
+              "using. Please, create context with proper base package for scan including your application " +
+              "components only"
+      );
+      if (null != basePackage) packages.add(basePackage);
+    }
+    if (packages.size() > 0) this.basePackages.addAll(packages);
+    return this;
+  }
+
+  /**
+   * Step 2: (Optional / if created default context) Add packages for injections scan.
+   *
+   * @param basePackages base packages to components and injections scan.
+   * @return context initialization.
+   */
+  public DaggerokContext withBasePackages(final Package... basePackages) {
+    requireNonNull(basePackages, "base packages");
+    if (0 == basePackages.length) return this;
+    final String[] packageNames = new String[basePackages.length];
+    for (int i = 0; i < basePackages.length; i++) {
+      final Package aPackage = basePackages[i];
+      requireNonNull(aPackage, "a package");
+      packageNames[i] = aPackage.getName();
+    }
+    withBasePackageNames(packageNames);
+    return this;
+  }
+
+  /**
    * Step 2: Optionally configure component annotation. Default: {@link Singleton}
    *
    * Must be performed before applicationContext.initialize()
@@ -123,9 +198,7 @@ public class DaggerokContext extends TreeMap<Integer, HashSet<Constructor>> {
    * @return context initialization. Throw {@link NullPointerException} if passed component annotation is null.
    */
   public <A extends Annotation> DaggerokContext withComponents(final Class<A> componentAnnotation) {
-
     requireNonNull(componentAnnotation, "component annotation");
-
     this.componentAnnotation = componentAnnotation;
     return this;
   }
@@ -142,9 +215,7 @@ public class DaggerokContext extends TreeMap<Integer, HashSet<Constructor>> {
    * @return context initialization. Throw {@link NullPointerException} if passed injector annotation is null.
    */
   public <A extends Annotation> DaggerokContext withInjectors(final Class<A> injectAnnotation) {
-
     requireNonNull(injectAnnotation, "inject annotation");
-
     this.injectAnnotation = injectAnnotation;
     return this;
   }
@@ -210,9 +281,7 @@ public class DaggerokContext extends TreeMap<Integer, HashSet<Constructor>> {
    * @return context configuration.
    */
   public <T> DaggerokContext register(final Class<T> beanType, final T instance) {
-
     requireNonNull(beanType, "bean type");
-
     register(beanType.getName(), instance);
     return this;
   }
@@ -236,10 +305,8 @@ public class DaggerokContext extends TreeMap<Integer, HashSet<Constructor>> {
    * @return context configuration.
    */
   public <T> DaggerokContext register(final String beanName, final T instance) {
-
     requireNonNull(beanName, "bean name type");
     requireNonNull(instance, "instance");
-
     beans.put(beanName, instance);
     return this;
   }
@@ -323,95 +390,18 @@ public class DaggerokContext extends TreeMap<Integer, HashSet<Constructor>> {
   /* construct context required components base package scan initialization */
 
   private <C extends Class> DaggerokContext(final C... sources) {
-    setBasePackageNames(sources);
+    withBasePackageClasses(sources);
   }
 
   private <P extends Package> DaggerokContext(final P... packages) {
-    setBasePackageNames(packages);
+    withBasePackages(packages);
   }
 
   private DaggerokContext(final String... packageNames) {
-    setBasePackageNames(packageNames);
+    withBasePackageNames(packageNames);
   }
 
   /* components base package scan initialization */
-
-  /**
-   * @param baseClasses base classes to get it's packages to components and injections scan.
-   * @return context initialization.
-   */
-  private DaggerokContext setBasePackageNames(final Class... baseClasses) {
-
-    requireNonNull(baseClasses, "base package classes");
-
-    if (0 == baseClasses.length) return this;
-
-    final Package[] packages = new Package[baseClasses.length];
-
-    for (int i = 0; i < baseClasses.length; i++) {
-
-      final Class aClass = baseClasses[i];
-
-      requireNonNull(aClass, "a package class");
-      packages[i] = aClass.getPackage();
-    }
-
-    setBasePackageNames(packages);
-    return this;
-  }
-
-  /**
-   * @param basePackages base packages to components and injections scan.
-   * @return context initialization.
-   */
-  private DaggerokContext setBasePackageNames(final Package... basePackages) {
-
-    requireNonNull(basePackages, "base packages");
-
-    if (0 == basePackages.length) return this;
-
-    final String[] packageNames = new String[basePackages.length];
-
-    for (int i = 0; i < basePackages.length; i++) {
-
-      final Package aPackage = basePackages[i];
-
-      requireNonNull(aPackage, "a package");
-      packageNames[i] = aPackage.getName();
-    }
-
-    setBasePackageNames(packageNames);
-    return this;
-  }
-
-  /**
-   * Main base packages setter.
-   *
-   * @param basePackageNames base packages to components and injections scan.
-   * @return context initialization.
-   */
-  private DaggerokContext setBasePackageNames(final String... basePackageNames) {
-
-    requireNonNull(basePackageNames, "base package");
-
-    if (0 == basePackageNames.length) return this;
-
-    final ArrayList<String> packages = new ArrayList<String>();
-
-    for (final String basePackage : basePackageNames) {
-      if ("".equals(basePackage)) log.warn(
-          "Detected empty base package! We don't recommend use all included empty packages. It can decrease " +
-              "performance dramatically and cause some unknown errors depends on 3rd party libraries your are " +
-              "using. Please, create context with proper base package for scan including your application " +
-              "components only"
-      );
-      if (null != basePackage) packages.add(basePackage);
-    }
-
-    if (packages.size() > 0) this.basePackages.addAll(packages);
-
-    return this;
-  }
 
   /* helpers and DRY methods */
 
@@ -440,7 +430,14 @@ public class DaggerokContext extends TreeMap<Integer, HashSet<Constructor>> {
    */
   private DaggerokContext createNoArgComponents() {
 
-    final List<Constructor> constructors = findAllComponentsConstructorsByParameterCountAndEqual(0, true);
+    final List<Constructor> constructors = FinderBuilder
+        .builder()
+        .basePackages(basePackages)
+        .componentAnnotation(componentAnnotation)
+        .injectAnnotation(injectAnnotation)
+        .failOnUnknownReflectionsErrors(failOnUnknownReflectionsErrors)
+        .build()
+        .findAllComponentsConstructorsByParameterCountAndEqual(0, true);
 
     for (final Constructor constructor : constructors) {
 
@@ -451,35 +448,6 @@ public class DaggerokContext extends TreeMap<Integer, HashSet<Constructor>> {
     }
 
     return this;
-  }
-
-  /**
-   * Search for components according to it's constructor parameters amount.
-   *
-   * @param count amount of constructor parameters to be found.
-   * @param isEqual indicates equality of nonEquality to previous count argument.
-   * @return list of component classes annotated with @{@link Singleton} or it's componentAnnotation replacement
-   *         as well as classes containing constructor annotated with @{@link Inject}.
-   */
-  private List<Constructor> findAllComponentsConstructorsByParameterCountAndEqual(final int count, boolean isEqual) {
-
-    final Set<Constructor> allConstructors = new HashSet<Constructor>(findAllInjects());
-    final Set<Constructor> constructors = new HashSet<Constructor>();
-
-    for (final Class component : findAllComponents()) {
-      allConstructors.addAll(Arrays.asList(component.getConstructors()));
-    }
-
-    for (final Constructor constructor : allConstructors) {
-
-      final int parametersCount = constructor.getParameterTypes().length;
-      final boolean searchCriteriaIsMatched = isEqual
-          ? count == parametersCount : count != parametersCount;
-
-      if (searchCriteriaIsMatched) constructors.add(constructor);
-    }
-
-    return new ArrayList<Constructor>(constructors);
   }
 
   /**
@@ -554,8 +522,14 @@ public class DaggerokContext extends TreeMap<Integer, HashSet<Constructor>> {
    * @return list of classes injectors with more than zero arguments.
    */
   private List<Constructor> findParametrizedInjectConstructors() {
-
-    final List<Constructor> injects = findAllInjects();
+    final List<Constructor> injects = FinderBuilder
+        .builder()
+        .basePackages(basePackages)
+        .componentAnnotation(componentAnnotation)
+        .injectAnnotation(injectAnnotation)
+        .failOnUnknownReflectionsErrors(failOnUnknownReflectionsErrors)
+        .build()
+        .findAllInjects();
     final Set<Constructor> parametrizedConstructors = new HashSet<Constructor>();
 
     for (final Constructor constructor : injects) {
@@ -572,17 +546,12 @@ public class DaggerokContext extends TreeMap<Integer, HashSet<Constructor>> {
    * @return sorted map by argument count to constructors set.
    */
   private TreeMap<Integer, HashSet<Constructor>> getInjectorsMap(final List<Constructor> injects) {
-
     requireNonNull(injects, "injects");
-
     final TreeMap<Integer, HashSet<Constructor>> unresolved = new TreeMap<Integer, HashSet<Constructor>>();
-
     for (final Constructor constructor : injects) {
-
       final int count = constructor.getParameterTypes().length;
       final HashSet<Constructor> container = unresolved.get(count);
       final HashSet<Constructor> constructors = null == container ? new HashSet<Constructor>() : container;
-
       constructors.add(constructor);
       unresolved.put(count, constructors);
     }
@@ -590,7 +559,6 @@ public class DaggerokContext extends TreeMap<Integer, HashSet<Constructor>> {
   }
 
   private int countTotalItemsValues(final TreeMap<Integer, HashSet<Constructor>> map) {
-
     int total = 0;
     for (final Entry<Integer, HashSet<Constructor>> item : map.entrySet()) {
       total += item.getValue().size();
@@ -614,26 +582,18 @@ public class DaggerokContext extends TreeMap<Integer, HashSet<Constructor>> {
    * @return beans from application context according to it's type.
    */
   private ArrayList<Object> parseParams(final Class[] parameterTypes) {
-
     final ArrayList<Object> params = new ArrayList<Object>();
-
     for (final Class<?> type : parameterTypes) {
-
       final Object bean = getBean(type);
-
       if (null != bean) params.add(bean);
-
       else for (final Constructor constructor : type.getConstructors()) {
         if (0 != constructor.getParameterTypes().length) continue;
-
         final Object instance = injectAndRegister(type, constructor);
         if (null == instance) continue;
-
         params.add(getBean(type));
         break;
       }
     }
-
     return params;
   }
 
@@ -677,7 +637,6 @@ public class DaggerokContext extends TreeMap<Integer, HashSet<Constructor>> {
    */
   @SuppressWarnings("unchecked")
   private Object newInstance(final Constructor constructor, final Object... parameters) {
-
     try {
 
       return constructor.newInstance(parameters);
@@ -693,123 +652,5 @@ public class DaggerokContext extends TreeMap<Integer, HashSet<Constructor>> {
       log.error("Bean instance '{}' creation with parameters '{}' failed.", type.getName(), parameters, error);
       throw error;
     }
-  }
-
-  /* reflections vendor API */
-
-  /**
-   * Validate base package for beans scan and return found injectors constructors.
-   *
-   * @return list of classes injectors containing constructors annotated with @{@link Inject}
-   * or it's injectAnnotation replacement.
-   */
-  private List<Constructor> findAllInjects() {
-
-    requireNotEmpty(basePackages, "list of base packages may not be empty.");
-
-    final MethodAnnotationsScanner scanner = new MethodAnnotationsScanner();
-    final Set<Constructor> injects = new HashSet<Constructor>();
-
-    for (final String basePackage : basePackages) {
-
-      try {
-
-        if (log.isDebugEnabled()) log.debug("processing package '{}' for {} injectors",
-                                            basePackage, injectAnnotation.getName());
-
-        final Reflections reflections = new Reflections(basePackage, scanner);
-        injects.addAll(reflections.getConstructorsAnnotatedWith(injectAnnotation));
-      }
-
-      catch (final Throwable e) {
-
-        if (log.isDebugEnabled()) log.debug("Reflections filed: {}", e.getLocalizedMessage());
-        if (!failOnUnknownReflectionsErrors) continue; // skip any ReflectionsExceptions...
-
-        log.error(e.getLocalizedMessage(), e);
-        throw new WrappedReflectionsException(e);
-      }
-    }
-
-    return new ArrayList<Constructor>(injects);
-  }
-
-  /**
-   * Validate base package for beans scan and return found component classes.
-   *
-   * @return list of component classes annotated with @{@link Singleton} or it's componentAnnotation replacement
-   */
-  private List<Class> findAllComponents() {
-
-    requireNotEmpty(basePackages, "list of base packages may not be empty.");
-
-    final Set<Class> components = new HashSet<Class>();
-
-    for (final String basePackage : basePackages) {
-
-      try {
-
-        if (log.isDebugEnabled()) log.debug("processing package '{}' for {} components",
-                                            basePackage, componentAnnotation.getName());
-
-        final Reflections reflections = new Reflections(basePackage);
-        // Searching all @Singleton classes
-        components.addAll(reflections.getTypesAnnotatedWith(componentAnnotation));
-      }
-
-      catch (final Throwable e) {
-
-        if (log.isDebugEnabled()) log.debug("Reflections filed: {}", e.getLocalizedMessage());
-        if (!failOnUnknownReflectionsErrors) continue; // skip any ReflectionsExceptions...
-
-        log.error(e.getLocalizedMessage(), e);
-        throw new WrappedReflectionsException(e);
-      }
-    }
-
-    return new ArrayList<Class>(components);
-  }
-
-  /* internal validation API */
-
-  /**
-   * Throws {@link NullPointerException} if given argument is null.
-   * @param o could be anything.
-   * @param variableName variable name to be used in error message.
-   */
-  private static void requireNonNull(final Object o, final String variableName) {
-
-    if (null != o) return;
-
-    final NullPointerException exception = new NullPointerException(format("%s may not be null.", variableName));
-    log.error(exception.getLocalizedMessage(), exception);
-    throw exception;
-  }
-
-  /**
-   * Throws {@link NullPointerException} if list is null.
-   * Throws {@link IllegalStateException} if list doesn't contains non-null / non-empty package names.
-   *
-   * @param basePackages list of base package names.
-   * @param messages error message.
-   */
-  private void requireNotEmpty(final List<String> basePackages, final String messages) {
-
-    requireNonNull(basePackages, "base packages");
-
-    final ArrayList<String> result = new ArrayList<String>();
-
-    for (final String packageName : basePackages) {
-      if (null == packageName) continue;
-      //// allow empty package
-      //if ("".equals(packageName.trim())) continue;
-      result.add(packageName);
-    }
-
-    if (result.size() > 0) return;
-
-    final IllegalStateException exception = new IllegalStateException(messages);
-    log.error(exception.getLocalizedMessage(), exception);
-    throw exception;
   }
 }
