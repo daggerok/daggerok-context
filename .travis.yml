@@ -36,10 +36,11 @@ script:
 ## JitPack
 #- |
 #  for sample in \
-#    jitpack001 \
-#    jitpack100 \
-#    jitpack101 \
 #    jitpackmaster \
+#    jitpack103 \
+#    jitpack101 \
+#    jitpack100 \
+#    jitpack001 \
 #  ; do
 #    cd $root/samples/$sample
 #    pwd
@@ -67,10 +68,10 @@ script:
 # bintray
 - |
   for sample in \
-    bintray001 \
-    bintray100 \
-    bintray101 \
     bintray102 \
+    bintray101 \
+    bintray100 \
+    bintray001 \
   ; do
     rm -rf ~/.m2/repository/com/github/daggerok/daggerok-context
     rm -rf ~/.gradle/caches/modules-2/files-2.1/com.github.daggerok/daggerok-contex
@@ -89,8 +90,8 @@ script:
 # central
 - |
   for sample in \
-    central101 \
     central102 \
+    central101 \
   ; do
     rm -rf ~/.m2/repository/com/github/daggerok/daggerok-context
     rm -rf ~/.gradle/caches/modules-2/files-2.1/com.github.daggerok/daggerok-contex
