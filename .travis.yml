@@ -68,6 +68,7 @@ script:
 # bintray
 - |
   for sample in \
+    bintray103 \
     bintray102 \
     bintray101 \
     bintray100 \
@@ -92,6 +93,7 @@ script:
 # central
 - |
   for sample in \
+    central103 \
     central102 \
     central101 \
   ; do
