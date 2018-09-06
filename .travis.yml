@@ -121,7 +121,7 @@ after_script:
 - test ".${TRAVIS_BRANCH}" = ".master" && echo "signing.keyId=$SIGNING_KEY_ID"                                  >> ~/.gradle/gradle.properties
 - test ".${TRAVIS_BRANCH}" = ".master" && echo "signing.password=$SIGNING_PASSWORD"                             >> ~/.gradle/gradle.properties
 - test ".${TRAVIS_BRANCH}" = ".master" && echo "signing.secretKeyRingFile=$(pwd)/.gnupg/secring.gpg"            >> ~/.gradle/gradle.properties
-- test ".${TRAVIS_BRANCH}" = ".master" && echo 'apply from:\ "$project.projectDir/gradle/maven-central.gradle"' >> build.gradle
+- test ".${TRAVIS_BRANCH}" = ".master" && echo 'apply from:\\ "$project.projectDir/gradle/maven-central.gradle"' >> build.gradle
 - test ".${TRAVIS_BRANCH}" = ".master" && cat build.gradle
 - test ".${TRAVIS_BRANCH}" = ".master" && ./gradlew clean assemble
 - test ".${TRAVIS_BRANCH}" = ".master" && ./gradlew -Si uploadArchives
