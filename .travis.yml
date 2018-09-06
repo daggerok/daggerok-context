@@ -71,7 +71,6 @@ script:
     bintray103 \
     bintray102 \
     bintray101 \
-    bintray100 \
     bintray001 \
   ; do
     cd $root/samples/$sample
@@ -93,7 +92,6 @@ script:
 # central
 - |
   for sample in \
-    central103 \
     central102 \
     central101 \
   ; do
