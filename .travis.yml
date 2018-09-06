@@ -33,16 +33,36 @@ script:
 - ./mvnw
 - ./gradlew
 
-# master-SNAPSHOT
-- export sample=jitpackmaster
-- cd $root/samples/$sample
-- ./mvnw -U
-- java -jar ./target/*-all.jar
-- java -jar ./target/*-all.jar trololo
-- java -jar ./target/*-all.jar $sample
-- bash gradlew --refresh-dependencies
-- bash build/install/$sample/bin/$sample
-- bash ./build/install/$sample/bin/$sample trololo
+## JitPack
+#- |
+#  for sample in \
+#    jitpack001 \
+#    jitpack100 \
+#    jitpack101 \
+#    jitpackmaster \
+#  ; do
+#    cd $root/samples/$sample
+#    pwd
+#    ./mvnw -U
+#    java -jar ./target/*-all.jar
+#    java -jar ./target/*-all.jar trololo
+#    java -jar ./target/*-all.jar $sample
+#    ./gradlew --refresh-dependencies
+#    bash ./build/install/$sample/bin/$sample
+#    bash ./build/install/$sample/bin/$sample trololo
+#    bash ./build/install/$sample/bin/$sample $sample
+#  done
+#
+## master-SNAPSHOT
+#- export sample=jitpackmaster
+#- cd $root/samples/$sample
+#- ./mvnw -U
+#- java -jar ./target/*-all.jar
+#- java -jar ./target/*-all.jar trololo
+#- java -jar ./target/*-all.jar $sample
+#- bash gradlew --refresh-dependencies
+#- bash build/install/$sample/bin/$sample
+#- bash ./build/install/$sample/bin/$sample trololo
 
 # bintray
 - |
@@ -82,27 +102,7 @@ script:
     bash ./build/install/$sample/bin/$sample $sample
   done
 
-## JitPack
-#- |
-#  for sample in \
-#    jitpack001 \
-#    jitpack100 \
-#    jitpack101 \
-#    jitpackmaster \
-#  ; do
-#    cd $root/samples/$sample
-#    pwd
-#    ./mvnw -U
-#    java -jar ./target/*-all.jar
-#    java -jar ./target/*-all.jar trololo
-#    java -jar ./target/*-all.jar $sample
-#    ./gradlew --refresh-dependencies
-#    bash ./build/install/$sample/bin/$sample
-#    bash ./build/install/$sample/bin/$sample trololo
-#    bash ./build/install/$sample/bin/$sample $sample
-#  done
-
-after_script:
+#deploy:
 - cd ${root}/
 - chmod 0600 .gnupg/gpg.conf
 #
