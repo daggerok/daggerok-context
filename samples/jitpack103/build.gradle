@@ -1,0 +1,54 @@
+buildscript {
+  ext {
+    daggerokContextVersion = '1.0.3'
+    javaVersion = '1.8'
+  }
+}
+
+plugins {
+  id 'idea'
+  id 'java'
+  id 'eclipse'
+  id 'application'
+  id 'maven-publish'
+  id 'com.github.johnrengelman.shadow' version '2.0.4'
+}
+
+group = 'daggerok'
+version = '0.0.1'
+sourceCompatibility = targetCompatibility = "$javaVersion"
+
+mainClassName = 'daggerok.App'
+shadowJar.mustRunAfter jar
+
+publishing {
+  publications {
+    shadow(MavenPublication) { publication ->
+      project.shadow.component(publication)
+    }
+  }
+  repositories {
+    maven {
+      url "$buildDir/maven-publish"
+    }
+  }
+}
+
+defaultTasks 'clean', 'build', 'installDist', 'distZip', 'publish'
+
+repositories {
+  // JitPack 1:
+  maven { url 'https://jitpack.io' }
+  //
+  mavenCentral()
+}
+
+dependencies {
+  // JitPack 2:
+  implementation "com.github.daggerok:daggerok-context:$daggerokContextVersion"
+}
+
+wrapper {
+  gradleVersion = '4.10'
+  distributionType = 'BIN'
+}
