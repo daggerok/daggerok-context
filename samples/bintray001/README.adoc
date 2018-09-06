@@ -1,0 +1,53 @@
+= bintray 0.0.1 (java 1.5 release) daggerok-context sample
+
+//tag::content[]
+.build, run and test
+[source,groovy]
+----
+bash ./gradlew
+bash ./build/install/bintray001/bin/bintray001
+----
+
+.resolve bintray dependency using gradle (build.gradle):
+[source,groovy]
+----
+buildscript {
+  ext {
+    daggerokContextVersion = "1.0.0"
+  }
+}
+
+allprojects {
+  repositories {
+    maven { url "https://dl.bintray.com/daggerok/daggerok" }
+  }
+}
+
+dependencies {
+  compile "com.github.daggerok:daggerok-context:$daggerokContextVersion"
+}
+----
+
+.resolve bintray dependency using maven (pom.xml)
+[source,xml]
+----
+  <properties>
+    <daggerok-context.version>1.0.0</daggerok-context.version>
+  </properties>
+
+  <repositories>
+    <repository>
+      <id>bintray-daggerok-daggerok</id>
+      <url>https://dl.bintray.com/daggerok/daggerok</url>
+    </repository>
+  </repositories>
+
+  <dependencies>
+    <dependency>
+      <groupId>com.github.daggerok</groupId>
+      <artifactId>daggerok-context</artifactId>
+      <version>${daggerok-context.version}</version>
+    </dependency>
+  </dependencies>
+----
+//end::content[]

@@ -153,7 +153,7 @@ public class MyAppTest {
 [source,java]
 ----
 // empty context (with simgle bean registred: DaggerokContext):
-DaggerokContext.create(MyApp.class);
+DaggerokContext.create();
 
 // by base class:
 DaggerokContext.create(MyApp.class);
@@ -172,11 +172,24 @@ DaggerokContext.create(Package.getPackages());
 ----
 
 === User configurations:
+. `DaggerokContext#withBasePackageClasses(Class...)`
+. `DaggerokContext#withBasePackageNames(String...)`
+. `DaggerokContext#withBasePackages(Package...)`
 . `DaggerokContext#withComponents(Annotation)`
 . `DaggerokContext#withInjectors(Annotation)`
 . `DaggerokContext#failOnInjectNullRef(boolean)`
 . `DaggerokContext#failOnBeanCreationError(boolean)`
 . `DaggerokContext#failOnUnknownReflectionsErrors(boolean)`
+
+.create simple (empty) context and add base packages configurations for scan
+[source,java]
+----
+final DaggerokContext applicationContext = DaggerokContext.create();
+// ...
+applicationContext.withBasePackageNames("my.app");
+applicationContext.withBasePackageClasses(my.app.Config);
+applicationContext.withBasePackages(Package.getPackage("my.other.app.pkg"));
+----
 
 .set custom component annotation
 [source,java]
