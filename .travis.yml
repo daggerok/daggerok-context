@@ -81,25 +81,25 @@ script:
     bash ./build/install/$sample/bin/$sample $sample
   done
 
-# JitPack
-- |
-  for sample in \
-    jitpack001 \
-    jitpack100 \
-    jitpack101 \
-    jitpackmaster \
-  ; do
-    cd $root/samples/$sample
-    pwd
-    ./mvnw -U
-    java -jar ./target/*-all.jar
-    java -jar ./target/*-all.jar trololo
-    java -jar ./target/*-all.jar $sample
-    ./gradlew --refresh-dependencies
-    bash ./build/install/$sample/bin/$sample
-    bash ./build/install/$sample/bin/$sample trololo
-    bash ./build/install/$sample/bin/$sample $sample
-  done
+## JitPack
+#- |
+#  for sample in \
+#    jitpack001 \
+#    jitpack100 \
+#    jitpack101 \
+#    jitpackmaster \
+#  ; do
+#    cd $root/samples/$sample
+#    pwd
+#    ./mvnw -U
+#    java -jar ./target/*-all.jar
+#    java -jar ./target/*-all.jar trololo
+#    java -jar ./target/*-all.jar $sample
+#    ./gradlew --refresh-dependencies
+#    bash ./build/install/$sample/bin/$sample
+#    bash ./build/install/$sample/bin/$sample trololo
+#    bash ./build/install/$sample/bin/$sample $sample
+#  done
 
 after_script:
 - cd ${root}/
@@ -120,7 +120,7 @@ after_script:
 - test ".${TRAVIS_BRANCH}" = ".master" && echo "signing.keyId=$SIGNING_KEY_ID"                                  >> ~/.gradle/gradle.properties
 - test ".${TRAVIS_BRANCH}" = ".master" && echo "signing.password=$SIGNING_PASSWORD"                             >> ~/.gradle/gradle.properties
 - test ".${TRAVIS_BRANCH}" = ".master" && echo "signing.secretKeyRingFile=$(pwd)/.gnupg/secring.gpg"            >> ~/.gradle/gradle.properties
-- test ".${TRAVIS_BRANCH}" = ".master" && echo 'apply from:\ "$project.projectDir/gradle/maven-central.gradle"' >> ~/.gradle/gradle.properties
+- test ".${TRAVIS_BRANCH}" = ".master" && echo 'apply from:\ "$project.projectDir/gradle/maven-central.gradle"' >> build.gradle
 - test ".${TRAVIS_BRANCH}" = ".master" && cat build.gradle
 - test ".${TRAVIS_BRANCH}" = ".master" && ./gradlew clean assemble
 - test ".${TRAVIS_BRANCH}" = ".master" && ./gradlew -Si uploadArchives
