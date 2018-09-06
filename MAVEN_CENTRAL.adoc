@@ -27,7 +27,7 @@ uid                  Maksim Kostromin (daggerok) <daggerok@gmail.com>
 ssb   2048R/7D692BAD 2018-04-14
 
 # test key
-gpg2 -ab build/libs/daggerok-context-1.0.2.jar
+gpg2 -ab build/libs/daggerok-context-1.0.3.jar
 
 # distributing public key
 gpg2 --keyserver hkp://pool.sks-keyservers.net --send-keys A5252B5B

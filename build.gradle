@@ -6,8 +6,6 @@ buildscript {
     slf4jVersion = '1.7.25'
     junitVersion = '4.12'
     injectVersion = '1'
-
-    // publication
     vcsUrl = 'https://github.com/daggerok/daggerok-context.git'
   }
 }
@@ -21,7 +19,7 @@ plugins {
   id 'com.jfrog.bintray' version '1.8.4' apply false
 }
 
-version = '1.0.3'
+version = '1.0.4'
 group = 'com.github.daggerok'
 archivesBaseName = 'daggerok-context'
 description = 'Daggerok Context - Java dependency injection library.'
@@ -42,22 +40,15 @@ compileJava {
 }
 
 dependencies {
-
-  // Reflections
-  compile("org.reflections:reflections:$reflectionsVersion")
-
-  // JSR-330
-  compile("javax.inject:javax.inject:$injectVersion")
-
-  // Logging
-  compile("org.slf4j:slf4j-api:$slf4jVersion")
+  implementation("org.reflections:reflections:$reflectionsVersion")
+  implementation("javax.inject:javax.inject:$injectVersion")
+  implementation("org.slf4j:slf4j-api:$slf4jVersion")
 
   runtime("ch.qos.logback:logback-classic:$logbackVersion")
   compileOnly("ch.qos.logback:logback-classic:$logbackVersion")
+  testImplementation("ch.qos.logback:logback-classic:$logbackVersion")
 
-  // Testing
-  testCompileOnly("ch.qos.logback:logback-classic:$logbackVersion")
-  testCompile("junit:junit:$junitVersion")
+  testImplementation("junit:junit:$junitVersion")
 }
 
 wrapper {

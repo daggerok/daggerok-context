@@ -7,7 +7,7 @@
 
   <groupId>com.github.daggerok</groupId>
   <artifactId>daggerok-context</artifactId>
-  <version>1.0.3</version>
+  <version>1.0.4</version>
   <packaging>jar</packaging>
 
   <name>${project.groupId}:${project.artifactId}</name>
@@ -76,6 +76,7 @@
       <artifactId>slf4j-api</artifactId>
       <version>${slf4j.version}</version>
     </dependency>
+
     <dependency>
       <groupId>ch.qos.logback</groupId>
       <artifactId>logback-classic</artifactId>
@@ -202,41 +203,6 @@
           </execution>
         </executions>
       </plugin>
-
-      <!-- fat jar
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-assembly-plugin</artifactId>
-        <version>3.1.0</version>
-
-        <configuration>
-          <finalName>${project.artifactId}-${project.version}-all</finalName>
-
-          <appendAssemblyId>false</appendAssemblyId>
-
-          <descriptorRefs>
-            <descriptorRef>jar-with-dependencies</descriptorRef>
-          </descriptorRefs>
-
-          <archive>
-            <manifest>
-              <mainClass>daggerok.App</mainClass>
-            </manifest>
-          </archive>
-        </configuration>
-
-        <executions>
-          <execution>
-            <id>assemble-jar-with-dependencies</id>
-            <phase>package</phase>
-            <goals>
-              <goal>single</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
-      -->
     </plugins>
   </build>
-
 </project>

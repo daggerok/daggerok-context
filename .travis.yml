@@ -73,14 +73,16 @@ script:
     bintray100 \
     bintray001 \
   ; do
-    rm -rf ~/.m2/repository/com/github/daggerok/daggerok-context
-    rm -rf ~/.gradle/caches/modules-2/files-2.1/com.github.daggerok/daggerok-contex
     cd $root/samples/$sample
     pwd
+    rm -rf ~/.m2/repository/com/github/daggerok/daggerok-context
+    rm -rf ~/.gradle/caches/modules-2/files-2.1/com.github.daggerok/daggerok-contex
     ./mvnw -U
     java -jar ./target/*-all.jar
     java -jar ./target/*-all.jar trololo
     java -jar ./target/*-all.jar $sample
+    rm -rf ~/.m2/repository/com/github/daggerok/daggerok-context
+    rm -rf ~/.gradle/caches/modules-2/files-2.1/com.github.daggerok/daggerok-contex
     ./gradlew --refresh-dependencies
     bash ./build/install/$sample/bin/$sample
     bash ./build/install/$sample/bin/$sample trololo
@@ -93,14 +95,16 @@ script:
     central102 \
     central101 \
   ; do
-    rm -rf ~/.m2/repository/com/github/daggerok/daggerok-context
-    rm -rf ~/.gradle/caches/modules-2/files-2.1/com.github.daggerok/daggerok-contex
     cd $root/samples/$sample
     pwd
+    rm -rf ~/.m2/repository/com/github/daggerok/daggerok-context
+    rm -rf ~/.gradle/caches/modules-2/files-2.1/com.github.daggerok/daggerok-contex
     ./mvnw -U
     java -jar ./target/*-all.jar
     java -jar ./target/*-all.jar trololo
     java -jar ./target/*-all.jar $sample
+    rm -rf ~/.m2/repository/com/github/daggerok/daggerok-context
+    rm -rf ~/.gradle/caches/modules-2/files-2.1/com.github.daggerok/daggerok-contex
     ./gradlew --refresh-dependencies
     bash ./build/install/$sample/bin/$sample
     bash ./build/install/$sample/bin/$sample trololo
