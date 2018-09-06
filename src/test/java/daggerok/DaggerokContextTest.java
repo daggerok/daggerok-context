@@ -9,7 +9,10 @@ import java.util.Map;
 import java.util.Set;
 
 import static java.util.Collections.singletonMap;
-import static org.junit.Assert.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 public class DaggerokContextTest {
 
@@ -82,5 +85,19 @@ public class DaggerokContextTest {
     assertEquals(namedString, classString);
 
     assertEquals("my other string", applicationContext.getBean("myOtherString"));
+  }
+
+  @Test
+  public void register_empty_context_test() {
+
+    final DaggerokContext applicationContext = DaggerokContext.create()
+                                                        .initialize();
+    assertThat(applicationContext.size()).isEqualTo(1);
+
+    final DaggerokContext updatedContext = applicationContext.register(String.class, "ololo");
+    assertThat(updatedContext.size()).isEqualTo(2);
+
+    final String bean = updatedContext.getBean(String.class);
+    assertThat(bean).isEqualTo("ololo");
   }
 }

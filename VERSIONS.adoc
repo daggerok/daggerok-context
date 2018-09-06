@@ -5,8 +5,13 @@ see link:./BINTRAY.adoc[bintray] and link:./JITPACK.adoc[jitpack] READMEs to pic
 |===
 |bintray jcenter|maven central|jitpack|minimal JDK support
 
+|1.0.4
+|1.0.4
+|-
+|1.5+
+
 |1.0.3
-|1.0.3
+|-
 |1.0.3
 |1.5+
 

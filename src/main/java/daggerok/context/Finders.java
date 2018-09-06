@@ -143,8 +143,9 @@ class Finders {
 
       for (final Constructor constructor : allConstructors) {
         final int parametersCount = constructor.getParameterTypes().length;
-        final boolean searchCriteriaIsMatched = isEqual
-            ? count == parametersCount : count != parametersCount;
+        // final boolean searchCriteriaIsMatched = isEqual
+        //     ? count == parametersCount : count != parametersCount;
+        final boolean searchCriteriaIsMatched = isEqual == (count == parametersCount);
         if (searchCriteriaIsMatched) constructors.add(constructor);
       }
 

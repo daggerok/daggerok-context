@@ -16,17 +16,17 @@ echo 'bintrayApiKey=Bintray.api.key...' >> ~/.gradle/gradle.properties
 ./gradlew -S clean bintrayUpload
 
 ## output:
-# Uploading to https://api.bintray.com/content/daggerok/daggerok/daggerok-context/1.0.2/com/github/daggerok/daggerok-context/1.0.2/daggerok-context-1.0.2-javadoc.jar...
-# Uploaded to 'https://api.bintray.com/content/daggerok/daggerok/daggerok-context/1.0.2/com/github/daggerok/daggerok-context/1.0.2/daggerok-context-1.0.2-javadoc.jar'.
-# Uploading to https://api.bintray.com/content/daggerok/daggerok/daggerok-context/1.0.2/com/github/daggerok/daggerok-context/1.0.2/daggerok-context-1.0.2-1.5.jar...
-# Uploaded to 'https://api.bintray.com/content/daggerok/daggerok/daggerok-context/1.0.2/com/github/daggerok/daggerok-context/1.0.2/daggerok-context-1.0.2-1.5.jar'.
-# Uploading to https://api.bintray.com/content/daggerok/daggerok/daggerok-context/1.0.2/com/github/daggerok/daggerok-context/1.0.2/daggerok-context-1.0.2-sources.jar...
-# Uploaded to 'https://api.bintray.com/content/daggerok/daggerok/daggerok-context/1.0.2/com/github/daggerok/daggerok-context/1.0.2/daggerok-context-1.0.2-sources.jar'.
-# Uploading to https://api.bintray.com/content/daggerok/daggerok/daggerok-context/1.0.2/com/github/daggerok/daggerok-context/1.0.2/daggerok-context-1.0.2-1.5-sources.jar...
-# Uploaded to 'https://api.bintray.com/content/daggerok/daggerok/daggerok-context/1.0.2/com/github/daggerok/daggerok-context/1.0.2/daggerok-context-1.0.2-1.5-sources.jar'.
-# Uploading to https://api.bintray.com/content/daggerok/daggerok/daggerok-context/1.0.2/com/github/daggerok/daggerok-context/1.0.2/daggerok-context-1.0.2.jar...
-# Uploaded to 'https://api.bintray.com/content/daggerok/daggerok/daggerok-context/1.0.2/com/github/daggerok/daggerok-context/1.0.2/daggerok-context-1.0.2.jar'.
-# Uploaded to 'https://api.bintray.com/content/daggerok/daggerok/daggerok-context/1.0.2/com/github/daggerok/daggerok-context/1.0.2/daggerok-context-1.0.2.pom'.
+# Uploading to https://api.bintray.com/content/daggerok/daggerok/daggerok-context/1.0.4/com/github/daggerok/daggerok-context/1.0.4/daggerok-context-1.0.4-javadoc.jar...
+# Uploaded to 'https://api.bintray.com/content/daggerok/daggerok/daggerok-context/1.0.4/com/github/daggerok/daggerok-context/1.0.4/daggerok-context-1.0.4-javadoc.jar'.
+# Uploading to https://api.bintray.com/content/daggerok/daggerok/daggerok-context/1.0.4/com/github/daggerok/daggerok-context/1.0.4/daggerok-context-1.0.4-1.5.jar...
+# Uploaded to 'https://api.bintray.com/content/daggerok/daggerok/daggerok-context/1.0.4/com/github/daggerok/daggerok-context/1.0.4/daggerok-context-1.0.4-1.5.jar'.
+# Uploading to https://api.bintray.com/content/daggerok/daggerok/daggerok-context/1.0.4/com/github/daggerok/daggerok-context/1.0.4/daggerok-context-1.0.4-sources.jar...
+# Uploaded to 'https://api.bintray.com/content/daggerok/daggerok/daggerok-context/1.0.4/com/github/daggerok/daggerok-context/1.0.4/daggerok-context-1.0.4-sources.jar'.
+# Uploading to https://api.bintray.com/content/daggerok/daggerok/daggerok-context/1.0.4/com/github/daggerok/daggerok-context/1.0.4/daggerok-context-1.0.4-1.5-sources.jar...
+# Uploaded to 'https://api.bintray.com/content/daggerok/daggerok/daggerok-context/1.0.4/com/github/daggerok/daggerok-context/1.0.4/daggerok-context-1.0.4-1.5-sources.jar'.
+# Uploading to https://api.bintray.com/content/daggerok/daggerok/daggerok-context/1.0.4/com/github/daggerok/daggerok-context/1.0.4/daggerok-context-1.0.4.jar...
+# Uploaded to 'https://api.bintray.com/content/daggerok/daggerok/daggerok-context/1.0.4/com/github/daggerok/daggerok-context/1.0.4/daggerok-context-1.0.4.jar'.
+# Uploaded to 'https://api.bintray.com/content/daggerok/daggerok/daggerok-context/1.0.4/com/github/daggerok/daggerok-context/1.0.4/daggerok-context-1.0.4.pom'.
 ----
 ////
 
@@ -58,40 +58,40 @@ echo 'signing.secretKeyRingFile=/Users/mak/.gnupg/secring.gpg' >> ~/.gradle/grad
 
 ## output:
 # Deploying to https://oss.sonatype.org/service/local/staging/deploy/maven2/
-# Uploading: com/github/daggerok/daggerok-context/1.0.2/daggerok-context-1.0.2.jar to repository remote at https://oss.sonatype.org/service/local/staging/deploy/maven2/
+# Uploading: com/github/daggerok/daggerok-context/1.0.4/daggerok-context-1.0.4.jar to repository remote at https://oss.sonatype.org/service/local/staging/deploy/maven2/
 # Transferring 10K from remote
 # Uploaded 10K
-# Uploading: com/github/daggerok/daggerok-context/1.0.2/daggerok-context-1.0.2.pom to repository remote at https://oss.sonatype.org/service/local/staging/deploy/maven2/
+# Uploading: com/github/daggerok/daggerok-context/1.0.4/daggerok-context-1.0.4.pom to repository remote at https://oss.sonatype.org/service/local/staging/deploy/maven2/
 # Transferring 2K from remote
 # Uploaded 2K
-# Uploading: com/github/daggerok/daggerok-context/1.0.2/daggerok-context-1.0.2-sources.jar to repository remote at https://oss.sonatype.org/service/local/staging/deploy/maven2/
+# Uploading: com/github/daggerok/daggerok-context/1.0.4/daggerok-context-1.0.4-sources.jar to repository remote at https://oss.sonatype.org/service/local/staging/deploy/maven2/
 # Transferring 7K from remote
 # Uploaded 7K
-# Uploading: com/github/daggerok/daggerok-context/1.0.2/daggerok-context-1.0.2-1.5.jar to repository remote at https://oss.sonatype.org/service/local/staging/deploy/maven2/
+# Uploading: com/github/daggerok/daggerok-context/1.0.4/daggerok-context-1.0.4-1.5.jar to repository remote at https://oss.sonatype.org/service/local/staging/deploy/maven2/
 # Transferring 10K from remote
 # Uploaded 10K
-# Uploading: com/github/daggerok/daggerok-context/1.0.2/daggerok-context-1.0.2-1.5.jar.asc to repository remote at https://oss.sonatype.org/service/local/staging/deploy/maven2/
+# Uploading: com/github/daggerok/daggerok-context/1.0.4/daggerok-context-1.0.4-1.5.jar.asc to repository remote at https://oss.sonatype.org/service/local/staging/deploy/maven2/
 # Transferring 0K from remote
 # Uploaded 0K
-# Uploading: com/github/daggerok/daggerok-context/1.0.2/daggerok-context-1.0.2.jar.asc to repository remote at https://oss.sonatype.org/service/local/staging/deploy/maven2/
+# Uploading: com/github/daggerok/daggerok-context/1.0.4/daggerok-context-1.0.4.jar.asc to repository remote at https://oss.sonatype.org/service/local/staging/deploy/maven2/
 # Transferring 0K from remote
 # Uploaded 0K
-# Uploading: com/github/daggerok/daggerok-context/1.0.2/daggerok-context-1.0.2-javadoc.jar to repository remote at https://oss.sonatype.org/service/local/staging/deploy/maven2/
+# Uploading: com/github/daggerok/daggerok-context/1.0.4/daggerok-context-1.0.4-javadoc.jar to repository remote at https://oss.sonatype.org/service/local/staging/deploy/maven2/
 # Transferring 32K from remote
 # Uploaded 32K
-# Uploading: com/github/daggerok/daggerok-context/1.0.2/daggerok-context-1.0.2-1.5-sources.jar to repository remote at https://oss.sonatype.org/service/local/staging/deploy/maven2/
+# Uploading: com/github/daggerok/daggerok-context/1.0.4/daggerok-context-1.0.4-1.5-sources.jar to repository remote at https://oss.sonatype.org/service/local/staging/deploy/maven2/
 # Transferring 7K from remote
 # Uploaded 7K
-# Uploading: com/github/daggerok/daggerok-context/1.0.2/daggerok-context-1.0.2-javadoc.jar.asc to repository remote at https://oss.sonatype.org/service/local/staging/deploy/maven2/
+# Uploading: com/github/daggerok/daggerok-context/1.0.4/daggerok-context-1.0.4-javadoc.jar.asc to repository remote at https://oss.sonatype.org/service/local/staging/deploy/maven2/
 # Transferring 0K from remote
 # Uploaded 0K
-# Uploading: com/github/daggerok/daggerok-context/1.0.2/daggerok-context-1.0.2-1.5-sources.jar.asc to repository remote at https://oss.sonatype.org/service/local/staging/deploy/maven2/
+# Uploading: com/github/daggerok/daggerok-context/1.0.4/daggerok-context-1.0.4-1.5-sources.jar.asc to repository remote at https://oss.sonatype.org/service/local/staging/deploy/maven2/
 # Transferring 0K from remote
 # Uploaded 0K
-# Uploading: com/github/daggerok/daggerok-context/1.0.2/daggerok-context-1.0.2-sources.jar.asc to repository remote at https://oss.sonatype.org/service/local/staging/deploy/maven2/
+# Uploading: com/github/daggerok/daggerok-context/1.0.4/daggerok-context-1.0.4-sources.jar.asc to repository remote at https://oss.sonatype.org/service/local/staging/deploy/maven2/
 # Transferring 0K from remote
 # Uploaded 0K
-# Uploading: com/github/daggerok/daggerok-context/1.0.2/daggerok-context-1.0.2.pom.asc to repository remote at https://oss.sonatype.org/service/local/staging/deploy/maven2/
+# Uploading: com/github/daggerok/daggerok-context/1.0.4/daggerok-context-1.0.4.pom.asc to repository remote at https://oss.sonatype.org/service/local/staging/deploy/maven2/
 # Transferring 0K from remote
 # Uploaded 0K
 # Downloading: com/github/daggerok/daggerok-context/maven-metadata.xml from repository remote at https://oss.sonatype.org/service/local/staging/deploy/maven2/

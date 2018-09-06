@@ -29,13 +29,13 @@ repositories {
 }
 
 dependencies {
-  compile "com.github.daggerok:daggerok-context:1.0.2"
+  compile "com.github.daggerok:daggerok-context:1.0.4"
 }
 ----
 
 //image:http://maven.apache.org/images/maven-logo-black-on-white.png["daggerok-context", link="https://maven-badges.herokuapp.com/maven-central/com.github.daggerok/daggerok-context"]
 
-image:http://maven.apache.org/images/maven-logo-black-on-white.png["daggerok-context", link="https://search.maven.org/beta/artifact/com.github.daggerok/daggerok-context/1.0.2/jar"]
+image:http://maven.apache.org/images/maven-logo-black-on-white.png["daggerok-context", link="https://search.maven.org/beta/artifact/com.github.daggerok/daggerok-context/1.0.4/jar"]
 
 .pom.xml
 [source,xml]
@@ -44,7 +44,7 @@ image:http://maven.apache.org/images/maven-logo-black-on-white.png["daggerok-con
   <dependency>
     <groupId>com.github.daggerok</groupId>
     <artifactId>daggerok-context</artifactId>
-    <version>1.0.2</version>
+    <version>1.0.4</version>
   </dependency>
 </dependencies>
 
@@ -152,8 +152,8 @@ public class MyAppTest {
 .many ways create context
 [source,java]
 ----
-// empty context (with simgle bean registred: DaggerokContext):
-DaggerokContext.create(MyApp.class);
+// empty context with single DaggerokContext bean registered:
+DaggerokContext.create();
 
 // by base class:
 DaggerokContext.create(MyApp.class);
@@ -172,11 +172,24 @@ DaggerokContext.create(Package.getPackages());
 ----
 
 === User configurations:
+. `DaggerokContext#withBasePackageClasses(Class...)`
+. `DaggerokContext#withBasePackageNames(String...)`
+. `DaggerokContext#withBasePackages(Package...)`
 . `DaggerokContext#withComponents(Annotation)`
 . `DaggerokContext#withInjectors(Annotation)`
 . `DaggerokContext#failOnInjectNullRef(boolean)`
 . `DaggerokContext#failOnBeanCreationError(boolean)`
 . `DaggerokContext#failOnUnknownReflectionsErrors(boolean)`
+
+.create simple (empty) context and add base packages configurations for scan
+[source,java]
+----
+final DaggerokContext applicationContext = DaggerokContext.create();
+// ...
+applicationContext.withBasePackageNames("my.app");
+applicationContext.withBasePackageClasses(my.app.Config);
+applicationContext.withBasePackages(Package.getPackage("my.other.app.pkg"));
+----
 
 .set custom component annotation
 [source,java]
@@ -301,7 +314,7 @@ repositories {
 }
 
 dependencies {
-  compile "com.github.daggerok:daggerok-context:1.0.3"
+  compile "com.github.daggerok:daggerok-context:1.0.4"
 }
 ----
 === gradle jitpack
@@ -313,7 +326,7 @@ repositories {
 }
 
 dependencies {
-  compile "com.github.daggerok:daggerok-context:1.0.3"
+  compile "com.github.daggerok:daggerok-context:1.0.4"
 }
 ----
 === maven bintray/daggerok
@@ -331,7 +344,7 @@ dependencies {
   <dependency>
     <groupId>com.github.daggerok</groupId>
     <artifactId>daggerok-context</artifactId>
-    <version>1.0.3</version>
+    <version>1.0.4</version>
   </dependency>
 </dependencies>
 ----
@@ -350,7 +363,7 @@ dependencies {
   <dependency>
     <groupId>com.github.daggerok</groupId>
     <artifactId>daggerok-context</artifactId>
-    <version>1.0.3</version>
+    <version>1.0.4</version>
   </dependency>
 </dependencies>
 ----

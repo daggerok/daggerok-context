@@ -13,37 +13,10 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
-    <daggerok.context.version>1.0.0</daggerok.context.version>
+    <daggerok.context.version>1.0.4</daggerok.context.version>
   </properties>
 
-  <dependencyManagement>
-    <dependencies>
-      <dependency>
-        <groupId>com.github.daggerok</groupId>
-        <artifactId>daggerok-context</artifactId>
-        <version>${daggerok.context.version}</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
-    </dependencies>
-  </dependencyManagement>
-
-  <repositories>
-    <!--
-    <repository>
-      <id>daggerok</id>
-      <url>https://dl.bintray.com/daggerok/daggerok</url>
-    </repository>
-    -->
-    <!-- bintray 1: -->
-    <repository>
-      <id>jcenter</id>
-      <url>https://jcenter.bintray.com</url>
-    </repository>
-  </repositories>
-
   <dependencies>
-    <!-- bintray 2: -->
     <dependency>
       <groupId>com.github.daggerok</groupId>
       <artifactId>daggerok-context</artifactId>

@@ -1,5 +1,6 @@
 buildscript {
   ext {
+    daggerokContextVersion = '1.0.4'
     javaVersion = '1.8'
   }
 }
@@ -36,14 +37,11 @@ publishing {
 defaultTasks 'clean', 'build', 'installDist', 'distZip', 'publish'
 
 repositories {
-  // bintray 1:
-  jcenter()
-  //mavenCentral()
+  mavenCentral()
 }
 
 dependencies {
-  // bintray 2:
-  compile 'com.github.daggerok:daggerok-context:1.0.0'
+  compile "com.github.daggerok:daggerok-context:$daggerokContextVersion"
 }
 
 wrapper {

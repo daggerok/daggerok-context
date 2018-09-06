@@ -79,7 +79,7 @@ public class DaggerokContext extends ConcurrentHashMap<Integer, HashSet<Construc
    * @return context initialization.
    */
   public static DaggerokContext create() {
-    return new DaggerokContext("");
+    return create(DaggerokContext.class);
   }
 
   /**
@@ -321,7 +321,7 @@ public class DaggerokContext extends ConcurrentHashMap<Integer, HashSet<Construc
    * @return context configuration.
    */
   public DaggerokContext initialize() {
-    return register(DaggerokContext.class, findAndRegisterAllBeans());
+    return findAndRegisterAllBeans().register(DaggerokContext.class, this);
   }
 
   /* context usage */
@@ -383,6 +383,13 @@ public class DaggerokContext extends ConcurrentHashMap<Integer, HashSet<Construc
   public <T> T getBean(final String typeName) {
     requireNonNull(typeName, "bean name");
     return (T) beans.get(typeName);
+  }
+
+  /* overrides */
+
+  @Override
+  public int size() {
+    return beans.size();
   }
 
   /* private API */
