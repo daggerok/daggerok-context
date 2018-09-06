@@ -2,6 +2,7 @@
 
 == gradle (bintray artifactory)
 
+////
 .prepare `gradle.properties` file
 [source,bash]
 ----
@@ -27,13 +28,17 @@ echo 'bintrayApiKey=Bintray.api.key...' >> ~/.gradle/gradle.properties
 # Uploaded to 'https://api.bintray.com/content/daggerok/daggerok/daggerok-context/1.0.2/com/github/daggerok/daggerok-context/1.0.2/daggerok-context-1.0.2.jar'.
 # Uploaded to 'https://api.bintray.com/content/daggerok/daggerok/daggerok-context/1.0.2/com/github/daggerok/daggerok-context/1.0.2/daggerok-context-1.0.2.pom'.
 ----
+////
 
-go to https://bintray.com/daggerok/daggerok/daggerok-context/
-
-login and publish deployed version to jcenter repository
+. update artifact version in build.gradle
+. create pull request into release branch
+. wait for Travis CI build finish
+. login into https://bintray.com/daggerok/daggerok/daggerok-context
+. click to publish on 'You have ... unpublished item(s) for this package' note
 
 == gradle (maven central)
 
+////
 .prepare `gradle.properties` file
 [source,bash]
 ----
@@ -45,17 +50,11 @@ echo 'signing.password=Pgp2.password...'  >> ~/.gradle/gradle.properties
 echo 'signing.secretKeyRingFile=/Users/mak/.gnupg/secring.gpg' >> ~/.gradle/gradle.properties
 ----
 
-.prepare `build.gradle` file
-[source,bash]
-----
-# uncomment maven-central.gradle file usage in build.gradle:
-echo 'apply from: "$project.projectDir/gradle/maven-central.gradle"' >> build.gradle
-----
-
 .publish artifact to bintray jcenter
 ----
 ./gradlew clean assemble
-./gradlew -Si uploadArchives
+#./gradlew -Si uploadArchives
+./gradlew -Si uploadArchives -Pmaven-central
 
 ## output:
 # Deploying to https://oss.sonatype.org/service/local/staging/deploy/maven2/
@@ -101,9 +100,14 @@ echo 'apply from: "$project.projectDir/gradle/maven-central.gradle"' >> build.gr
 # Transferring 0K from remote
 # Uploaded 0K
 ----
+////
 
-go to https://oss.sonatype.org/#stagingRepositories
+. update artifact version in build.gradle
+. create pull request into release branch
+. wait for Travis CI build finish
+. login into https://oss.sonatype.org/#stagingRepositories
+. find your deployment, close it, wait a little and release
 
-login and publish deployed version and link:https://central.sonatype.org/pages/releasing-the-deployment.html[follow instructions]
+or follow link:https://central.sonatype.org/pages/releasing-the-deployment.html[these] instructions for details
 
 link:https://www.youtube.com/watch?v=b5D2EBjLp40&feature=youtu.be[see for details YouTube: 04 - Accessing OSS-RH - Easy Publishing to Central Repository]

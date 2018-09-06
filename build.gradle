@@ -78,4 +78,7 @@ def getPropOrSystemOrDefault(def propertyName, def systemPropertyName) {
 
 apply from: "$project.projectDir/gradle/maven-publish.gradle"
 apply from: "$project.projectDir/gradle/bintray.gradle"
-//apply from: "$project.projectDir/gradle/maven-central.gradle"
+
+if (project.hasProperty('maven-central')) {
+  apply from: "$project.projectDir/gradle/maven-central.gradle"
+}

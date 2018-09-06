@@ -72,6 +72,8 @@ script:
     bintray101 \
     bintray102 \
   ; do
+    rm -rf ~/.m2/repository/com/github/daggerok/daggerok-context
+    rm -rf ~/.gradle/caches/modules-2/files-2.1/com.github.daggerok/daggerok-contex
     cd $root/samples/$sample
     pwd
     ./mvnw -U
@@ -90,6 +92,8 @@ script:
     central101 \
     central102 \
   ; do
+    rm -rf ~/.m2/repository/com/github/daggerok/daggerok-context
+    rm -rf ~/.gradle/caches/modules-2/files-2.1/com.github.daggerok/daggerok-contex
     cd $root/samples/$sample
     pwd
     ./mvnw -U
@@ -102,29 +106,30 @@ script:
     bash ./build/install/$sample/bin/$sample $sample
   done
 
-#deploy:
+#deploy release artifacts to bintray jcenter and maven central repositories:
 - cd ${root}/
 - chmod 0600 .gnupg/gpg.conf
 #
-- test ".${TRAVIS_BRANCH}" = ".master" && echo "deploy drafted release to bintray jcenter"
+- test ".${TRAVIS_BRANCH}" != ".release" || echo "deploy drafted release to bintray jcenter"
+- test ".${TRAVIS_BRANCH}" != ".release" || mkdir -p ~/.gradle
+- test ".${TRAVIS_BRANCH}" != ".release" || echo 'bintrayUser=daggerok'           >> ~/.gradle/gradle.properties
+- test ".${TRAVIS_BRANCH}" != ".release" || echo "bintrayApiKey=$BINTRAY_API_KEY" >> ~/.gradle/gradle.properties
+- test ".${TRAVIS_BRANCH}" != ".release" || ./gradlew clean assemble
+- test ".${TRAVIS_BRANCH}" != ".release" || ./gradlew -S bintrayUpload
 #
-- test ".${TRAVIS_BRANCH}" = ".master" && mkdir -p ~/.gradle
-- test ".${TRAVIS_BRANCH}" = ".master" && echo 'bintrayUser=daggerok'           >> ~/.gradle/gradle.properties
-- test ".${TRAVIS_BRANCH}" = ".master" && echo "bintrayApiKey=$BINTRAY_API_KEY" >> ~/.gradle/gradle.properties
-- test ".${TRAVIS_BRANCH}" = ".master" && ./gradlew clean assemble
-- test ".${TRAVIS_BRANCH}" = ".master" && ./gradlew -S bintrayUpload
+- test ".${TRAVIS_BRANCH}" != ".release" || echo "deploy drafted release to maven central"
+- |
+  if [ ".${TRAVIS_BRANCH}" = ".release" ]; then
+    mkdir -p ~/.gradle
+    echo 'ossrhUsername=daggerok'                               >> ~/.gradle/gradle.properties
+    echo "ossrhPassword=$OSSRH_PASSWORD"                        >> ~/.gradle/gradle.properties
+    echo "signing.keyId=$SIGNING_KEY_ID"                        >> ~/.gradle/gradle.properties
+    echo "signing.password=$SIGNING_PASSWORD"                   >> ~/.gradle/gradle.properties
+    echo "signing.secretKeyRingFile=$(pwd)/.gnupg/secring.gpg"  >> ~/.gradle/gradle.properties
+    ./gradlew clean assemble
+    ./gradlew -Si uploadArchives -Pmaven-central
+  fi
 #
-- test ".${TRAVIS_BRANCH}" = ".master" && echo "deploy drafted release to maven central"
-#
-- test ".${TRAVIS_BRANCH}" = ".master" && echo 'ossrhUsername=daggerok'                                         >> ~/.gradle/gradle.properties
-- test ".${TRAVIS_BRANCH}" = ".master" && echo "ossrhPassword=$OSSRH_PASSWORD"                                  >> ~/.gradle/gradle.properties
-- test ".${TRAVIS_BRANCH}" = ".master" && echo "signing.keyId=$SIGNING_KEY_ID"                                  >> ~/.gradle/gradle.properties
-- test ".${TRAVIS_BRANCH}" = ".master" && echo "signing.password=$SIGNING_PASSWORD"                             >> ~/.gradle/gradle.properties
-- test ".${TRAVIS_BRANCH}" = ".master" && echo "signing.secretKeyRingFile=$(pwd)/.gnupg/secring.gpg"            >> ~/.gradle/gradle.properties
-- test ".${TRAVIS_BRANCH}" = ".master" && echo 'apply from:\\ "$project.projectDir/gradle/maven-central.gradle"' >> build.gradle
-- test ".${TRAVIS_BRANCH}" = ".master" && cat build.gradle
-- test ".${TRAVIS_BRANCH}" = ".master" && ./gradlew clean assemble
-- test ".${TRAVIS_BRANCH}" = ".master" && ./gradlew -Si uploadArchives
 
 before_cache:
 - for item in $(find ~/.gradle -name "*.lock");
