@@ -13,7 +13,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
-    <daggerok.context.version>1.0.3</daggerok.context.version>
+    <daggerok.context.version>1.0.4</daggerok.context.version>
   </properties>
 
   <!-- JitPack 1: -->
@@ -30,6 +30,12 @@
       <groupId>com.github.daggerok</groupId>
       <artifactId>daggerok-context</artifactId>
       <version>${daggerok.context.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>javax.inject</groupId>
+      <artifactId>javax.inject</artifactId>
+      <version>1</version>
     </dependency>
   </dependencies>
 

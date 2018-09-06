@@ -41,9 +41,9 @@ compileJava {
 }
 
 dependencies {
-  implementation("org.reflections:reflections:$reflectionsVersion")
-  implementation("javax.inject:javax.inject:$injectVersion")
-  implementation("org.slf4j:slf4j-api:$slf4jVersion")
+  compile("org.reflections:reflections:$reflectionsVersion")
+  compile("javax.inject:javax.inject:$injectVersion")
+  compile("org.slf4j:slf4j-api:$slf4jVersion")
 
   runtime("ch.qos.logback:logback-classic:$logbackVersion")
   compileOnly("ch.qos.logback:logback-classic:$logbackVersion")
