@@ -29,13 +29,13 @@ repositories {
 }
 
 dependencies {
-  compile "com.github.daggerok:daggerok-context:1.0.3"
+  compile "com.github.daggerok:daggerok-context:1.0.4"
 }
 ----
 
 //image:http://maven.apache.org/images/maven-logo-black-on-white.png["daggerok-context", link="https://maven-badges.herokuapp.com/maven-central/com.github.daggerok/daggerok-context"]
 
-image:http://maven.apache.org/images/maven-logo-black-on-white.png["daggerok-context", link="https://search.maven.org/beta/artifact/com.github.daggerok/daggerok-context/1.0.3/jar"]
+image:http://maven.apache.org/images/maven-logo-black-on-white.png["daggerok-context", link="https://search.maven.org/beta/artifact/com.github.daggerok/daggerok-context/1.0.4/jar"]
 
 .pom.xml
 [source,xml]
@@ -44,7 +44,7 @@ image:http://maven.apache.org/images/maven-logo-black-on-white.png["daggerok-con
   <dependency>
     <groupId>com.github.daggerok</groupId>
     <artifactId>daggerok-context</artifactId>
-    <version>1.0.3</version>
+    <version>1.0.4</version>
   </dependency>
 </dependencies>
 
@@ -314,7 +314,7 @@ repositories {
 }
 
 dependencies {
-  compile "com.github.daggerok:daggerok-context:1.0.3"
+  compile "com.github.daggerok:daggerok-context:1.0.4"
 }
 ----
 === gradle jitpack
@@ -326,7 +326,7 @@ repositories {
 }
 
 dependencies {
-  compile "com.github.daggerok:daggerok-context:1.0.3"
+  compile "com.github.daggerok:daggerok-context:1.0.4"
 }
 ----
 === maven bintray/daggerok
@@ -344,7 +344,7 @@ dependencies {
   <dependency>
     <groupId>com.github.daggerok</groupId>
     <artifactId>daggerok-context</artifactId>
-    <version>1.0.3</version>
+    <version>1.0.4</version>
   </dependency>
 </dependencies>
 ----
@@ -363,7 +363,7 @@ dependencies {
   <dependency>
     <groupId>com.github.daggerok</groupId>
     <artifactId>daggerok-context</artifactId>
-    <version>1.0.3</version>
+    <version>1.0.4</version>
   </dependency>
 </dependencies>
 ----
