@@ -47,10 +47,10 @@ dependencies {
 
   runtime("ch.qos.logback:logback-classic:$logbackVersion")
   compileOnly("ch.qos.logback:logback-classic:$logbackVersion")
-  testImplementation("ch.qos.logback:logback-classic:$logbackVersion")
+  testCompile("ch.qos.logback:logback-classic:$logbackVersion")
 
-  testImplementation("junit:junit:$junitVersion")
-  testImplementation("org.assertj:assertj-core:$assertjVersion")
+  testCompile("junit:junit:$junitVersion")
+  testCompile("org.assertj:assertj-core:$assertjVersion")
 }
 
 wrapper {
