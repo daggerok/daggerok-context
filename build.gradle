@@ -20,7 +20,7 @@ plugins {
   id 'com.jfrog.bintray' version '1.8.4' apply false
 }
 
-version = '1.0.4'
+version = '1.0.5'
 group = 'com.github.daggerok'
 archivesBaseName = 'daggerok-context'
 description = 'Daggerok Context - Java dependency injection library.'
