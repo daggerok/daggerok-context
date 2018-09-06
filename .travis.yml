@@ -68,6 +68,7 @@ script:
 - |
   for sample in \
     central101 \
+    central102 \
   ; do
     cd $root/samples/$sample
     pwd
