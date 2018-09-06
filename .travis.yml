@@ -131,7 +131,7 @@ before_cache:
     do sudo rm -rf $item ;
   done
 
-cache:
-  directories:
-  - "$HOME/.m2"
-  - "$HOME/.gradle"
+#cache:
+#  directories:
+#  - "$HOME/.m2"
+#  - "$HOME/.gradle"
