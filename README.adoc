@@ -152,7 +152,7 @@ public class MyAppTest {
 .many ways create context
 [source,java]
 ----
-// empty context (with simgle bean registred: DaggerokContext):
+// empty context with single DaggerokContext bean registered:
 DaggerokContext.create();
 
 // by base class:

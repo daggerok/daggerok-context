@@ -6,6 +6,7 @@ buildscript {
     slf4jVersion = '1.7.25'
     junitVersion = '4.12'
     injectVersion = '1'
+    assertjVersion = '3.11.1'
     vcsUrl = 'https://github.com/daggerok/daggerok-context.git'
   }
 }
@@ -49,6 +50,7 @@ dependencies {
   testImplementation("ch.qos.logback:logback-classic:$logbackVersion")
 
   testImplementation("junit:junit:$junitVersion")
+  testImplementation("org.assertj:assertj-core:$assertjVersion")
 }
 
 wrapper {
