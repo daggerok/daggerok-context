@@ -36,10 +36,9 @@ publishing {
 defaultTasks 'clean', 'build', 'installDist', 'distZip', 'publish'
 
 repositories {
-  mavenLocal()
-  mavenCentral()
   // bintray 1:
   jcenter()
+  //mavenCentral()
 }
 
 dependencies {

@@ -36,11 +36,10 @@ publishing {
 defaultTasks 'clean', 'build', 'installDist', 'distZip', 'publish'
 
 repositories {
-  mavenLocal()
-  mavenCentral()
-
+  //maven { url 'https://dl.bintray.com/daggerok/daggerok' }
   // bintray 1:
-  maven { url 'https://dl.bintray.com/daggerok/daggerok' }
+  jcenter()
+  //mavenCentral()
 }
 
 dependencies {
