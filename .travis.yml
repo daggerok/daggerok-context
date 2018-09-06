@@ -37,9 +37,7 @@ script:
 #- |
 #  for sample in \
 #    jitpackmaster \
-#    jitpack103 \
-#    jitpack101 \
-#    jitpack100 \
+#    jitpack104 \
 #    jitpack001 \
 #  ; do
 #    cd $root/samples/$sample
@@ -68,9 +66,7 @@ script:
 # bintray
 - |
   for sample in \
-    bintray103 \
-    bintray102 \
-    bintray101 \
+    bintray104 \
     bintray001 \
   ; do
     cd $root/samples/$sample
@@ -90,26 +86,21 @@ script:
   done
 
 # central
-- |
-  for sample in \
-    central102 \
-    central101 \
-  ; do
-    cd $root/samples/$sample
-    pwd
-    rm -rf ~/.m2/repository/com/github/daggerok/daggerok-context
-    rm -rf ~/.gradle/caches/modules-2/files-2.1/com.github.daggerok/daggerok-contex
-    ./mvnw -U
-    java -jar ./target/*-all.jar
-    java -jar ./target/*-all.jar trololo
-    java -jar ./target/*-all.jar $sample
-    rm -rf ~/.m2/repository/com/github/daggerok/daggerok-context
-    rm -rf ~/.gradle/caches/modules-2/files-2.1/com.github.daggerok/daggerok-contex
-    ./gradlew --refresh-dependencies
-    bash ./build/install/$sample/bin/$sample
-    bash ./build/install/$sample/bin/$sample trololo
-    bash ./build/install/$sample/bin/$sample $sample
-  done
+- export sample=central104
+- cd $root/samples/$sample
+- pwd
+- rm -rf ~/.m2/repository/com/github/daggerok/daggerok-context
+- rm -rf ~/.gradle/caches/modules-2/files-2.1/com.github.daggerok/daggerok-contex
+- ./mvnw -U
+- java -jar ./target/*-all.jar
+- java -jar ./target/*-all.jar trololo
+- java -jar ./target/*-all.jar $sample
+- rm -rf ~/.m2/repository/com/github/daggerok/daggerok-context
+- rm -rf ~/.gradle/caches/modules-2/files-2.1/com.github.daggerok/daggerok-contex
+- ./gradlew --refresh-dependencies
+- bash ./build/install/$sample/bin/$sample
+- bash ./build/install/$sample/bin/$sample trololo
+- bash ./build/install/$sample/bin/$sample $sample
 
 #deploy release artifacts to bintray jcenter and maven central repositories:
 - cd ${root}/
