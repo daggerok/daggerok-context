@@ -1,6 +1,6 @@
 buildscript {
   ext {
-    daggerokContextVersion = '1.0.3'
+    daggerokContextVersion = '1.0.4'
     javaVersion = '1.8'
   }
 }
