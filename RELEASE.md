@@ -12,7 +12,7 @@ repositories {
 }
 
 dependencies {
-  compile 'com.github.daggerok:daggerok-context:1.0.5'
+  compile 'com.github.daggerok:daggerok-context:1.0.4'
 }
 ```
 
@@ -25,7 +25,7 @@ dependencies {
   <dependency>
     <groupId>com.github.daggerok</groupId>
     <artifactId>daggerok-context</artifactId>
-    <version>1.0.5</version>
+    <version>1.0.4</version>
   </dependency>
 </dependencies>
 
@@ -50,7 +50,7 @@ repositories {
 }
 
 dependencies {
-  compile 'com.github.daggerok:daggerok-context:1.0.5'
+  compile 'com.github.daggerok:daggerok-context:1.0.4'
 }
 ```
 
@@ -70,7 +70,7 @@ dependencies {
   <dependency>
     <groupId>com.github.daggerok</groupId>
     <artifactId>daggerok-context</artifactId>
-    <version>1.0.5</version>
+    <version>1.0.4</version>
   </dependency>
 </dependencies>
 ```
@@ -85,7 +85,7 @@ repositories {
 }
 
 dependencies {
-  compile 'com.github.daggerok:daggerok-context:1.0.5'
+  compile 'com.github.daggerok:daggerok-context:1.0.4'
 }
 ```
 
@@ -105,7 +105,7 @@ dependencies {
   <dependency>
     <groupId>com.github.daggerok</groupId>
     <artifactId>daggerok-context</artifactId>
-    <version>1.0.5</version>
+    <version>1.0.4</version>
   </dependency>
 </dependencies>
 ```
